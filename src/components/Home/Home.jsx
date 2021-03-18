@@ -31,7 +31,28 @@ export const Home = () => {
       }
     
       const donorForm = () => {
-        setEditDonor({First_Name:''})
+        setEditDonor({
+          Title:'',
+          Family_Name:'',
+          First_Name:'',
+          Current_Address:'',
+          Email:'',
+          Phone:'',
+          Birth_Date:'',
+          First_Donation_Date:'',
+          Recruitment_Source:'',
+          Recruitment_Reason:'',
+          Number_of_Donations:'',
+          Cumulative_Donation_Amount:'',
+          Last_Donation_Amount:'',
+          Date_of_Last_Donation:'',
+          Preferred_Communication:'',
+          Date_of_Last_Communication:'',
+          Last_communication:'',
+          SEF_POC:'',
+          Notes:'',
+          Email_Communication_Rate:''
+        })
     
       }
     
