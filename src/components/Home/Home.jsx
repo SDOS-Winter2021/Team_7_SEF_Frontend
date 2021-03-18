@@ -87,6 +87,9 @@ export const Home = () => {
               <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
             </div>
           </div>
+          <div className = "row">
+            <br/>
+          </div>
 
 
             <DonorList donors = {donors} editBtn = {editBtn} deleteBtn = {deleteBtn}/>

@@ -71,7 +71,8 @@ function Form(props) {
             Email_Communication_Rate
         })
         .then(resp => props.updatedInformation(resp))
-        window.location.reload(false);
+        window.location.reload(true);
+        alert("Donor Entry Updated");
 
 
     }
@@ -100,7 +101,8 @@ function Form(props) {
             Email_Communication_Rate
         })
         .then(resp => props.insertedInformation(resp))
-        window.location.reload(false);
+        window.location.reload(true);
+        alert("New Donor Added");
     }
 
     return (
