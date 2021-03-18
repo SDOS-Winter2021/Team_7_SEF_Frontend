@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react'
 import APIService from '../APIService';
 
 function Form(props) {
-    // const [First_Name, setFirst_Name] = useState('')
     const [Title, setTitle] = useState('')
     const [Family_Name, setFamily_Name] = useState('')
     const [First_Name, setFirst_Name] = useState('')
@@ -23,6 +22,7 @@ function Form(props) {
     const [SEF_POC, setSEF_POC] = useState('')
     const [Notes, setNotes] = useState('')
     const [Email_Communication_Rate, setEmail_Communication_Rate] = useState('')
+    // const history = useHistory()
 
     useEffect(() => {
         setTitle(props.donor.Title)
@@ -71,6 +71,7 @@ function Form(props) {
             Email_Communication_Rate
         })
         .then(resp => props.updatedInformation(resp))
+        window.location.reload(false);
 
 
     }
@@ -99,17 +100,13 @@ function Form(props) {
             Email_Communication_Rate
         })
         .then(resp => props.insertedInformation(resp))
+        window.location.reload(false);
     }
 
     return (
         <div>
             {props.donor ? (
                 <div className="mb-3">
-                    // <label htmlFor='First_Name' className='form-label'>First Name</label>
-                    // <input type="text" className='form-control' id='First_Name' placeholder = "Please Enter the First Name"
-                    // value={First_Name} onChange={e => setFirst_Name(e.target.value)}/>
-
-
                     <label htmlFor='Title' className='form-label'>Title</label>
                     <input type="text" className='form-control' id='Title' placeholder = "Please Enter the Title"
                     value={Title} onChange={e => setTitle(e.target.value)}/>
@@ -208,9 +205,6 @@ function Form(props) {
                     <label htmlFor='Email_Communication_Rate' className='form-label'>Email Communication Rate</label>
                     <input type="text" className='form-control' id='Email_Communication_Rate' placeholder = "Please Enter the Email Communication Rate"
                     value={Email_Communication_Rate} onChange={e => setEmail_Communication_Rate(e.target.value)}/>
-
-
-
 
                     <br/>
                     {props.donor.id ? 

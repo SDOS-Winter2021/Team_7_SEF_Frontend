@@ -25,6 +25,9 @@ function DonorList(props) {
                     <p>Cumulative Donation Amount: {donor.Cumulative_Donation_Amount}</p>
                     <p>Date of Last Donation: {donor.Date_of_Last_Donation}</p>
                     <p>SEF POC: {donor.SEF_POC}</p>
+
+
+                    
                     <div className = "row">
                         <div className = "col-md-1">
                             <button className = "btn btn-primary" onClick  = {() => editBtn(donor)}>Update</button>
