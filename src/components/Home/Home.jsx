@@ -41,14 +41,34 @@ export const Home = () => {
     
       }
 
+      const deleteBtn = (donor) => {
+        const new_donors = donors.filter(mydonor => {
+          if(mydonor.id === donor.id) {
+            return false
+          }
+          return true;
+        })
+    
+        setDonors(new_donors)
+    
+      }
+
     return (
-        <div>
-
-            <div className = "col">
-            <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
+        <div className="App">
+          <div className = "row">
+            <div className = "col">        
+              <br/> 
             </div>
+            <div className = "col">        
+              <br/> 
+            </div>
+            <div className = "col">
+              <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
+            </div>
+          </div>
 
-            <DonorList donors = {donors} editBtn = {editBtn}/>
+
+            <DonorList donors = {donors} editBtn = {editBtn} deleteBtn = {deleteBtn}/>
 
             {editDonor ? <Form donor = {editDonor} updatedInformation = {updatedInformation} insertedInformation = {insertedInformation}/> : null}
         </div>

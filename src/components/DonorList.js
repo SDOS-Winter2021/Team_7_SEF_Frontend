@@ -1,10 +1,18 @@
-import React from 'react'
+import React from 'react';
+import APIService from '../APIService';
 
 function DonorList(props) {
 
     const editBtn = (donor) => {
         props.editBtn(donor)
     }
+
+   const deleteBtn = (donor) => {
+    APIService.DeleteDonor(donor.id)
+    .then(() => props.deleteBtn(donor))
+    .catch(error => console.log(error))
+   
+}
 
     return (
         <div>
@@ -17,8 +25,15 @@ function DonorList(props) {
                     <p>Cumulative Donation Amount: {donor.Cumulative_Donation_Amount}</p>
                     <p>Date of Last Donation: {donor.Date_of_Last_Donation}</p>
                     <p>SEF POC: {donor.SEF_POC}</p>
-                    <button className = 'btn btn-primary' onClick = {() => editBtn(donor)}>Edit</button>
-                    <hr/>
+                    <div className = "row">
+                        <div className = "col-md-1">
+                            <button className = "btn btn-primary" onClick  = {() => editBtn(donor)}>Update</button>
+                        </div>
+                        <div className = "col">
+                            <button onClick = {() => deleteBtn(donor)} className = "btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                    <hr className="hrclass"/>
                     </div>
                 )
             })}

@@ -7,6 +7,7 @@ import reducers from './reducers'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 

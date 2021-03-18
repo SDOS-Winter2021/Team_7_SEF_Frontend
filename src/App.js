@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Navbar } from './components/NavBar/Navbar'
 import { Auth } from './components/Auth/Auth'
 import { Home } from './components/Home/Home'
+import './App.css';
 
 const App = () => {
     return (
