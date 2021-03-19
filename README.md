@@ -46,6 +46,9 @@ Once installed start the frontend server by thye following command.
 
 ```sh
 $ npm start
+
+# Alternatively run
+$ yarn start.
 ```
 The website server is now running at http://127.0.0.1:3000. Open this in your browser.
 
