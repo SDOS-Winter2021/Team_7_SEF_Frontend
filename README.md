@@ -53,7 +53,7 @@ The website server is now running at http://127.0.0.1:3000. Open this in your br
 
 ## Roadmap
 
-See the [open issues](https://github.com/SDOS2020/Team_3_Reactonite/issues) for a list of proposed features (and known issues). You can also track where the project is going in further releases just visit the [projects](https://github.com/SDOS2020/Team_3_Reactonite/projects) tab.
+See the [open issues](https://github.com/SDOS-Winter2021/Team_7_SEF_Frontend/issues) for a list of proposed features (and known issues). You can also track where the project is going in further releases just visit the [projects](https://github.com/SDOS-Winter2021/Team_7_SEF_Frontend/projects) tab.
 
 
 <!-- LICENSE -->
@@ -68,7 +68,7 @@ MIT License. See `LICENSE` for more information once complete.
 
 - Aayush Gupta  - aayush17002@iiitd.ac.in
 - Sudhanshu Mohan - sudhanshu17110@iiitd.ac.in
-- Divyam Bhagchandani - divyamavi17339@iiitd.ac.in
+- Divyam Bhagchandani - divyam17339@iiitd.ac.in
 - Bhavika Rana - bhavika17036@iiitd.ac.in
 
 Project Link: [https://github.com/SDOS-Winter2021/Team_7_SEF_Frontend](https://github.com/SDOS-Winter2021/Team_7_SEF_Frontend)
