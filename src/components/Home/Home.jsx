@@ -6,7 +6,6 @@ import WithoutUser from './WithoutUser'
 export const Home = () => {
   const location = useLocation()
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-  const userName = user?.result.name
   useEffect(() => {
       const token = user?.token
       setUser(JSON.parse(localStorage.getItem('profile')))
