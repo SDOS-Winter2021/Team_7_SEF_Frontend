@@ -62,31 +62,36 @@ function Form() {
     }, [])
 
     const addDonor = () => {
-        APIService.AddDonor({
-            Title,
-            Family_Name,
-            First_Name,
-            Current_Address,
-            Email,
-            Phone,
-            Birth_Date,
-            First_Donation_Date,
-            Recruitment_Source,
-            Recruitment_Reason,
-            Number_of_Donations,
-            Cumulative_Donation_Amount,
-            Last_Donation_Amount,
-            Date_of_Last_Donation,
-            Preferred_Communication,
-            Date_of_Last_Communication,
-            Last_communication,
-            SEF_POC,
-            Notes,
-            Email_Communication_Rate
-        })
-        .then(resp => console.log(resp))
-        alert("New Donor Added");
-        history.push('/');
+        if (check(Title) && check(Family_Name) && check(First_Name) && check(Current_Address) && check(Email) && check(Phone) && check(Birth_Date) && check(First_Donation_Date) && check(Recruitment_Source) && check(Recruitment_Reason) && check(Number_of_Donations) && check(Cumulative_Donation_Amount) && check(Last_Donation_Amount) && check(Date_of_Last_Donation) && check(Last_communication) && check(SEF_POC) && check(Notes) && check(Email_Communication_Rate)) {
+            APIService.AddDonor({
+                Title,
+                Family_Name,
+                First_Name,
+                Current_Address,
+                Email,
+                Phone,
+                Birth_Date,
+                First_Donation_Date,
+                Recruitment_Source,
+                Recruitment_Reason,
+                Number_of_Donations,
+                Cumulative_Donation_Amount,
+                Last_Donation_Amount,
+                Date_of_Last_Donation,
+                Preferred_Communication,
+                Date_of_Last_Communication,
+                Last_communication,
+                SEF_POC,
+                Notes,
+                Email_Communication_Rate
+            })
+            alert("New Donor Added");
+            history.push('/');
+        }
+        else{
+            alert("Error in Input")
+        }
+        
     }
 
     return (
@@ -194,4 +199,12 @@ function Form() {
             <button onClick={addDonor} className="btn btn-success">Add Donor</button>
         </div>
     )
+}
+
+function check(data){
+    if (data == null){
+        console.log(data)
+        return true;
+    }
+    return false;
 }

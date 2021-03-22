@@ -10,4 +10,8 @@ export default makeStyles((theme) => ({
     title: {
       flexGrow: 1,
     },
+    logo: {
+      maxWidth: 40,
+      marginRight: '10px'
+    }
   }));
