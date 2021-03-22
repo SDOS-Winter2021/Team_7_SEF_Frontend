@@ -1,12 +1,14 @@
 import React,{useState,useEffect} from 'react'
 import DonorList from '../DonorList';
 import Form from '../Form';
+import { useHistory } from 'react-router-dom';
 
 function WithUser() {
     const fetchURL = 'http://127.0.0.1:8000/api/donor/';
     const getItems = () => fetch(fetchURL).then(res => res.json());
     const [donors, setDonors] = useState([]);
     const [editDonor, setEditDonor] = useState(null);
+    const history = useHistory();
 
     useEffect(() => {
         getItems().then(data => setDonors(data));
@@ -31,29 +33,7 @@ function WithUser() {
       }
     
       const donorForm = () => {
-        setEditDonor({
-          Title:'',
-          Family_Name:'',
-          First_Name:'',
-          Current_Address:'',
-          Email:'',
-          Phone:'',
-          Birth_Date:'',
-          First_Donation_Date:'',
-          Recruitment_Source:'',
-          Recruitment_Reason:'',
-          Number_of_Donations:'',
-          Cumulative_Donation_Amount:'',
-          Last_Donation_Amount:'',
-          Date_of_Last_Donation:'',
-          Preferred_Communication:'',
-          Date_of_Last_Communication:'',
-          Last_communication:'',
-          SEF_POC:'',
-          Notes:'',
-          Email_Communication_Rate:''
-        })
-    
+        history.push('/donor');
       }
     
       const insertedInformation = (donor) => {
