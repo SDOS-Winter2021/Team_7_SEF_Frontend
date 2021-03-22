@@ -17,10 +17,10 @@ function WithUser() {
       history.push('/donor');
     }
     
-      const donorForm = () => {
-        localStorage.setItem('curr_donor',null)
-        history.push('/donor');
-      }
+    const donorForm = () => {
+      localStorage.setItem('curr_donor',null)
+      history.push('/donor');
+    }
 
     return (
         <div className="App">
