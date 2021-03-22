@@ -10,8 +10,8 @@ const App = () => {
         <Router>
             <Navbar />
             <Switch>
-                <Route path='/auth' exact component={Auth}/>
                 <Route path='/' exact component={Home}/>
+                <Route path='/auth' exact component={Auth}/>
             </Switch>
         </Router>
     )
