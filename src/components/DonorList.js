@@ -11,12 +11,6 @@ function DonorList(props) {
         props.editBtn(donor)
     }
 
-   const deleteBtn = (donor) => {
-    APIService.DeleteDonor(donor.id)
-    .then(() => props.deleteBtn(donor))
-    .catch(error => console.log(error))
-    }
-
     return (
         <div>            
             <table id='donors'> 
@@ -67,7 +61,6 @@ function DonorList(props) {
                             {/* <td>{Notes}</td> */}
                             {/* <td>{Email_Communication_Rate}</td> */}
                             <td><button className = "btn btn-primary" onClick  = {() => editBtn(donor)}>Update</button></td>
-                            <td><button onClick = {() => deleteBtn(donor)} className = "btn btn-danger">Delete</button></td>
                         </tr>
                     )
                     })}

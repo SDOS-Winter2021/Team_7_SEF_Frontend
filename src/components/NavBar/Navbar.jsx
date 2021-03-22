@@ -17,8 +17,6 @@ export const Navbar = () => {
     const userName = user?.result.name
     const imgUrl = user?.result.imageUrl
 
-    // console.log(user)
-
     const handleLogout = () => {
         dispatch({ type: LOGOUT })
         history.push('/auth')
@@ -27,6 +25,9 @@ export const Navbar = () => {
 
     useEffect(() => {
         const token = user?.token
+
+
+        // console.log(JSON.parse(localStorage))
 
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
