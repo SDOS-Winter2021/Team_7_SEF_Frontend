@@ -62,35 +62,38 @@ function Form() {
     }, [])
 
     const addDonor = () => {
-        if (check(Title) && check(Family_Name) && check(First_Name) && check(Current_Address) && check(Email) && check(Phone) && check(Birth_Date) && check(First_Donation_Date) && check(Recruitment_Source) && check(Recruitment_Reason) && check(Number_of_Donations) && check(Cumulative_Donation_Amount) && check(Last_Donation_Amount) && check(Date_of_Last_Donation) && check(Last_communication) && check(SEF_POC) && check(Notes) && check(Email_Communication_Rate)) {
-            APIService.AddDonor({
-                Title,
-                Family_Name,
-                First_Name,
-                Current_Address,
-                Email,
-                Phone,
-                Birth_Date,
-                First_Donation_Date,
-                Recruitment_Source,
-                Recruitment_Reason,
-                Number_of_Donations,
-                Cumulative_Donation_Amount,
-                Last_Donation_Amount,
-                Date_of_Last_Donation,
-                Preferred_Communication,
-                Date_of_Last_Communication,
-                Last_communication,
-                SEF_POC,
-                Notes,
-                Email_Communication_Rate
-            })
-            alert("New Donor Added");
-            history.push('/');
+        APIService.AddDonor({
+            Title,
+            Family_Name,
+            First_Name,
+            Current_Address,
+            Email,
+            Phone,
+            Birth_Date,
+            First_Donation_Date,
+            Recruitment_Source,
+            Recruitment_Reason,
+            Number_of_Donations,
+            Cumulative_Donation_Amount,
+            Last_Donation_Amount,
+            Date_of_Last_Donation,
+            Preferred_Communication,
+            Date_of_Last_Communication,
+            Last_communication,
+            SEF_POC,
+            Notes,
+            Email_Communication_Rate
+        })
+        .then(resp => {
+            if (check(resp)) {
+                alert("New Donor Added")
+                history.push('/')
+            }
+            else{
+                alert("Error in Input")
+            }
         }
-        else{
-            alert("Error in Input")
-        }
+        )
         
     }
 
@@ -201,10 +204,9 @@ function Form() {
     )
 }
 
-function check(data){
-    if (data == null){
-        console.log(data)
-        return true;
+function check(resp){
+    if (resp.Birth_Date == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Cumulative_Donation_Amount == "A valid integer is required." || resp.Current_Address == "This field may not be blank." || resp.Date_of_Last_Communication == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Date_of_Last_Donation == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Email == "This field may not be blank." || resp.Email_Communication_Rate == "A valid integer is required." || resp.Family_Name == "This field may not be blank." || resp.First_Donation_Date == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.First_Name == "This field may not be blank." || resp.Last_Donation_Amount == "This field may not be blank." || resp.Last_communication == "This field may not be blank." || resp.Notes == "This field may not be blank." || resp.Number_of_Donations == "A valid integer is required." || resp.Phone == "A valid integer is required." || resp.Preferred_Communication == "This field may not be blank." || resp.Recruitment_Reason == "This field may not be blank." || resp.Recruitment_Source == "This field may not be blank." || resp.SEF_POC == "This field may not be blank." || resp.Title == "This field may not be blank.") {
+        return false;
     }
-    return false;
+    return true;
 }

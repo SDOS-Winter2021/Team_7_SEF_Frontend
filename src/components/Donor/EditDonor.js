@@ -122,11 +122,16 @@ function Form(props) {
     }
 
     const deleteBtn = () => {
-        APIService.DeleteDonor(props.donor.id)
-        .catch(error => console.log(error))
-        alert("Donor Entry Deleted");
-        history.push('/');
-
+        var donor_check = prompt("Please enter the First_Name of the Donor:", props.donor.First_Name);
+        if (donor_check == null || donor_check !=props.donor.First_Name || donor_check == "") {
+            alert("Try Again, Donor Name miss match")
+        } 
+        else {
+            APIService.DeleteDonor(props.donor.id)
+            .catch(error => console.log(error))
+            alert("Donor Entry Deleted");
+            history.push('/');
+        }
         }
 
     return (
