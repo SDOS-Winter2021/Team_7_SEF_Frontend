@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Logo from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/components/Home/Background.png';
 
 function WithoutUser() {
 
     return (
         <div className="App">
-            <img src="../../images/Background.png" alt="SEF Dashboard"/>
+            <img src={Logo} alt="SEF Dashboard"/>
         </div>
     )
 }
