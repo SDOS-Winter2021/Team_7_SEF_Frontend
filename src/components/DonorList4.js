@@ -125,15 +125,21 @@ function Table({ columns, data }) {
     )
 }
 
+function editBtn(props,donor) {
 
-
-function DonorList2(props) {
-
-    const donors = props.donors;
-
-    const editBtn = (donor) => {
+    const editDonorBtn = (donor) => {
         props.editBtn(donor)
     }
+
+
+    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>Update</button>
+}
+
+
+
+function DonorList4(props) {
+
+    const donors = props.donors;
 
     const newData = [];
     donors.forEach(donor => {
@@ -158,7 +164,7 @@ function DonorList2(props) {
             SEF_POC: donor.SEF_POC,
             Notes: donor.Notes,
             Email_Communication_Rate: donor.Email_Communication_Rate,
-            Update_Donor: editBtn
+            Update_Donor: editBtn(props,donor)
         });
     });
 
@@ -245,7 +251,8 @@ function DonorList2(props) {
                 accessor: 'Email_Communication_Rate',
             },
             {
-                Header: 'Update_Donor',
+                Header: '',
+                disableFilters: true,
                 accessor: 'Update_Donor',
             },
         ],
@@ -261,4 +268,4 @@ function DonorList2(props) {
     )
 }
 
-export default DonorList2;
+export default DonorList4;

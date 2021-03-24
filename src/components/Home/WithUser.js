@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import DonorList from '../DonorList';
 import DonorList2 from '../DonorList2';
+import DonorList4 from '../DonorList4';
 import { useHistory } from 'react-router-dom';
 
 function WithUser() {
@@ -57,7 +58,7 @@ function WithUser() {
           <div className = "row">
             <br/>
           </div>
-            <DonorList2 donors = {donors} editBtn = {editBtn}/>
+            <DonorList4 donors = {donors} editBtn = {editBtn}/>
           <div>
             <button onClick={topFunction} id="myBtn">Top</button>
           </div>
