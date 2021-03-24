@@ -1,8 +1,9 @@
 .App {
-    min-height: 100vh;
+    min-height: 125vh;
     background-color: #282c34;
     color: white;
     padding: 20px;
+    zoom: 0.8;
     
   }
   

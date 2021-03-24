@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { AUTH } from '../../constants/actionTypes'
 import { useHistory } from 'react-router-dom'
 import { signIn, signUp } from '../../actions/auth'
+import { LOGOUT } from '../../constants/actionTypes'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
@@ -31,11 +32,19 @@ export const Auth = () => {
     const googleSuccess = async (res) => {
         const result = res?.profileObj
         const token = res?.tokenId
-        console.log(res)
+        // console.log(result.email)
 
         try {
-            dispatch({ type: AUTH, data: { result, token } });
-            history.push('/')
+            if (result.email.includes('@iiitd.ac.in')) {
+                dispatch({ type: AUTH, data: { result, token } });
+                history.push('/')
+            }
+            else {
+
+                alert('Unotherised user')
+                dispatch({ type: LOGOUT })
+                history.push('/auth')
+            }
         } catch (error) {
             console.log(error)
         }

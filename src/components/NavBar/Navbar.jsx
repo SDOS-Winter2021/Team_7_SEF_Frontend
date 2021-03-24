@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import useStyles from './styles'
 import MenuIcon from '@material-ui/icons/Menu'
+import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import { Avatar, Typography, IconButton, Toolbar, AppBar, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import { LOGOUT } from '../../constants/actionTypes'
@@ -15,8 +16,6 @@ export const Navbar = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const userName = user?.result.name
     const imgUrl = user?.result.imageUrl
-
-    // console.log(user)
 
     const handleLogout = () => {
         dispatch({ type: LOGOUT })
@@ -34,11 +33,13 @@ export const Navbar = () => {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Typography component={Link} to='/' variant="h6" className={classes.title}>
-                        Title
+                        <IconButton className={classes.logo} primary="white" secondary="black">
+                            <HomeTwoToneIcon />
+                        </IconButton>
                     </Typography>
                     {user
                         ? <div>
