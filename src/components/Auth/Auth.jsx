@@ -35,6 +35,8 @@ export const Auth = () => {
         // console.log(result.email)
 
         try {
+            // dispatch({ type: AUTH, data: { result, token } });
+            // history.push('/')
             if (result.email.includes('@iiitd.ac.in')) {
                 dispatch({ type: AUTH, data: { result, token } });
                 history.push('/')

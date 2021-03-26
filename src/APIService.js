@@ -104,4 +104,17 @@ export default class APIService {
 
     }
 
+    // User
+
+    static GetStaff() {
+
+      return fetch(`http://127.0.0.1:8000/api/staff/`, {
+         'method':'GET',
+         headers: {
+             'Content-Type':'application/json'
+           } 
+      }).then(resp => resp.json())
+
+    }
+
 }
