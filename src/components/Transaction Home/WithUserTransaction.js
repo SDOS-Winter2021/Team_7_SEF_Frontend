@@ -1,30 +1,26 @@
 import React,{useState,useEffect} from 'react'
-import DonorList from '../DonorList';
-import DonorList2 from '../DonorList2';
-import DonorList4 from '../DonorList4';
+import TransactionList from '../TransactionList';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 
-function WithUser() {
+function WithUserTransaction() {
 
-    // const fetchURL = 'http://127.0.0.1:8000/api/donor/';
-    // const getItems = () => fetch(fetchURL).then(res => res.json());
-    const getItems = () => APIService.GetDonor();
-    const [donors, setDonors] = useState([]);
+    const getItems = () => APIService.GetTransaction();
+    const [transactions, setTransactions] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
-        getItems().then(data => setDonors(data));
+        getItems().then(data => setTransactions(data));
       }, []);
 
-    const editBtn = (donor) => {
-      localStorage.setItem('curr_donor',JSON.stringify(donor))
-      history.push('/donor');
+    const editBtn = (transaction) => {
+      localStorage.setItem('curr_transaction',JSON.stringify(transaction))
+      history.push('/transaction');
     }
     
-    const donorForm = () => {
-      localStorage.setItem('curr_donor',null)
-      history.push('/donor');
+    const transactionForm = () => {
+      localStorage.setItem('curr_transaction',null)
+      history.push('/transaction');
     }
 
     const topFunction = () => {
@@ -54,13 +50,13 @@ function WithUser() {
               <br/> 
             </div>
             <div className = "col">
-              <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
+              <button onClick = {transactionForm} className = "btn btn-primary">New Transaction</button>
             </div>
           </div>
           <div className = "row">
             <br/>
           </div>
-            <DonorList4 donors = {donors} editBtn = {editBtn}/>
+            <TransactionList transactions = {transactions} editBtn = {editBtn}/>
           <div>
             <button onClick={topFunction} id="myBtn">Top</button>
           </div>
@@ -68,4 +64,4 @@ function WithUser() {
     )
 }
 
-export default WithUser
+export default WithUserTransaction
