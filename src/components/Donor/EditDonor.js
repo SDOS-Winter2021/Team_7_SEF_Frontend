@@ -36,6 +36,7 @@ function Form(props) {
     const [SEF_POC, setSEF_POC] = useState('')
     const [Notes, setNotes] = useState('')
     const [Email_Communication_Rate, setEmail_Communication_Rate] = useState('')
+    console.log(props.donor)
     // const history = useHistory()
 
     useEffect(() => {
