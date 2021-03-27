@@ -3,6 +3,7 @@ import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-t
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 import APIService from '../APIService';
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 
 // Define a default UI for filtering
@@ -135,7 +136,11 @@ function editBtn(props,transaction,aproval) {
 
     return ( <div> 
             {aproval ? 
-                <div></div> : 
+            <div>
+                <PDFDownloadLink document={<MyDoc transaction = {transaction} />} fileName="recipt.pdf">
+                {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className = "btn btn-primary" >PDF</button>)}
+              </PDFDownloadLink> 
+              </div>: 
                 <button className = "btn btn-primary" onClick  = {() => editDonorBtn(transaction)}>Edit</button> }
         </div>
     )
@@ -157,7 +162,7 @@ function approveBtn(props,transaction,approval,Poc,Donor,Amount,Currency,Date) {
     }
     return ( <div> 
             {approval ? 
-                <div>Approved</div> : 
+                <div style={{color: '#66FF99'}}>Approved</div> : 
                 <div>
                 <button className = "btn btn-primary" onClick  = {() => approveDonorBtn(transaction)}>Approve</button> 
                 </div>}
@@ -165,6 +170,48 @@ function approveBtn(props,transaction,approval,Poc,Donor,Amount,Currency,Date) {
     )
     
 }
+
+const MyDoc = (props) => (
+    <Document>
+      <Page>
+      <View>
+        <Text>
+            Poc: {props.transaction.Poc}
+        </Text>
+        <Text>
+            Donor: {props.transaction.Donor}
+        </Text>
+        <Text>
+            Amount: {props.transaction.Amount}
+        </Text>
+        <Text>
+            Currency: {props.transaction.Currency}
+        </Text>
+        <Text>
+            Date: {props.transaction.Date}
+        </Text>
+      </View>
+      </Page>
+    </Document>
+  )
+
+// function TransactionPDF(props) {
+//     return (
+//         <div>
+//             <h2>Poc: </h2>
+//             <p>props.transaction.Poc</p>
+//             <h2>Donor: </h2>
+//             <p>props.transaction.Donor</p>
+//             <h2>Amount: </h2>
+//             <p>props.transaction.Amount</p>
+//             <h2>Currency: </h2>
+//             <p>props.transaction.Currency</p>
+//             <h2>Date: </h2>
+//             <p>props.transaction.Date</p>
+//         </div>
+//     )
+
+// }
 
 function TransactionList(props) {
 
