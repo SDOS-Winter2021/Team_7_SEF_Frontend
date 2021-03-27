@@ -17,13 +17,29 @@ export const Donor = () => {
   
     return (
         <div className="App">
-          {user ? <DonorCheck donor = {donor} /> : <WithoutUser/>}
+          {user ? <TeamCheck donor = {donor} /> : <WithoutUser/>}
         </div>
     )
   }
 
+const TeamCheck = (props) => {
+  const [donor, setDonor] = useState(props.donor)
+    const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
+    useEffect(() => {
+        setDonor(props.donor)
+        setTeam(JSON.parse(localStorage.getItem('Team')))
+    }, [])
+    return (
+        <div className="App">
+          {team != 'Finance' ? <DonorCheck donor = {donor} /> : <WithoutUser/> }
+        </div>
+    )
+}
+
+
 const DonorCheck = (props) => {
-    const [donor, setDonor] = useState(JSON.parse(localStorage.getItem('curr_donor')))
+    const [donor, setDonor] = useState([])
+    // const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
     useEffect(() => {
         setDonor(props.donor)
     }, [])
