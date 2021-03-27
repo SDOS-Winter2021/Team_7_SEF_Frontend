@@ -17,10 +17,25 @@ export const Transaction = () => {
   
     return (
         <div className="App">
-          {user ? <TransactionCheck transaction = {transaction} /> : <WithoutUser/>}
+          {user ? <TeamCheck transaction = {transaction} /> : <WithoutUser/>}
         </div>
     )
   }
+
+
+const TeamCheck = (props) => {
+  const [transaction, setTransaction] = useState([])
+  const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
+  useEffect(() => {
+    setTransaction(props.transaction)
+    setTeam(JSON.parse(localStorage.getItem('Team')))
+  }, [])
+  return (
+      <div className="App">
+        {team != 'Donor' ? <TransactionCheck transaction = {transaction} /> : <WithoutUser/> }
+      </div>
+  )
+}
 
 const TransactionCheck = (props) => {
     const [transaction, setTransaction] = useState(JSON.parse(localStorage.getItem('curr_transaction')))

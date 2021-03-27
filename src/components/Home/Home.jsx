@@ -34,11 +34,13 @@ const UserCheck = (props) => {
   useEffect(() => {
     getItems().then(data => data.forEach(data_item => {
       // console.log(data_item.Email)
-      console.log(props.email)
+      // console.log(props.email)
       if (props.email == data_item.Email) {
         setStaff(data_item)
+        localStorage.setItem('Team',JSON.stringify(data_item.Team))
       }
     }))
+    
     // console.log(props.email)
   }, [props])
 
