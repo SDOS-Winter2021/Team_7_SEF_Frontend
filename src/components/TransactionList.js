@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
+import APIService from '../APIService';
 
 
 // Define a default UI for filtering
@@ -125,22 +126,49 @@ function Table({ columns, data }) {
     )
 }
 
-function editBtn(props,transaction) {
+function editBtn(props,transaction,aproval) {
 
     const editDonorBtn = (transaction) => {
         props.editBtn(transaction)
     }
 
 
-    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(transaction)}>Update</button>
+    return ( <div> 
+            {aproval ? 
+                <div></div> : 
+                <button className = "btn btn-primary" onClick  = {() => editDonorBtn(transaction)}>Edit</button> }
+        </div>
+    )
+    
 }
 
-
+function approveBtn(props,transaction,approval,Poc,Donor,Amount,Currency,Date) {
+    const Is_Approved = true;
+    const approveDonorBtn = (transaction) => {
+        APIService.UpdateTransaction(transaction.id, {
+            Poc,
+            Donor,
+            Amount,
+            Currency,
+            Date,
+            Is_Approved
+        }).then(resp => console.log(resp))
+        props.approveBtn();
+    }
+    return ( <div> 
+            {approval ? 
+                <div>Approved</div> : 
+                <div>
+                <button className = "btn btn-primary" onClick  = {() => approveDonorBtn(transaction)}>Approve</button> 
+                </div>}
+        </div>
+    )
+    
+}
 
 function TransactionList(props) {
 
     const transactions = props.transactions;
-
     const newData = [];
     transactions.forEach(transaction => {
         newData.push({
@@ -149,7 +177,8 @@ function TransactionList(props) {
             Amount: transaction.Amount,
             Currency: transaction.Currency,
             Date: transaction.Date,
-            Edit_Transaction: editBtn(props,transaction)
+            Approve_Transaction: approveBtn(props,transaction,transaction.Is_Approved,transaction.Poc,transaction.Donor,transaction.Amount,transaction.Currency,transaction.Date),
+            Edit_Transaction: editBtn(props,transaction,transaction.Is_Approved)
         });
     });
 
@@ -174,6 +203,11 @@ function TransactionList(props) {
             {
                 Header: 'Date',
                 accessor: 'Date',
+            },
+            {
+                Header: '',
+                disableFilters: true,
+                accessor: 'Approve_Transaction',
             },
             {
                 Header: '',

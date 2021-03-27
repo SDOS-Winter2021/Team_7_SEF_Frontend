@@ -17,6 +17,11 @@ function WithUserTransaction() {
       localStorage.setItem('curr_transaction',JSON.stringify(transaction))
       history.push('/transaction');
     }
+
+    const approveBtn = () => {
+      alert("Transaction Approved")
+      window.location.reload(true);
+    }
     
     const transactionForm = () => {
       localStorage.setItem('curr_transaction',null)
@@ -56,7 +61,7 @@ function WithUserTransaction() {
           <div className = "row">
             <br/>
           </div>
-            <TransactionList transactions = {transactions} editBtn = {editBtn}/>
+            <TransactionList transactions = {transactions} editBtn = {editBtn} approveBtn = {approveBtn}/>
           <div>
             <button onClick={topFunction} id="myBtn">Top</button>
           </div>

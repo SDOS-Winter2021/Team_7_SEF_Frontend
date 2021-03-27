@@ -23,7 +23,7 @@ export const Donor = () => {
   }
 
 const TeamCheck = (props) => {
-  const [donor, setDonor] = useState([])
+  const [donor, setDonor] = useState(props.donor)
     const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
     useEffect(() => {
         setDonor(props.donor)

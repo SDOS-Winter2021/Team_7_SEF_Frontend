@@ -24,7 +24,7 @@ export const Transaction = () => {
 
 
 const TeamCheck = (props) => {
-  const [transaction, setTransaction] = useState([])
+  const [transaction, setTransaction] = useState(props.transaction)
   const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
   useEffect(() => {
     setTransaction(props.transaction)
@@ -38,7 +38,7 @@ const TeamCheck = (props) => {
 }
 
 const TransactionCheck = (props) => {
-    const [transaction, setTransaction] = useState(JSON.parse(localStorage.getItem('curr_transaction')))
+    const [transaction, setTransaction] = useState([])
     useEffect(() => {
         setTransaction(props.transaction)
     }, [])
