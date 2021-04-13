@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from 'src/components/Home/Background.png';
+import Logo from './src/components/Home/Background.png';
 // import Logo from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/components/Home/Background.png';
 
 function WithoutUser() {
