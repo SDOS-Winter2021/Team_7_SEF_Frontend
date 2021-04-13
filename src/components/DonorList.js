@@ -1,98 +1,271 @@
-import React from 'react';
-import APIService from '../APIService';
+import React from "react";
+import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './Donors.css';
 
 
-function DonorList(props) {
-
-    let headers = ["Title","Family_Name","First_Name","Current_Address","Email","Phone","First_Donation_Date","Recruitment_Source","Number_of_Donations","Last_Donation_Amount","SEF_POC"]
-    // let headers = ["Title","Family_Name","First_Name","Current_Address","Email","Phone","Birth_Date","First_Donation_Date","Recruitment_Source","Recruitment_Reason","Number_of_Donations","Cumulative_Donation_Amount","Last_Donation_Amount","Date_of_Last_Donation","Preferred_Communication","Date_of_Last_Communication","Last_communication","SEF_POC","Notes","Email_Communication_Rate"]
-
-    const editBtn = (donor) => {
-        props.editBtn(donor)
-    }
+// Define a default UI for filtering
+function GlobalFilter({
+    preGlobalFilteredRows,
+    globalFilter,
+    setGlobalFilter,
+}) {
+    const count = preGlobalFilteredRows.length
+    const [value, setValue] = React.useState(globalFilter)
+    const onChange = useAsyncDebounce(value => {
+        setGlobalFilter(value || undefined)
+    }, 200)
 
     return (
-        <div>            
-            <table id='donors'> 
-               <tbody>
-                   <tr>{headers.map((key, index) => {
-                        return <th key={index}>{key.toUpperCase()}</th>
-                    })}</tr>
-                  {props.donors && props.donors.map((donor, index) => {
-                    const { id, Title, Family_Name,
-                        First_Name,
-                        Current_Address,
-                        Email,
-                        Phone,
-                        Birth_Date,
-                        First_Donation_Date,
-                        Recruitment_Source,
-                        Recruitment_Reason,
-                        Number_of_Donations,
-                        Cumulative_Donation_Amount,
-                        Last_Donation_Amount,
-                        Date_of_Last_Donation,
-                        Preferred_Communication,
-                        Date_of_Last_Communication,
-                        Last_communication,
-                        SEF_POC,
-                        Notes,
-                        Email_Communication_Rate } = donor //destructuring
-                    return (
-                        <tr key={id}>
-                            <td>{Title}</td>
-                            <td>{Family_Name}</td>
-                            <td>{First_Name}</td>
-                            <td>{Current_Address}</td>
-                            <td>{Email}</td>
-                            <td>{Phone}</td>
-                            {/* <td>{Birth_Date}</td> */}
-                            <td>{First_Donation_Date}</td>
-                            <td>{Recruitment_Source}</td>
-                            {/* <td>{Recruitment_Reason}</td> */}
-                            <td>{Number_of_Donations}</td>
-                            {/* <td>{Cumulative_Donation_Amount}</td> */}
-                            <td>{Last_Donation_Amount}</td>
-                            {/* <td>{Date_of_Last_Donation}</td> */}
-                            {/* <td>{Preferred_Communication}</td> */}
-                            {/* <td>{Date_of_Last_Communication}</td> */}
-                            {/* <td>{Last_communication}</td> */}
-                            <td>{SEF_POC}</td>
-                            {/* <td>{Notes}</td> */}
-                            {/* <td>{Email_Communication_Rate}</td> */}
-                            <td><button className = "btn btn-primary" onClick  = {() => editBtn(donor)}>Update</button></td>
+        <span>
+            Search:{' '}
+            <input
+                className="form-control"
+                value={value || ""}
+                onChange={e => {
+                    setValue(e.target.value);
+                    onChange(e.target.value);
+                }}
+                placeholder={`${count} records...`}
+            />
+        </span>
+    )
+}
+
+function DefaultColumnFilter({
+    column: { filterValue, preFilteredRows, setFilter },
+}) {
+    const count = preFilteredRows.length
+
+    return (
+        <input
+            className="form-control"
+            value={filterValue || ''}
+            onChange={e => {
+                setFilter(e.target.value || undefined)
+            }}
+            placeholder={`Search`}
+        />
+    )
+}
+
+function Table({ columns, data }) {
+
+    const defaultColumn = React.useMemo(
+        () => ({
+            // Default Filter UI
+            Filter: DefaultColumnFilter,
+        }),
+        []
+    )
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        state,
+        preGlobalFilteredRows,
+        setGlobalFilter,
+    } = useTable(
+        {
+            columns,
+            data,
+            defaultColumn
+        },
+        useFilters,
+        useGlobalFilter
+    )
+
+    return (
+        <div>
+            <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+            />
+            <br/>
+            <br/>
+            <table className="table table-dark" {...getTableProps()}>
+                <thead>
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                    {/* Render the columns filter UI */}
+                                    <div>{column.canFilter ? column.render('Filter') : null}</div>
+                                </th>
+                            ))}
                         </tr>
-                    )
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                    {rows.map((row, i) => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
                     })}
-               </tbody>
+                </tbody>
             </table>
-
-            {/* {props.donors && props.donors.map(donor => {
-                return (
-                    <div key={donor.id}>
-                    <h2>{donor.First_Name}</h2>
-                    <p>First Donation Date: {donor.First_Donation_Date}</p>
-                    <p>Number of Donations: {donor.Number_of_Donations}</p>
-                    <p>Cumulative Donation Amount: {donor.Cumulative_Donation_Amount}</p>
-                    <p>Date of Last Donation: {donor.Date_of_Last_Donation}</p>
-                    <p>SEF POC: {donor.SEF_POC}</p>
-
-
-
-                    <div className = "row">
-                        <div className = "col-md-1">
-                            <button className = "btn btn-primary" onClick  = {() => editBtn(donor)}>Update</button>
-                        </div>
-                        <div className = "col">
-                            <button onClick = {() => deleteBtn(donor)} className = "btn btn-danger">Delete</button>
-                        </div>
-                    </div>
-                    <hr className="hrclass"/>
-                    </div>
-                )
-            })} */}
+            <br />
+            <div>Showing the first 20 results of {rows.length} rows</div>
+            {/* <div>
+                <pre className="temp">
+                    <code>{JSON.stringify(state.filters, null, 2)}</code>
+                </pre>
+            </div> */}
         </div>
     )
 }
 
-export default DonorList
+function editBtn(props,donor) {
+
+    const editDonorBtn = (donor) => {
+        props.editBtn(donor)
+    }
+
+
+    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>Update</button>
+}
+
+
+
+function DonorList(props) {
+
+    const donors = props.donors;
+
+    const newData = [];
+    donors.forEach(donor => {
+        newData.push({
+            Title: donor.Title,
+            Family_Name: donor.Family_Name,
+            First_Name: donor.First_Name,
+            Current_Address: donor.Current_Address,
+            Email: donor.Email,
+            Phone: donor.Phone,
+            Birth_Date: donor.Birth_Date,
+            First_Donation_Date: donor.First_Donation_Date,
+            Recruitment_Source: donor.Recruitment_Source,
+            Recruitment_Reason: donor.Recruitment_Reason,
+            Number_of_Donations: donor.Number_of_Donations,
+            Cumulative_Donation_Amount: donor.Cumulative_Donation_Amount,
+            Last_Donation_Amount: donor.Last_Donation_Amount,
+            Date_of_Last_Donation: donor.Date_of_Last_Donation,
+            Preferred_Communication: donor.Preferred_Communication,
+            Date_of_Last_Communication: donor.Date_of_Last_Communication,
+            Last_communication: donor.Last_communication,
+            SEF_POC: donor.SEF_POC,
+            Notes: donor.Notes,
+            Email_Communication_Rate: donor.Email_Communication_Rate,
+            Update_Donor: editBtn(props,donor)
+        });
+    });
+
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Title',
+                accessor: 'Title',
+            },
+            {
+                Header: 'Family Name',
+                accessor: 'Family_Name',
+            },
+            {
+                Header: 'First Name',
+                accessor: 'First_Name',
+            },
+            {
+                Header: 'Current Address',
+                accessor: 'Current_Address',
+            },
+            {
+                Header: 'Email',
+                accessor: 'Email',
+            },
+            {
+                Header: 'Phone',
+                accessor: 'Phone',
+            },
+            {
+                Header: 'Birth Date',
+                accessor: 'Birth_Date',
+            },
+            {
+                Header: 'First Donation Date',
+                accessor: 'First_Donation_Date',
+            },
+            {
+                Header: 'Recruitment Source',
+                accessor: 'Recruitment_Source',
+            },
+            {
+                Header: 'Recruitment Reason',
+                accessor: 'Recruitment_Reason',
+            },
+            {
+                Header: 'Number of Donations',
+                accessor: 'Number_of_Donations',
+            },
+            {
+                Header: 'Cumulative Donation Amount',
+                accessor: 'Cumulative_Donation_Amount',
+            },
+            {
+                Header: 'Last Donation Amount',
+                accessor: 'Last_Donation_Amount',
+            },
+            {
+                Header: 'Date of Last Donation',
+                accessor: 'Date_of_Last_Donation',
+            },
+            {
+                Header: 'Preferred Communication',
+                accessor: 'Preferred_Communication',
+            },
+            {
+                Header: 'Date of Last Communication',
+                accessor: 'Date_of_Last_Communication',
+            },
+            {
+                Header: 'Last communication',
+                accessor: 'Last_communication',
+            },
+            {
+                Header: 'SEF POC',
+                accessor: 'SEF_POC',
+            },
+            {
+                Header: 'Notes',
+                accessor: 'Notes',
+            },
+            {
+                Header: 'Email Communication Rate',
+                accessor: 'Email_Communication_Rate',
+            },
+            {
+                Header: '',
+                disableFilters: true,
+                accessor: 'Update_Donor',
+            },
+        ],
+        []
+    )
+
+    const data = newData
+
+    return (
+        <div className="Donors">  
+        <Table columns={columns} data={data} />
+        </div>
+    )
+}
+
+export default DonorList;

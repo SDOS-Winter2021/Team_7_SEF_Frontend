@@ -1,10 +1,12 @@
+const base_url = 'https://sef-dashboard.herokuapp.com/api/'
+
 export default class APIService {
 
   // Donor
 
     static GetDonor() {
 
-      return fetch(`http://127.0.0.1:8000/api/donor/`, {
+      return fetch(`${base_url}donor/`, {
          'method':'GET',
          headers: {
              'Content-Type':'application/json'
@@ -15,7 +17,7 @@ export default class APIService {
     
     static UpdateDonor(donor_id, body) {
 
-     return fetch(`http://127.0.0.1:8000/api/donor/${donor_id}/`, {
+     return fetch(`${base_url}donor/${donor_id}/`, {
         'method':'PUT',
         headers: {
             'Content-Type':'application/json'
@@ -29,7 +31,7 @@ export default class APIService {
 
     static AddDonor(body) {
 
-      return fetch('http://127.0.0.1:8000/api/donor/', {
+      return fetch(`${base_url}donor/`, {
         'method':'POST',
         headers: {
             'Content-Type':'application/json'
@@ -42,7 +44,7 @@ export default class APIService {
 
     static DeleteDonor(donor_id) {
 
-      return fetch(`http://127.0.0.1:8000/api/donor/${donor_id}/`, {
+      return fetch(`${base_url}donor/${donor_id}/`, {
         'method':'DELETE',
         headers: {
             'Content-Type':'application/json'
@@ -56,7 +58,7 @@ export default class APIService {
 
     static GetTransaction() {
 
-      return fetch(`http://127.0.0.1:8000/api/transaction/`, {
+      return fetch(`${base_url}transaction/`, {
          'method':'GET',
          headers: {
              'Content-Type':'application/json'
@@ -67,7 +69,7 @@ export default class APIService {
     
     static UpdateTransaction(transaction_id, body) {
 
-     return fetch(`http://127.0.0.1:8000/api/transaction/${transaction_id}/`, {
+     return fetch(`${base_url}transaction/${transaction_id}/`, {
         'method':'PUT',
         headers: {
             'Content-Type':'application/json'
@@ -81,7 +83,7 @@ export default class APIService {
 
     static AddTransaction(body) {
 
-      return fetch('http://127.0.0.1:8000/api/transaction/', {
+      return fetch(`${base_url}transaction/`, {
         'method':'POST',
         headers: {
             'Content-Type':'application/json'
@@ -94,7 +96,7 @@ export default class APIService {
 
     static DeleteTransaction(transaction_id) {
 
-      return fetch(`http://127.0.0.1:8000/api/transaction/${transaction_id}/`, {
+      return fetch(`${base_url}transaction/${transaction_id}/`, {
         'method':'DELETE',
         headers: {
             'Content-Type':'application/json'
@@ -108,7 +110,7 @@ export default class APIService {
 
     static GetStaff() {
 
-      return fetch(`http://127.0.0.1:8000/api/staff/`, {
+      return fetch(`${base_url}staff/`, {
          'method':'GET',
          headers: {
              'Content-Type':'application/json'
