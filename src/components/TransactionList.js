@@ -4,8 +4,8 @@ import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-t
 import './Donors.css';
 import APIService from '../APIService';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import im1 from 'images/sign.png';
-import im2 from 'images/logo.png';
+import im1 from './src/images/sign.png';
+import im2 from './src/images/logo.png';
 // import im1 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/sign.png';
 // import im2 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/logo.png';
 
