@@ -37,16 +37,16 @@ export const Auth = () => {
         try {
             // dispatch({ type: AUTH, data: { result, token } });
             // history.push('/')
-            if (result.email.includes('@iiitd.ac.in')) {
+            // if (result.email.includes('@iiitd.ac.in')) {
                 dispatch({ type: AUTH, data: { result, token } });
                 history.push('/')
-            }
-            else {
+            // }
+            // else {
 
-                alert('Unotherised user')
-                dispatch({ type: LOGOUT })
-                history.push('/auth')
-            }
+            //     alert('Unotherised user')
+            //     dispatch({ type: LOGOUT })
+            //     history.push('/auth')
+            // }
         } catch (error) {
             console.log(error)
         }
@@ -63,7 +63,7 @@ export const Auth = () => {
                 </Avatar>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <GoogleLogin
-                        clientId='418571538477-t9fcp3230p21kcio23nb0euf0dtelimb.apps.googleusercontent.com'
+                        clientId='769388396500-909t411qfsejlkguj9n6opi2kulhpb2r.apps.googleusercontent.com'
                         render={(renderProps) => (
                             <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant='contained'>
                                 Google Sign In
