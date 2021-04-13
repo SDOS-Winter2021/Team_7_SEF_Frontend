@@ -39,16 +39,22 @@ const UserCheck = (props) => {
 
   return (
     <div className="App">
-      {staff.Team == 'Donor' ? <WithUser /> : <WithUserTransaction />}
+      {staff.Team == 'Donor' ? <WithUser /> : <UserCheck2 staff = {staff} />}
     </div>
   )
 }
 
+const UserCheck2 = (props) => {
+  const [staff, setStaff] = useState([])
 
+  useEffect(() => {
+    setStaff(props.staff)
+  }, [props])
 
-// getItems().then(data => setStaffMembers(data));
-// staffMembers.forEach(staffMember => {
-//   if (props.user.Email == staffMember.Email) {
-//     setStaff(staffMember)
-//   }
-// })
+  return (
+    <div className="App">
+      {staff.Team == 'Finance' ? <WithUserTransaction /> : <WithoutUser />}
+    </div>
+  )
+}
+
