@@ -136,12 +136,20 @@ function editBtn(props,transaction,aproval,donor) {
     const editDonorBtn = (transaction) => {
         props.editBtn(transaction)
     }
-    const file_name = "transaction_" + donor + "_" + transaction.id + ".pdf"
+    const file_name = "transaction_" + donor.First_Name + "_" + transaction.id + ".pdf";
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const yyyy = today.getFullYear();
+
+    const date_today = mm + '/' + dd + '/' + yyyy;
+    const numWords = require('num-words')
+    const amountInWords = numWords(transaction.Amount)
 
     return ( <div> 
             {aproval ? 
             <div>
-                {transaction && <PDFDownloadLink document={<MyDoc transaction = {transaction} donor = {donor}/>} fileName={file_name}>
+                {transaction && <PDFDownloadLink document={<MyDoc transaction = {transaction} donor = {donor} date={date_today} amountInWords={amountInWords}/>} fileName={file_name}>
                 {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className = "btn btn-primary" >PDF</button>)}
               </PDFDownloadLink> }
               </div>: 
@@ -176,167 +184,60 @@ function approveBtn(props,transaction,approval,Poc,Donor,Amount,Currency,Date) {
 }
 
 const styles = StyleSheet.create({
+    page_style: {
+        margin: 10
+    },
     section: { 
         padding: 10, 
         margin: 10,
         flexGrow: 1
     },
-    header: {
-        textAlign: 'center'
-    },
     image: {
-      width: "50%",
-      padding: 10
-    },
-    centerImage: {
-      alignItems: "center"
-    },
-    table: { 
-        display: "table", 
-        width: "auto", 
-        borderStyle: "solid", 
-        borderWidth: 1, 
-        borderRightWidth: 0, 
-        borderBottomWidth: 0 
-    }, 
-    tableRow: { 
-        margin: "auto", 
-        flexDirection: "row" 
-    }, 
-    tableColSmall: { 
-        width: "12.5%", 
-        borderStyle: "solid", 
-        borderWidth: 1, 
-        borderLeftWidth: 0, 
-        borderTopWidth: 0 
-    }, 
-    tableColLarge: { 
-        width: "25%", 
-        borderStyle: "solid", 
-        borderWidth: 1, 
-        borderLeftWidth: 0, 
-        borderTopWidth: 0 
-    }, 
-    tableCell: { 
-        margin: "auto", 
-        marginTop: 5, 
-        fontSize: 10 
+      width: "30%",
+      padding: 2
     },
     text: {
       fontSize: 11,
       textAlign: 'center'
+    },
+    text_right: {
+      fontSize: 11,
+      textAlign: 'left'
     }
   });
 
 
 const MyDoc = (props) => (
     <Document>
-      <Page size="A4" wrap>
+      <Page size="LETTER" orientation="landscape" style={styles.page_style} wrap>
+      <View>
+        <Image style={styles.image} src={im2} />
+    </View>
+            <View style={styles.section}>
+                <Text style={styles.text_right}>
+                    Donations are exempt under Section 80G of the IT Act 1961:{"\n"}
+                    No. {props.transaction.id}{"\n"}
+                    Pan No: {props.donor.id} {/*convert to pan number when defined*/}
+                </Text>
+            </View>
+            <View>
+                <Text style={styles.text_right}>
+                    Receipt Date: {props.date}{"\n"}
+                    Receipt No: {props.transaction.id}{"\n"}
+                    Donation Date: {props.transaction.Date}{"\n"}
+                    Received with thanks from: {props.donor.First_Name}{"\n"}
+                    Address/Email of Donor: {props.donor.Email}{"\n"}
+                    Pan of Donor: {props.donor.id}{"\n"}
+                    Sum of Rupees (in words): {props.amountInWords}{"\n"}
+                    By Cash/Online/Cheque*: {"\n"}
+                </Text>
+            </View>
+            
             <View style={styles.section} wrap={false}>
-                <Image style={styles.image} src={im2} />
-                <Text>
-                Receipt No: SEF/DON/Serial No./2021-22	Date: {props.transaction.Date}
-                </Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.header}>
-                TO WHOMSOEVER IT MAY CONCERN
-                </Text>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.text}>
-                Simple Education Foundation (SEF) received the below items as a donation from {props.donor}. The
-invoice no {props.transaction.Poc} dated {props.transaction.Date} along with good was received on {props.transaction.Date}
-                </Text>
-            </View>
-            <View style={styles.section}>
-                <View style={styles.table}> 
-                    {/* TableHeader */} 
-                    <View style={styles.tableRow}> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                S.no 
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColLarge}> 
-                            <Text style={styles.tableCell}>
-                                Item Description
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                Unit
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                Qty
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                Rate
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColLarge}> 
-                            <Text style={styles.tableCell}>
-                                Amount
-                            </Text> 
-                        </View> 
-                    </View> 
-                    {/* TableContent */} 
-                    <View style={styles.tableRow}> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                1
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColLarge}> 
-                            <Text style={styles.tableCell}>
-                                
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColSmall}> 
-                            <Text style={styles.tableCell}>
-                                {props.transaction.Currency}
-                            </Text> 
-                        </View> 
-                        <View style={styles.tableColLarge}> 
-                            <Text style={styles.tableCell}>
-                                {props.transaction.Amount}
-                            </Text> 
-                        </View> 
-                    </View> 
-                </View>
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.text}>
-                Thank you for your generous donation! We appreciate your support
-                </Text>
-            </View>
-            <View style={styles.section} wrap={false}>
-                <Text style={styles.text}>
+                <Text style={styles.text_right}>
                 For Simple Education Foundation
                 </Text>
                 <Image style={styles.image} src={im1} />
-            </View>
-            <View style={styles.section}>
-                <Text style={styles.text}>
-                    This confirms that the items given by the donor to Simple Education Foundation (SEF).{"\n"}
-                    No goods or services were received in exchange for this/ these donations.{"\n"}
-                    SEF is a non-profit registered under section 80G of Income Tax Act, 1961.{"\n"}
-                    80G: DEL-SE27729-24042017/8410
-                </Text>
             </View>
             <View
                 style={{
@@ -346,8 +247,8 @@ invoice no {props.transaction.Poc} dated {props.transaction.Date} along with goo
                 />
             <View style={styles.section}>
                 <Text style={styles.text}>
-                    Registered Address: H-1, Bandhu Vihar, CGHS, Sector – 10, Plot No. – 11, Dwarka, New Delhi – 110075{"\n"}
-                    www.simpleeducationfoundation.org | +91-9810704035 | connect@simpleeducationfoundation.org
+                    H-1, Bandhu Vihar, CGHS, Sector – 10, Plot No. – 11, Dwarka, New Delhi – 110075{"\n"}
+                    +91-9810704035 | www.simpleeducationfoundation.org | connect@simpleeducationfoundation.org
                 </Text>
             </View>
         </Page>
@@ -355,16 +256,16 @@ invoice no {props.transaction.Poc} dated {props.transaction.Date} along with goo
   )
 
 function getDonor(transaction,donors){
-    var name = "unknown"
+    var d = null;
     donors.forEach(donor => {
         if (donor.id == transaction) {
-            name = donor.First_Name;
+            d = donor;
         }
     });
-    if (name == "unknown") {
+    if (d == null) {
         console.log(transaction)
     }
-    return name;
+    return d;
 }
 
 function TransactionList(props) {
@@ -380,7 +281,7 @@ function TransactionList(props) {
     transactions.forEach(transaction => {
         newData.push({
             Poc: transaction.Poc,
-            Donor: getDonor(transaction.Donor,donors),
+            Donor: getDonor(transaction.Donor,donors).First_Name,
             Amount: transaction.Amount,
             Currency: transaction.Currency,
             Date: transaction.Date,
