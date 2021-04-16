@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import AddDonor from './AddDonor'
+import AddDonor from './AddDonor2'
 import EditDonor from './EditDonor'
 import WithoutUser from '../Home/WithoutUser'
 

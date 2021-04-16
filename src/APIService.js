@@ -1,4 +1,4 @@
-const base_url = 'https://sef-dashboard.herokuapp.com/api/'
+const base_url = 'http://127.0.0.1:8000/api/'
 
 export default class APIService {
 

@@ -17,11 +17,21 @@ export const Home = () => {
 
   }, [location])
 
-  return (
-    <div className="App">
-      {user ? <UserCheck email={email} /> : <WithoutUser />}
-    </div>
-  )
+  if (user==null) {
+    return (
+      <div className="App">
+        <WithoutUser />
+      </div>
+    )
+  }
+
+  else {
+    return (
+      <div className="App">
+        <UserCheck email={email} />
+      </div>
+    )
+  }
 }
 
 const UserCheck = (props) => {
@@ -37,24 +47,29 @@ const UserCheck = (props) => {
     }))
   }, [props])
 
-  return (
-    <div className="App">
-      {staff.Team == 'Donor' ? <WithUser /> : <UserCheck2 staff = {staff} />}
-    </div>
-  )
-}
+  if (staff.Team == 'Donor') {
+    return (
+      <div className="App">
+        <WithUser />
+      </div>
+    )
+  }
 
-const UserCheck2 = (props) => {
-  const [staff, setStaff] = useState([])
+  else if (staff.Team == 'Finance') {
+    return (
+      <div className="App">
+        <WithUserTransaction />
+      </div>
+    )
+  }
 
-  useEffect(() => {
-    setStaff(props.staff)
-  }, [props])
+  else {
+    return (
+      <div className="App">
+        <WithoutUser />
+      </div>
+    )
+  }
 
-  return (
-    <div className="App">
-      {staff.Team == 'Finance' ? <WithUserTransaction /> : <WithoutUser />}
-    </div>
-  )
 }
 
