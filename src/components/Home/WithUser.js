@@ -37,7 +37,7 @@ function WithUser() {
     //   }
     // }
 
-    var mybutton = document.getElementById("myBtn");
+    // var mybutton = document.getElementById("myBtn");
     // window.onscroll = function() {scrollFunction()};
 
     return (

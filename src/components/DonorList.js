@@ -1,5 +1,5 @@
 import React from "react";
-import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
+import { useTable, useFilters, useGlobalFilter } from 'react-table'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 
@@ -7,27 +7,12 @@ import './Donors.css';
 // Define a default UI for filtering
 function GlobalFilter({
     preGlobalFilteredRows,
-    globalFilter,
-    setGlobalFilter,
 }) {
     const count = preGlobalFilteredRows.length
-    const [value, setValue] = React.useState(globalFilter)
-    const onChange = useAsyncDebounce(value => {
-        setGlobalFilter(value || undefined)
-    }, 200)
 
     return (
         <span>
-            Search:{' '}
-            <input
-                className="form-control"
-                value={value || ""}
-                onChange={e => {
-                    setValue(e.target.value);
-                    onChange(e.target.value);
-                }}
-                placeholder={`${count} records...`}
-            />
+            Found: {count} records
         </span>
     )
 }
@@ -35,8 +20,6 @@ function GlobalFilter({
 function DefaultColumnFilter({
     column: { filterValue, preFilteredRows, setFilter },
 }) {
-    const count = preFilteredRows.length
-
     return (
         <input
             className="form-control"

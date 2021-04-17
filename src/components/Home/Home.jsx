@@ -7,17 +7,17 @@ import APIService from '../../APIService';
 
 export const Home = () => {
   const location = useLocation()
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+  const user = JSON.parse(localStorage.getItem('profile')).result
   const [email, setEmail] = useState('')
   useEffect(() => {
-    const token = user?.token
-    setUser(JSON.parse(localStorage.getItem('profile')))
+    // const token = user?.token
+    // setUser(JSON.parse(localStorage.getItem('profile')))
     // setBranch('Finance') //Donor, Finance, CNF
-    setEmail(user?.result.email)
+    setEmail(user?.email)
 
-  }, [location])
+  }, [location,user])
 
-  if (user==null) {
+  if (user === null) {
     return (
       <div className="App">
         <WithoutUser />
@@ -40,14 +40,14 @@ const UserCheck = (props) => {
 
   useEffect(() => {
     getItems().then(data => data.forEach(data_item => {
-      if (props.email == data_item.Email) {
+      if (props.email === data_item.Email) {
         setStaff(data_item)
         localStorage.setItem('Team',JSON.stringify(data_item.Team))
       }
     }))
   }, [props])
 
-  if (staff.Team == 'Donor') {
+  if (staff.Team === 'Donor') {
     return (
       <div className="App">
         <WithUser />
@@ -55,7 +55,7 @@ const UserCheck = (props) => {
     )
   }
 
-  else if (staff.Team == 'Finance') {
+  else if (staff.Team === 'Finance') {
     return (
       <div className="App">
         <WithUserTransaction />

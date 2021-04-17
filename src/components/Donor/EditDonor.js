@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
 function EditDonor(props) {
 
     return (
         <div className="App">
-            <Form donor = {props.donor}/>
+            <Formx donor = {props.donor}/>
         </div>
     )
 }
@@ -14,7 +15,7 @@ function EditDonor(props) {
 export default EditDonor
 
 
-function Form(props) {
+function Formx(props) {
     const history = useHistory()
     const [PAN, setPAN] = useState('')
     const [Title, setTitle] = useState('')
@@ -29,7 +30,6 @@ function Form(props) {
     const [Nationality, setNationality] = useState('')
     const [Organisation, setOrganisation] = useState('')
     const [Status, setStatus] = useState('')
-    console.log(props.donor)
     // const history = useHistory()
 
     useEffect(() => {
@@ -48,29 +48,49 @@ function Form(props) {
         setStatus(props.donor.Status)
     }, [props.donor])
 
-    const updateDonor = () => {
-        APIService.UpdateDonor(props.donor.id, {
-            PAN,
-            Title,
-            First_Name,
-            Last_Name,
-            Current_Address,
-            Email,
-            Phone,
-            Birth_Date,
-            Recruitment_Source,
-            Recruitment_Type,
-            Nationality,
-            Organisation,
-            Status
-        })
-        alert("Donor Entry Updated");
-        history.push('/');
+    const yourChangeHandler = (event) => {
+        setNationality(event.target.value)
+    }
+
+    const yourChangeHandler2 = (event) => {
+        setTitle(event.target.value)
+    }
+
+    const [validated, setValidated] = useState(false);
+
+    const updateDonor = (event) => {
+        const form = event.currentTarget;
+        console.log(form)
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else {
+            APIService.UpdateDonor(props.donor.id, {
+                PAN,
+                Title,
+                First_Name,
+                Last_Name,
+                Current_Address,
+                Email,
+                Phone,
+                Birth_Date,
+                Recruitment_Source,
+                Recruitment_Type,
+                Nationality,
+                Organisation,
+                Status
+            })
+            alert("Donor Entry Updated");
+            history.push('/');
+        }
+        setValidated(true);
+        
     }
 
     const deleteBtn = () => {
         var donor_check = prompt("Please enter the First_Name of the Donor:", props.donor.First_Name);
-        if (donor_check == null || donor_check !=props.donor.First_Name || donor_check == "") {
+        if (donor_check === null || donor_check !==props.donor.First_Name || donor_check === "") {
             alert("Try Again, Donor Name miss match")
         } 
         else {
@@ -82,79 +102,263 @@ function Form(props) {
         }
 
     return (
-        <div className="mb-3">
-            <label htmlFor='PAN' className='form-label'>PAN</label>
-            <input type="text" className='form-control' id='PAN' placeholder = "Please Enter the PAN"
-            value={PAN} onChange={e => setPAN(e.target.value)}/>
+        <Container > {/*change the widht of the form (padding) */}
+            <Form noValidate validated={validated}>
+
+                <Form.Group as={Row} controlId="validationTitle">
+                    <Form.Label column sm={2}>Title <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            as='select'
+                            type="text"
+                            placeholder="Title"
+                            value={Title}
+                            onChange={yourChangeHandler2.bind(this)}>
+                            <option>Choose</option>
+                            <option>Mr</option>
+                            <option>Mrs</option>
+                            <option>Miss</option>
+                            <option>Ms</option>
+                            <option>Mx</option>
+                            <option>Dr</option>
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">Please enter the Title.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationFirst_Name">
+                    <Form.Label column sm={2}>First Name <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="First Name"
+                            value={First_Name}
+                            onChange={e => setFirst_Name(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter First Name.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
 
 
-            <label htmlFor='Title' className='form-label'>Title</label>
-            <input type="text" className='form-control' id='Title' placeholder = "Please Enter the Title"
-            value={Title} onChange={e => setTitle(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationLast_Name">
+                    <Form.Label column sm={2}>Last Name <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="Last Name"
+                            value={Last_Name}
+                            onChange={e => setLast_Name(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter Last Name.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationEmail">
+                    <Form.Label column sm={2}>Email <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="email"
+                            placeholder="Email"
+                            value={Email}
+                            onChange={e => setEmail(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Email.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationPhone">
+                    <Form.Label column sm={2}>Phone</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Phone"
+                            value={Phone}
+                            onChange={e => setPhone(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Phone.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationBirth_Date">
+                    <Form.Label column sm={2}>Birth Date</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="date"
+                            placeholder="Birth Date"
+                            value={Birth_Date}
+                            onChange={e => setBirth_Date(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Birth Date.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationAddress">
+                    <Form.Label column sm={2}>Current Address</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            as='textarea'
+                            type="text"
+                            row={5}
+                            placeholder="Current Address"
+                            value={Current_Address}
+                            onChange={e => setCurrent_Address(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Address.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
 
 
-            <label htmlFor='First_Name' className='form-label'>First Name</label>
-            <input type="text" className='form-control' id='First_Name' placeholder = "Please Enter the First Name"
-            value={First_Name} onChange={e => setFirst_Name(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationPAN">
+                    <Form.Label column sm={2}>PAN</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="PAN"
+                            value={PAN.toUpperCase()}
+                            onChange={e => setPAN(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the PAN.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Last_Name' className='form-label'>Last Name</label>
-            <input type="text" className='form-control' id='Last_Name' placeholder = "Please Enter the Last Name"
-            value={Last_Name} onChange={e => setLast_Name(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationRecruitment_Source">
+                    <Form.Label column sm={2}>Recruitment Source</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Recruitment Source"
+                            value={Recruitment_Source}
+                            onChange={e => setRecruitment_Source(e.target.value)}
 
-            <label htmlFor='Current_Address' className='form-label'>Current Address</label>
-            <input type="text" className='form-control' id='Current_Address' placeholder = "Please Enter the Current Address"
-            value={Current_Address} onChange={e => setCurrent_Address(e.target.value)}/>
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Recruitment Source.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
+                <br />
 
-            <label htmlFor='Email' className='form-label'>Email</label>
-            <input type="text" className='form-control' id='Email' placeholder = "Please Enter the Email"
-            value={Email} onChange={e => setEmail(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationRecruitment_Type">
+                    <Form.Label column sm={2}>Recruitment Type</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Recruitment Type"
+                            value={Recruitment_Type}
+                            onChange={e => setRecruitment_Type(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Recruitment Type.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Phone' className='form-label'>Phone</label>
-            <input type="text" className='form-control' id='Phone' placeholder = "Please Enter the Phone"
-            value={Phone} onChange={e => setPhone(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationNationality">
+                    <Form.Label column sm={2}>Nationality <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            as='select'
+                            type="text"
+                            placeholder="Nationality"
+                            value={Nationality}
+                            onChange={yourChangeHandler.bind(this)}>
+                            <option value="">Choose</option>
+                            <option value="Indian">Indian</option>
+                            <option value="FCRA">FCRA</option>
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">Please enter the Nationality.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Birth_Date' className='form-label'>Birth Date</label>
-            <input type="text" className='form-control' id='Birth_Date' placeholder = "Please Enter the Birth Date"
-            value={Birth_Date} onChange={e => setBirth_Date(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationOrganisation">
+                    <Form.Label column sm={2}>Organisation</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Organisation"
+                            value={Organisation}
+                            onChange={e => setOrganisation(e.target.value)}
 
-            <label htmlFor='Recruitment_Source' className='form-label'>Recruitment Source</label>
-            <input type="text" className='form-control' id='Recruitment_Source' placeholder = "Please Enter the Recruitment Source"
-            value={Recruitment_Source} onChange={e => setRecruitment_Source(e.target.value)}/>
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Organisation.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
+                <br />
 
-            <label htmlFor='Recruitment_Type' className='form-label'>Recruitment Type</label>
-            <input type="text" className='form-control' id='Recruitment_Type' placeholder = "Please Enter the Recruitment Type"
-            value={Recruitment_Type} onChange={e => setRecruitment_Type(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationStatus"> {/*need to convert into options on further review*/}
+                    <Form.Label column sm={2}>Status <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="Status"
+                            value={Status}
+                            onChange={e => setStatus(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Status.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Nationality' className='form-label'>Nationality</label>
-            <input type="text" className='form-control' id='Nationality' placeholder = "Please Enter the Nationality"
-            value={Nationality} onChange={e => setNationality(e.target.value)}/>
+                <br />
 
-
-            <label htmlFor='Organisation' className='form-label'>Organisation</label>
-            <input type="text" className='form-control' id='Organisation' placeholder = "Please Enter the Organisation"
-            value={Organisation} onChange={e => setOrganisation(e.target.value)}/>
-
-            <label htmlFor='Status' className='form-label'>Status</label>
-            <input type="text" className='form-control' id='Status' placeholder = "Please Enter the Status"
-            value={Status} onChange={e => setStatus(e.target.value)}/>  
-
-            <br/>
-
-            <div className = "row">   
-                <button onClick={updateDonor} className="btn btn-success">Update Donor</button>
-            <div className = "col">
-                <br/>
-            </div>
-                <button onClick = {deleteBtn} className = "btn btn-danger">Delete</button>
-          </div>
-        </div>
+                <Row>
+                    <Col sm={2}>
+                    </Col>
+                    <Col sm={4}>
+                    <Button block onClick={updateDonor} className="btn btn-success">Update Donor</Button>
+                    </Col>
+                    <Col sm={1}>
+                    </Col>
+                    <Col sm={4}>
+                    <Button block onClick={deleteBtn} className="btn btn-danger">Delete Donor</Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Container>
     )
 }

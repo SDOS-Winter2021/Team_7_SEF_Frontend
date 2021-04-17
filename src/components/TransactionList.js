@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
+import { useTable, useFilters, useGlobalFilter } from 'react-table'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 import APIService from '../APIService';
@@ -13,27 +13,12 @@ import im2 from '../images/logo.png';
 // Define a default UI for filtering
 function GlobalFilter({
     preGlobalFilteredRows,
-    globalFilter,
-    setGlobalFilter,
 }) {
     const count = preGlobalFilteredRows.length
-    const [value, setValue] = React.useState(globalFilter)
-    const onChange = useAsyncDebounce(value => {
-        setGlobalFilter(value || undefined)
-    }, 200)
 
     return (
         <span>
-            Search:{' '}
-            <input
-                className="form-control"
-                value={value || ""}
-                onChange={e => {
-                    setValue(e.target.value);
-                    onChange(e.target.value);
-                }}
-                placeholder={`${count} records...`}
-            />
+            Found: {count} records
         </span>
     )
 }
@@ -41,7 +26,6 @@ function GlobalFilter({
 function DefaultColumnFilter({
     column: { filterValue, preFilteredRows, setFilter },
 }) {
-    const count = preFilteredRows.length
 
     return (
         <input
@@ -91,8 +75,8 @@ function Table({ columns, data }) {
                 globalFilter={state.globalFilter}
                 setGlobalFilter={setGlobalFilter}
             />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <table className="table table-dark" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -131,12 +115,12 @@ function Table({ columns, data }) {
     )
 }
 
-function editBtn(props,transaction,aproval,donor) {
+function editBtn(props, transaction, aproval, donor) {
 
     const editDonorBtn = (transaction) => {
         props.editBtn(transaction)
     }
-    const file_name = "transaction_" + donor.First_Name + "_" + transaction.id + ".pdf";
+    const file_name = "transaction_" + donor.First_Name + "_" + transaction.Receipt_Number + ".pdf";
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -146,96 +130,97 @@ function editBtn(props,transaction,aproval,donor) {
     const numWords = require('num-words')
     const amountInWords = numWords(transaction.Amount)
 
-    return ( <div> 
-            {aproval ? 
+    return (<div>
+        {aproval ?
             <div>
-                {transaction && <PDFDownloadLink document={<MyDoc transaction = {transaction} donor = {donor} date={date_today} amountInWords={amountInWords}/>} fileName={file_name}>
-                {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className = "btn btn-primary" >PDF</button>)}
-              </PDFDownloadLink> }
-              </div>: 
-                <button className = "btn btn-primary" onClick  = {() => editDonorBtn(transaction)}>Edit</button> }
-        </div>
+                {transaction && <PDFDownloadLink document={<MyDoc transaction={transaction} donor={donor} date={date_today} amountInWords={amountInWords} />} fileName={file_name}>
+                    {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className="btn btn-primary" >PDF</button>)}
+                </PDFDownloadLink>}
+            </div> :
+            <button className="btn btn-primary" onClick={() => editDonorBtn(transaction)}>Edit</button>}
+    </div>
     )
-    
+
 }
 
-function approveBtn(props,transaction,approval,Poc,Donor,Amount,Currency,Date) {
+function approveBtn(props, transaction, approval, Receipt_Number, Donor, Currency, Amount, Date, Mode_of_Payment) {
     const Is_Approved = true;
     const approveDonorBtn = (transaction) => {
         APIService.UpdateTransaction(transaction.id, {
-            Poc,
+            Receipt_Number,
             Donor,
-            Amount,
             Currency,
+            Amount,
             Date,
+            Mode_of_Payment,
             Is_Approved
         }).then(resp => console.log(resp))
         props.approveBtn();
     }
-    return ( <div> 
-            {approval ? 
-                <div style={{color: '#66FF99'}}>Approved</div> : 
-                <div>
-                <button className = "btn btn-primary" onClick  = {() => approveDonorBtn(transaction)}>Approve</button> 
-                </div>}
-        </div>
+    return (<div>
+        {approval ?
+            <div style={{ color: '#66FF99' }}>Approved</div> :
+            <div>
+                <button className="btn btn-primary" onClick={() => approveDonorBtn(transaction)}>Approve</button>
+            </div>}
+    </div>
     )
-    
+
 }
 
 const styles = StyleSheet.create({
     page_style: {
         margin: 10
     },
-    section: { 
-        padding: 10, 
+    section: {
+        padding: 10,
         margin: 10,
         flexGrow: 1
     },
     image: {
-      width: "30%",
-      padding: 2
+        width: "30%",
+        padding: 2
     },
     text: {
-      fontSize: 11,
-      textAlign: 'center'
+        fontSize: 11,
+        textAlign: 'center'
     },
     text_right: {
-      fontSize: 11,
-      textAlign: 'left'
+        fontSize: 11,
+        textAlign: 'left'
     }
-  });
+});
 
 
 const MyDoc = (props) => (
     <Document>
-      <Page size="LETTER" orientation="landscape" style={styles.page_style} wrap>
-      <View>
-        <Image style={styles.image} src={im2} />
-    </View>
+        <Page size="LETTER" orientation="landscape" style={styles.page_style} wrap>
+            <View>
+                <Image style={styles.image} src={im2} />
+            </View>
             <View style={styles.section}>
                 <Text style={styles.text_right}>
                     Donations are exempt under Section 80G of the IT Act 1961:{"\n"}
                     No. {props.transaction.id}{"\n"}
-                    Pan No: {props.donor.id} {/*convert to pan number when defined*/}
+                    Pan No: {props.donor.PAN} {/*convert to pan number when defined*/}
                 </Text>
             </View>
             <View>
                 <Text style={styles.text_right}>
                     Receipt Date: {props.date}{"\n"}
-                    Receipt No: {props.transaction.id}{"\n"}
+                    Receipt No: {props.transaction.Receipt_Number}{"\n"}
                     Donation Date: {props.transaction.Date}{"\n"}
                     Received with thanks from: {props.donor.First_Name}{"\n"}
                     Address/Email of Donor: {props.donor.Email}{"\n"}
-                    Pan of Donor: {props.donor.id}{"\n"}
+                    Pan of Donor: {props.donor.PAN}{"\n"}
                     Sum of Rupees (in words): {props.amountInWords}{"\n"}
-                    By Cash/Online/Cheque*: {"\n"}
+                    By Cash/Online/Cheque*: {props.transaction.Mode_of_Payment}{"\n"}
                 </Text>
             </View>
-            
+
             <View style={styles.section} wrap={false}>
                 <Text style={styles.text_right}>
-                For Simple Education Foundation
+                    For Simple Education Foundation
                 </Text>
                 <Image style={styles.image} src={im1} />
             </View>
@@ -244,7 +229,7 @@ const MyDoc = (props) => (
                     borderBottomColor: 'black',
                     borderBottomWidth: 1,
                 }}
-                />
+            />
             <View style={styles.section}>
                 <Text style={styles.text}>
                     H-1, Bandhu Vihar, CGHS, Sector – 10, Plot No. – 11, Dwarka, New Delhi – 110075{"\n"}
@@ -253,16 +238,16 @@ const MyDoc = (props) => (
             </View>
         </Page>
     </Document>
-  )
+)
 
-function getDonor(transaction,donors){
+function getDonor(transaction, donors) {
     var d = null;
     donors.forEach(donor => {
-        if (donor.id == transaction) {
+        if (donor.id === transaction) {
             d = donor;
         }
     });
-    if (d == null) {
+    if (d === null) {
         console.log(transaction)
     }
     return d;
@@ -274,43 +259,48 @@ function TransactionList(props) {
     const [donors, setDonors] = useState([]);
     useEffect(() => {
         getItems().then(data => setDonors(data));
-      }, []);
+    }, []);
 
     const transactions = props.transactions;
     const newData = [];
     transactions.forEach(transaction => {
         newData.push({
-            Poc: transaction.Poc,
-            Donor: getDonor(transaction.Donor,donors).First_Name,
+            Receipt_Number: transaction.Receipt_Number,
+            Donor: getDonor(transaction.Donor, donors).PAN,
+            Currency: transaction.Currency, 
             Amount: transaction.Amount,
-            Currency: transaction.Currency,
             Date: transaction.Date,
-            Approve_Transaction: approveBtn(props,transaction,transaction.Is_Approved,transaction.Poc,transaction.Donor,transaction.Amount,transaction.Currency,transaction.Date),
-            Edit_Transaction: editBtn(props,transaction,transaction.Is_Approved,getDonor(transaction.Donor,donors))
+            Mode_of_Payment: transaction.Mode_of_Payment,
+            Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment),
+            Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, getDonor(transaction.Donor, donors))
         });
     });
 
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Poc',
-                accessor: 'Poc',
+                Header: 'Receipt Number',
+                accessor: 'Receipt_Number',
             },
             {
-                Header: 'Donor',
+                Header: 'Donor PAN',
                 accessor: 'Donor',
-            },
-            {
-                Header: 'Amount',
-                accessor: 'Amount',
             },
             {
                 Header: 'Currency',
                 accessor: 'Currency',
             },
             {
+                Header: 'Amount',
+                accessor: 'Amount',
+            },
+            {
                 Header: 'Date',
                 accessor: 'Date',
+            },
+            {
+                Header: 'Mode of Payment',
+                accessor: 'Mode_of_Payment',
             },
             {
                 Header: '',
@@ -329,8 +319,8 @@ function TransactionList(props) {
     const data = newData
 
     return (
-        <div className="Donors">  
-        <Table columns={columns} data={data} />
+        <div className="Donors">
+            <Table columns={columns} data={data} />
         </div>
     )
 }
