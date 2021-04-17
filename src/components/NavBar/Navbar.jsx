@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import useStyles from './styles'
-import MenuIcon from '@material-ui/icons/Menu'
+// import MenuIcon from '@material-ui/icons/Menu'
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import { Avatar, Typography, IconButton, Toolbar, AppBar, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
@@ -24,7 +24,7 @@ export const Navbar = () => {
     }
 
     useEffect(() => {
-        const token = user?.token
+        // const token = user?.token
 
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])

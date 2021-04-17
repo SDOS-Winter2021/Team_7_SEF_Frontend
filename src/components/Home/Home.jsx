@@ -7,21 +7,31 @@ import APIService from '../../APIService';
 
 export const Home = () => {
   const location = useLocation()
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+  const user = JSON.parse(localStorage.getItem('profile')).result
   const [email, setEmail] = useState('')
   useEffect(() => {
-    const token = user?.token
-    setUser(JSON.parse(localStorage.getItem('profile')))
+    // const token = user?.token
+    // setUser(JSON.parse(localStorage.getItem('profile')))
     // setBranch('Finance') //Donor, Finance, CNF
-    setEmail(user?.result.email)
+    setEmail(user?.email)
 
-  }, [location])
+  }, [location,user])
 
-  return (
-    <div className="App">
-      {user ? <UserCheck email={email} /> : <WithoutUser />}
-    </div>
-  )
+  if (user === null) {
+    return (
+      <div className="App">
+        <WithoutUser />
+      </div>
+    )
+  }
+
+  else {
+    return (
+      <div className="App">
+        <UserCheck email={email} />
+      </div>
+    )
+  }
 }
 
 const UserCheck = (props) => {
@@ -30,25 +40,36 @@ const UserCheck = (props) => {
 
   useEffect(() => {
     getItems().then(data => data.forEach(data_item => {
-      if (props.email == data_item.Email) {
+      if (props.email === data_item.Email) {
         setStaff(data_item)
         localStorage.setItem('Team',JSON.stringify(data_item.Team))
       }
     }))
   }, [props])
 
-  return (
-    <div className="App">
-      {staff.Team == 'Donor' ? <WithUser /> : <WithUserTransaction />}
-    </div>
-  )
+  if (staff.Team === 'Donor') {
+    return (
+      <div className="App">
+        <WithUser />
+      </div>
+    )
+  }
+
+  else if (staff.Team === 'Finance') {
+    return (
+      <div className="App">
+        <WithUserTransaction />
+      </div>
+    )
+  }
+
+  else {
+    return (
+      <div className="App">
+        <WithoutUser />
+      </div>
+    )
+  }
+
 }
 
-
-
-// getItems().then(data => setStaffMembers(data));
-// staffMembers.forEach(staffMember => {
-//   if (props.user.Email == staffMember.Email) {
-//     setStaff(staffMember)
-//   }
-// })

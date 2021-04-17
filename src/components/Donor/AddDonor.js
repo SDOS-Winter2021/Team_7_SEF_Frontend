@@ -1,12 +1,13 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
 function AddDonor() {
 
     return (
         <div className="App">
-            <Form/>
+            <Formx />
         </div>
     )
 }
@@ -14,199 +15,344 @@ function AddDonor() {
 export default AddDonor
 
 
-function Form() {
+function Formx() {
     const history = useHistory()
+    const [PAN, setPAN] = useState('')
     const [Title, setTitle] = useState('')
-    const [Family_Name, setFamily_Name] = useState('')
     const [First_Name, setFirst_Name] = useState('')
+    const [Last_Name, setLast_Name] = useState('')
     const [Current_Address, setCurrent_Address] = useState('')
     const [Email, setEmail] = useState('')
     const [Phone, setPhone] = useState('')
-    const [Birth_Date, setBirth_Date] = useState('')
-    const [First_Donation_Date, setFirst_Donation_Date] = useState('')
+    const [Birth_Date, setBirth_Date] = useState(null)
     const [Recruitment_Source, setRecruitment_Source] = useState('')
-    const [Recruitment_Reason, setRecruitment_Reason] = useState('')
-    const [Number_of_Donations, setNumber_of_Donations] = useState('')
-    const [Cumulative_Donation_Amount, setCumulative_Donation_Amount] = useState('')
-    const [Last_Donation_Amount, setLast_Donation_Amount] = useState('')
-    const [Date_of_Last_Donation, setDate_of_Last_Donation] = useState('')
-    const [Preferred_Communication, setPreferred_Communication] = useState('')
-    const [Date_of_Last_Communication, setDate_of_Last_Communication] = useState('')
-    const [Last_communication, setLast_communication] = useState('')
-    const [SEF_POC, setSEF_POC] = useState('')
-    const [Notes, setNotes] = useState('')
-    const [Email_Communication_Rate, setEmail_Communication_Rate] = useState('')
-    // const history = useHistory()
+    const [Recruitment_Type, setRecruitment_Type] = useState('')
+    const [Nationality, setNationality] = useState('')
+    const [Organisation, setOrganisation] = useState('')
+    const [Status, setStatus] = useState('')
 
     useEffect(() => {
+        setPAN('')
         setTitle('')
-        setFamily_Name('')
         setFirst_Name('')
+        setLast_Name('')
         setCurrent_Address('')
         setEmail('')
         setPhone('')
-        setBirth_Date('')
-        setFirst_Donation_Date('')
+        setBirth_Date(null)
         setRecruitment_Source('')
-        setRecruitment_Reason('')
-        setNumber_of_Donations('')
-        setCumulative_Donation_Amount('')
-        setLast_Donation_Amount('')
-        setDate_of_Last_Donation('')
-        setPreferred_Communication('')
-        setDate_of_Last_Communication('')
-        setLast_communication('')
-        setSEF_POC('')
-        setNotes('')
-        setEmail_Communication_Rate('')
+        setRecruitment_Type('')
+        setNationality('')
+        setOrganisation('')
+        setStatus('')
     }, [])
 
-    const addDonor = () => {
-        APIService.AddDonor({
-            Title,
-            Family_Name,
-            First_Name,
-            Current_Address,
-            Email,
-            Phone,
-            Birth_Date,
-            First_Donation_Date,
-            Recruitment_Source,
-            Recruitment_Reason,
-            Number_of_Donations,
-            Cumulative_Donation_Amount,
-            Last_Donation_Amount,
-            Date_of_Last_Donation,
-            Preferred_Communication,
-            Date_of_Last_Communication,
-            Last_communication,
-            SEF_POC,
-            Notes,
-            Email_Communication_Rate
-        })
-        .then(resp => {
-            if (check(resp)) {
-                alert("New Donor Added")
-                history.push('/')
-            }
-            else{
-                alert("Error in Input")
-            }
+    const yourChangeHandler = (event) => {
+        setNationality(event.target.value)
+    }
+
+    const yourChangeHandler2 = (event) => {
+        setTitle(event.target.value)
+    }
+
+    const [validated, setValidated] = useState(false);
+
+    const addDonor = (event) => {
+        const form = event.currentTarget;
+        console.log(form)
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-        )
-        
+        else {
+            APIService.AddDonor({
+                PAN,
+                Title,
+                First_Name,
+                Last_Name,
+                Current_Address,
+                Email,
+                Phone,
+                Birth_Date,
+                Recruitment_Source,
+                Recruitment_Type,
+                Nationality,
+                Organisation,
+                Status
+            })
+                .then(resp => {
+                    if (check(resp)) {
+                        alert("New Donor Added");
+                        history.push('/');
+                    }
+                }
+                )
+        }
+        setValidated(true);
     }
 
     return (
-        <div className="mb-3">
-            <label htmlFor='Title' className='form-label'>Title</label>
-            <input type="text" className='form-control' id='Title' placeholder = "Please Enter the Title"
-            value={Title} onChange={e => setTitle(e.target.value)}/>
+        <Container > {/*change the widht of the form (padding) */}
+            <Form noValidate validated={validated}>
+
+                <Form.Group as={Row} controlId="validationTitle">
+                    <Form.Label column sm={2}>Title <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            as='select'
+                            type="text"
+                            placeholder="Title"
+                            value={Title}
+                            onChange={yourChangeHandler2.bind(this)}>
+                            <option>Choose</option>
+                            <option>Mr</option>
+                            <option>Mrs</option>
+                            <option>Miss</option>
+                            <option>Ms</option>
+                            <option>Mx</option>
+                            <option>Dr</option>
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">Please enter the Title.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationFirst_Name">
+                    <Form.Label column sm={2}>First Name <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="First Name"
+                            value={First_Name}
+                            onChange={e => setFirst_Name(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter First Name.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
 
 
-            <label htmlFor='Family_Name' className='form-label'>Family Name</label>
-            <input type="text" className='form-control' id='Family_Name' placeholder = "Please Enter the Family Name"
-            value={Family_Name} onChange={e => setFamily_Name(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationLast_Name">
+                    <Form.Label column sm={2}>Last Name <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="Last Name"
+                            value={Last_Name}
+                            onChange={e => setLast_Name(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter Last Name.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationEmail">
+                    <Form.Label column sm={2}>Email <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="email"
+                            placeholder="Email"
+                            value={Email}
+                            onChange={e => setEmail(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Email.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationPhone">
+                    <Form.Label column sm={2}>Phone</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Phone"
+                            value={Phone}
+                            onChange={e => setPhone(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Phone.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationBirth_Date">
+                    <Form.Label column sm={2}>Birth Date</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="date"
+                            placeholder="Birth Date"
+                            value={Birth_Date}
+                            onChange={e => setBirth_Date(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Birth Date.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
+
+                <Form.Group as={Row} controlId="validationAddress">
+                    <Form.Label column sm={2}>Current Address</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            as='textarea'
+                            type="text"
+                            row={5}
+                            placeholder="Current Address"
+                            value={Current_Address}
+                            onChange={e => setCurrent_Address(e.target.value)}
+
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Address.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+
+                <br />
 
 
-            <label htmlFor='First_Name' className='form-label'>First Name</label>
-            <input type="text" className='form-control' id='First_Name' placeholder = "Please Enter the First Name"
-            value={First_Name} onChange={e => setFirst_Name(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationPAN">
+                    <Form.Label column sm={2}>PAN</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="PAN"
+                            value={PAN.toUpperCase()}
+                            onChange={e => setPAN(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the PAN.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Current_Address' className='form-label'>Current Address</label>
-            <input type="text" className='form-control' id='Current_Address' placeholder = "Please Enter the Current Address"
-            value={Current_Address} onChange={e => setCurrent_Address(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationRecruitment_Source">
+                    <Form.Label column sm={2}>Recruitment Source</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Recruitment Source"
+                            value={Recruitment_Source}
+                            onChange={e => setRecruitment_Source(e.target.value)}
 
-            <label htmlFor='Email' className='form-label'>Email</label>
-            <input type="text" className='form-control' id='Email' placeholder = "Please Enter the Email"
-            value={Email} onChange={e => setEmail(e.target.value)}/>
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Recruitment Source.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
+                <br />
 
-            <label htmlFor='Phone' className='form-label'>Phone</label>
-            <input type="text" className='form-control' id='Phone' placeholder = "Please Enter the Phone"
-            value={Phone} onChange={e => setPhone(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationRecruitment_Type">
+                    <Form.Label column sm={2}>Recruitment Type</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Recruitment Type"
+                            value={Recruitment_Type}
+                            onChange={e => setRecruitment_Type(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Recruitment Type.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Birth_Date' className='form-label'>Birth Date</label>
-            <input type="text" className='form-control' id='Birth_Date' placeholder = "Please Enter the Birth Date"
-            value={Birth_Date} onChange={e => setBirth_Date(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationNationality">
+                    <Form.Label column sm={2}>Nationality <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            as='select'
+                            type="text"
+                            placeholder="Nationality"
+                            value={Nationality}
+                            onChange={yourChangeHandler.bind(this)}>
+                            <option value="">Choose</option>
+                            <option value="Indian">Indian</option>
+                            <option value="FCRA">FCRA</option>
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">Please enter the Nationality.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='First_Donation_Date' className='form-label'>First Donation Date</label>
-            <input type="text" className='form-control' id='First_Donation_Date' placeholder = "Please Enter the First Donation Date"
-            value={First_Donation_Date} onChange={e => setFirst_Donation_Date(e.target.value)}/>
+                <br />
 
+                <Form.Group as={Row} controlId="validationOrganisation">
+                    <Form.Label column sm={2}>Organisation</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            type="text"
+                            placeholder="Organisation"
+                            value={Organisation}
+                            onChange={e => setOrganisation(e.target.value)}
 
-            <label htmlFor='Recruitment_Source' className='form-label'>Recruitment Source</label>
-            <input type="text" className='form-control' id='Recruitment_Source' placeholder = "Please Enter the Recruitment Source"
-            value={Recruitment_Source} onChange={e => setRecruitment_Source(e.target.value)}/>
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Organisation.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
+                <br />
 
-            <label htmlFor='Recruitment_Reason' className='form-label'>Recruitment Reason</label>
-            <input type="text" className='form-control' id='Recruitment_Reason' placeholder = "Please Enter the Recruitment Reason"
-            value={Recruitment_Reason} onChange={e => setRecruitment_Reason(e.target.value)}/>
+                <Form.Group as={Row} controlId="validationStatus"> {/*need to convert into options on further review*/}
+                    <Form.Label column sm={2}>Status <span style={{color:'red'}}>*</span></Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="Status"
+                            value={Status}
+                            onChange={e => setStatus(e.target.value)}
 
+                        />
+                        <Form.Control.Feedback type="invalid">Please enter the Status.</Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
 
-            <label htmlFor='Number_of_Donations' className='form-label'>Number of Donations</label>
-            <input type="text" className='form-control' id='Number_of_Donations' placeholder = "Please Enter the Number of Donations"
-            value={Number_of_Donations} onChange={e => setNumber_of_Donations(e.target.value)}/>
+                <br />
 
-
-            <label htmlFor='Cumulative_Donation_Amount' className='form-label'>Cumulative Donation Amount</label>
-            <input type="text" className='form-control' id='Cumulative_Donation_Amount' placeholder = "Please Enter the Cumulative Donation Amount"
-            value={Cumulative_Donation_Amount} onChange={e => setCumulative_Donation_Amount(e.target.value)}/>
-
-
-            <label htmlFor='Last_Donation_Amount' className='form-label'>Last Donation Amount</label>
-            <input type="text" className='form-control' id='Last_Donation_Amount' placeholder = "Please Enter the Last Donation Amount"
-            value={Last_Donation_Amount} onChange={e => setLast_Donation_Amount(e.target.value)}/>
-
-
-            <label htmlFor='Date_of_Last_Donation' className='form-label'>Date of Last Donation</label>
-            <input type="text" className='form-control' id='Date_of_Last_Donation' placeholder = "Please Enter the Date of Last Donation"
-            value={Date_of_Last_Donation} onChange={e => setDate_of_Last_Donation(e.target.value)}/>
-
-
-            <label htmlFor='Preferred_Communication' className='form-label'>Preferred Communication</label>
-            <input type="text" className='form-control' id='Preferred_Communication' placeholder = "Please Enter the Preferred Communication"
-            value={Preferred_Communication} onChange={e => setPreferred_Communication(e.target.value)}/>
-
-
-            <label htmlFor='Date_of_Last_Communication' className='form-label'>Date of Last Communication</label>
-            <input type="text" className='form-control' id='Date_of_Last_Communication' placeholder = "Please Enter the Date of Last Communication"
-            value={Date_of_Last_Communication} onChange={e => setDate_of_Last_Communication(e.target.value)}/>
-
-
-            <label htmlFor='Last_communication' className='form-label'>Last communication</label>
-            <input type="text" className='form-control' id='Last_communication' placeholder = "Please Enter the Last communication"
-            value={Last_communication} onChange={e => setLast_communication(e.target.value)}/>
-
-
-            <label htmlFor='SEF_POC' className='form-label'>SEF POC</label>
-            <input type="text" className='form-control' id='SEF_POC' placeholder = "Please Enter the SEF POC"
-            value={SEF_POC} onChange={e => setSEF_POC(e.target.value)}/>
-
-
-            <label htmlFor='Notes' className='form-label'>Notes</label>
-            <input type="text" className='form-control' id='Notes' placeholder = "Please Enter the Notes"
-            value={Notes} onChange={e => setNotes(e.target.value)}/>
-
-
-            <label htmlFor='Email_Communication_Rate' className='form-label'>Email Communication Rate</label>
-            <input type="text" className='form-control' id='Email_Communication_Rate' placeholder = "Please Enter the Email Communication Rate"
-            value={Email_Communication_Rate} onChange={e => setEmail_Communication_Rate(e.target.value)}/>
-
-            <br/>
-            <button onClick={addDonor} className="btn btn-success">Add Donor</button>
-        </div>
+                <Row className="md-center">
+                    <Col sm={4}>
+                    </Col>
+                    <Col sm={4}>
+                        <Button block onClick={addDonor} className="btn btn-success">Add Donor</Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Container>
     )
 }
 
-function check(resp){
-    if (resp.Birth_Date == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Cumulative_Donation_Amount == "A valid integer is required." || resp.Current_Address == "This field may not be blank." || resp.Date_of_Last_Communication == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Date_of_Last_Donation == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.Email == "This field may not be blank." || resp.Email_Communication_Rate == "A valid integer is required." || resp.Family_Name == "This field may not be blank." || resp.First_Donation_Date == "Date has wrong format. Use one of these formats instead: YYYY-MM-DD." || resp.First_Name == "This field may not be blank." || resp.Last_Donation_Amount == "This field may not be blank." || resp.Last_communication == "This field may not be blank." || resp.Notes == "This field may not be blank." || resp.Number_of_Donations == "A valid integer is required." || resp.Phone == "A valid integer is required." || resp.Preferred_Communication == "This field may not be blank." || resp.Recruitment_Reason == "This field may not be blank." || resp.Recruitment_Source == "This field may not be blank." || resp.SEF_POC == "This field may not be blank." || resp.Title == "This field may not be blank.") {
+function check(resp) {
+    if (resp.id === undefined) {
         return false;
     }
-    return true;
+    else {
+        return true;
+    }
 }

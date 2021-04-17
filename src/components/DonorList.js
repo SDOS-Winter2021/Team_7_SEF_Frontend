@@ -1,5 +1,5 @@
 import React from "react";
-import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
+import { useTable, useFilters, useGlobalFilter } from 'react-table'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 
@@ -7,27 +7,12 @@ import './Donors.css';
 // Define a default UI for filtering
 function GlobalFilter({
     preGlobalFilteredRows,
-    globalFilter,
-    setGlobalFilter,
 }) {
     const count = preGlobalFilteredRows.length
-    const [value, setValue] = React.useState(globalFilter)
-    const onChange = useAsyncDebounce(value => {
-        setGlobalFilter(value || undefined)
-    }, 200)
 
     return (
         <span>
-            Search:{' '}
-            <input
-                className="form-control"
-                value={value || ""}
-                onChange={e => {
-                    setValue(e.target.value);
-                    onChange(e.target.value);
-                }}
-                placeholder={`${count} records...`}
-            />
+            Found: {count} records
         </span>
     )
 }
@@ -35,8 +20,6 @@ function GlobalFilter({
 function DefaultColumnFilter({
     column: { filterValue, preFilteredRows, setFilter },
 }) {
-    const count = preFilteredRows.length
-
     return (
         <input
             className="form-control"
@@ -144,26 +127,19 @@ function DonorList(props) {
     const newData = [];
     donors.forEach(donor => {
         newData.push({
-            Title: donor.Title,
-            Family_Name: donor.Family_Name,
-            First_Name: donor.First_Name,
-            Current_Address: donor.Current_Address,
-            Email: donor.Email,
-            Phone: donor.Phone,
-            Birth_Date: donor.Birth_Date,
-            First_Donation_Date: donor.First_Donation_Date,
-            Recruitment_Source: donor.Recruitment_Source,
-            Recruitment_Reason: donor.Recruitment_Reason,
-            Number_of_Donations: donor.Number_of_Donations,
-            Cumulative_Donation_Amount: donor.Cumulative_Donation_Amount,
-            Last_Donation_Amount: donor.Last_Donation_Amount,
-            Date_of_Last_Donation: donor.Date_of_Last_Donation,
-            Preferred_Communication: donor.Preferred_Communication,
-            Date_of_Last_Communication: donor.Date_of_Last_Communication,
-            Last_communication: donor.Last_communication,
-            SEF_POC: donor.SEF_POC,
-            Notes: donor.Notes,
-            Email_Communication_Rate: donor.Email_Communication_Rate,
+            PAN:donor.PAN,
+            Title:donor.Title,
+            First_Name:donor.First_Name,
+            Last_Name:donor.Last_Name,
+            Current_Address:donor.Current_Address,
+            Email:donor.Email,
+            Phone:donor.Phone,
+            Birth_Date:donor.Birth_Date,
+            Recruitment_Source:donor.Recruitment_Source,
+            Recruitment_Type:donor.Recruitment_Type,
+            Nationality:donor.Nationality,
+            Organisation:donor.Organisation,
+            Status:donor.Status,
             Update_Donor: editBtn(props,donor)
         });
     });
@@ -171,16 +147,16 @@ function DonorList(props) {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Title',
-                accessor: 'Title',
-            },
-            {
-                Header: 'Family Name',
-                accessor: 'Family_Name',
+                Header: 'PAN',
+                accessor: 'PAN',
             },
             {
                 Header: 'First Name',
                 accessor: 'First_Name',
+            },
+            {
+                Header: 'Last Name',
+                accessor: 'Last_Name',
             },
             {
                 Header: 'Current Address',
@@ -199,56 +175,24 @@ function DonorList(props) {
                 accessor: 'Birth_Date',
             },
             {
-                Header: 'First Donation Date',
-                accessor: 'First_Donation_Date',
-            },
-            {
                 Header: 'Recruitment Source',
                 accessor: 'Recruitment_Source',
             },
             {
-                Header: 'Recruitment Reason',
-                accessor: 'Recruitment_Reason',
+                Header: 'Recruitment Type',
+                accessor: 'Recruitment_Type',
             },
             {
-                Header: 'Number of Donations',
-                accessor: 'Number_of_Donations',
+                Header: 'Nationality',
+                accessor: 'Nationality',
             },
             {
-                Header: 'Cumulative Donation Amount',
-                accessor: 'Cumulative_Donation_Amount',
+                Header: 'Organisation',
+                accessor: 'Organisation',
             },
             {
-                Header: 'Last Donation Amount',
-                accessor: 'Last_Donation_Amount',
-            },
-            {
-                Header: 'Date of Last Donation',
-                accessor: 'Date_of_Last_Donation',
-            },
-            {
-                Header: 'Preferred Communication',
-                accessor: 'Preferred_Communication',
-            },
-            {
-                Header: 'Date of Last Communication',
-                accessor: 'Date_of_Last_Communication',
-            },
-            {
-                Header: 'Last communication',
-                accessor: 'Last_communication',
-            },
-            {
-                Header: 'SEF POC',
-                accessor: 'SEF_POC',
-            },
-            {
-                Header: 'Notes',
-                accessor: 'Notes',
-            },
-            {
-                Header: 'Email Communication Rate',
-                accessor: 'Email_Communication_Rate',
+                Header: 'Status',
+                accessor: 'Status',
             },
             {
                 Header: '',

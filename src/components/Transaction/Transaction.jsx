@@ -9,42 +9,60 @@ export const Transaction = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const [transaction, setTransaction] = useState(JSON.parse(localStorage.getItem('curr_transaction')))
     useEffect(() => {
-        const token = user?.token
-        const token2 = transaction?.token
+        // const token = user?.token
+        // const token2 = transaction?.token
         setUser(JSON.parse(localStorage.getItem('profile')))
         setTransaction(JSON.parse(localStorage.getItem('curr_transaction')))
     }, [location])
-  
-    return (
+
+    if (user === null) {
+      return (
         <div className="App">
-          {user ? <TeamCheck transaction = {transaction} /> : <WithoutUser/>}
+          <WithoutUser/>
         </div>
-    )
+      )
+    }
+
+    else {
+      return (
+        <div className="App">
+          <TeamCheck transaction = {transaction} />
+        </div>
+      )
+    }
   }
 
 
 const TeamCheck = (props) => {
-  const [transaction, setTransaction] = useState(props.transaction)
+  const [transaction, setTransaction] = useState([])
   const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
   useEffect(() => {
     setTransaction(props.transaction)
     setTeam(JSON.parse(localStorage.getItem('Team')))
-  }, [])
-  return (
-      <div className="App">
-        {team != 'Donor' ? <TransactionCheck transaction = {transaction} /> : <WithoutUser/> }
-      </div>
-  )
-}
+  }, [props])
 
-const TransactionCheck = (props) => {
-    const [transaction, setTransaction] = useState([])
-    useEffect(() => {
-        setTransaction(props.transaction)
-    }, [])
-    return (
+  if (team !== 'Donor') {
+    if (transaction === null) {
+      return (
         <div className="App">
-          {transaction ? <EditTransaction transaction={transaction}/> : <AddTransaction/> }
+          <AddTransaction/>
         </div>
     )
+    }
+    else{
+      return (
+        <div className="App">
+          <EditTransaction transaction={transaction}/>
+        </div>
+    )
+    }
+  }
+
+  else{
+    return (
+      <div className="App">
+        <WithoutUser/>
+      </div>
+    )
+  }
 }

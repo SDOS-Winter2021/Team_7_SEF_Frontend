@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
+import { Avatar, Button, Paper, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './styles'
 import { Icon } from './Icon'
@@ -7,8 +7,8 @@ import { GoogleLogin } from 'react-google-login'
 import { useDispatch } from 'react-redux'
 import { AUTH } from '../../constants/actionTypes'
 import { useHistory } from 'react-router-dom'
-import { signIn, signUp } from '../../actions/auth'
-import { LOGOUT } from '../../constants/actionTypes'
+import { signIn } from '../../actions/auth'
+// import { LOGOUT } from '../../constants/actionTypes'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
@@ -16,17 +16,11 @@ export const Auth = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const history = useHistory()
-    const [isSignUp, setIsSignUp] = useState(false)
-    const [form, setForm] = useState(initialState)
+    const form = useState(initialState)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        if (isSignUp) {
-            dispatch(signUp(form, history))
-        } else {
-            dispatch(signIn(form, history))
-        }
+        dispatch(signIn(form, history))
     }
 
     const googleSuccess = async (res) => {

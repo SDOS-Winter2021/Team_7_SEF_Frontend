@@ -5,8 +5,6 @@ import APIService from '../../APIService';
 
 function WithUser() {
 
-    // const fetchURL = 'http://127.0.0.1:8000/api/donor/';
-    // const getItems = () => fetch(fetchURL).then(res => res.json());
     const getItems = () => APIService.GetDonor();
     const [donors, setDonors] = useState([]);
     const history = useHistory();
@@ -31,16 +29,16 @@ function WithUser() {
       console.log('top button clicked')
     }
 
-    const scrollFunction = () => {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
+    // const scrollFunction = () => {
+    //   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    //     mybutton.style.display = "block";
+    //   } else {
+    //     mybutton.style.display = "none";
+    //   }
+    // }
 
-    var mybutton = document.getElementById("myBtn");
-    window.onscroll = function() {scrollFunction()};
+    // var mybutton = document.getElementById("myBtn");
+    // window.onscroll = function() {scrollFunction()};
 
     return (
         <div className="App">
