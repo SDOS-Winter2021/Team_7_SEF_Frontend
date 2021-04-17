@@ -264,16 +264,19 @@ function TransactionList(props) {
     const transactions = props.transactions;
     const newData = [];
     transactions.forEach(transaction => {
-        newData.push({
-            Receipt_Number: transaction.Receipt_Number,
-            Donor: getDonor(transaction.Donor, donors).PAN,
-            Currency: transaction.Currency, 
-            Amount: transaction.Amount,
-            Date: transaction.Date,
-            Mode_of_Payment: transaction.Mode_of_Payment,
-            Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment),
-            Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, getDonor(transaction.Donor, donors))
-        });
+        const donor_out = getDonor(transaction.Donor, donors)
+        if (donor_out){
+            newData.push({
+                Receipt_Number: transaction.Receipt_Number,
+                Donor: donor_out.PAN,
+                Currency: transaction.Currency, 
+                Amount: transaction.Amount,
+                Date: transaction.Date,
+                Mode_of_Payment: transaction.Mode_of_Payment,
+                Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment),
+                Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, donor_out)
+            });
+        }
     });
 
     const columns = React.useMemo(
