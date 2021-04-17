@@ -57,7 +57,7 @@ export const Auth = () => {
                 </Avatar>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <GoogleLogin
-                        clientId='769388396500-95kaaug7sbjt0e3s33ukfr7d2nt2taf3.apps.googleusercontent.com'
+                        clientId='769388396500-909t411qfsejlkguj9n6opi2kulhpb2r.apps.googleusercontent.com'
                         render={(renderProps) => (
                             <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant='contained'>
                                 Google Sign In
