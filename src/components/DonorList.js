@@ -151,10 +151,6 @@ function DonorList(props) {
                 accessor: 'PAN',
             },
             {
-                Header: 'Title',
-                accessor: 'Title',
-            },
-            {
                 Header: 'First Name',
                 accessor: 'First_Name',
             },

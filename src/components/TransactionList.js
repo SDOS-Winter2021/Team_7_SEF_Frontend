@@ -253,6 +253,198 @@ function getDonor(transaction, donors) {
     return d;
 }
 
+const styles = StyleSheet.create({
+    section: { 
+        padding: 10, 
+        margin: 10,
+        flexGrow: 1
+    },
+    header: {
+        textAlign: 'center'
+    },
+    image: {
+      width: "50%",
+      padding: 10
+    },
+    centerImage: {
+      alignItems: "center"
+    },
+    table: { 
+        display: "table", 
+        width: "auto", 
+        borderStyle: "solid", 
+        borderWidth: 1, 
+        borderRightWidth: 0, 
+        borderBottomWidth: 0 
+    }, 
+    tableRow: { 
+        margin: "auto", 
+        flexDirection: "row" 
+    }, 
+    tableColSmall: { 
+        width: "12.5%", 
+        borderStyle: "solid", 
+        borderWidth: 1, 
+        borderLeftWidth: 0, 
+        borderTopWidth: 0 
+    }, 
+    tableColLarge: { 
+        width: "25%", 
+        borderStyle: "solid", 
+        borderWidth: 1, 
+        borderLeftWidth: 0, 
+        borderTopWidth: 0 
+    }, 
+    tableCell: { 
+        margin: "auto", 
+        marginTop: 5, 
+        fontSize: 10 
+    },
+    text: {
+      fontSize: 11,
+      textAlign: 'center'
+    }
+  });
+
+
+const MyDoc = (props) => (
+    <Document>
+      <Page size="A4" wrap>
+            <View style={styles.section} wrap={false}>
+                <Image style={styles.image} src={im2} />
+                <Text>
+                Receipt No: SEF/DON/Serial No./2021-22	Date: {props.transaction.Date}
+                </Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.header}>
+                TO WHOMSOEVER IT MAY CONCERN
+                </Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.text}>
+                Simple Education Foundation (SEF) received the below items as a donation from {props.donor}. The
+invoice no {props.transaction.Poc} dated {props.transaction.Date} along with good was received on {props.transaction.Date}
+                </Text>
+            </View>
+            <View style={styles.section}>
+                <View style={styles.table}> 
+                    {/* TableHeader */} 
+                    <View style={styles.tableRow}> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                S.no 
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColLarge}> 
+                            <Text style={styles.tableCell}>
+                                Item Description
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                Unit
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                Qty
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                Rate
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColLarge}> 
+                            <Text style={styles.tableCell}>
+                                Amount
+                            </Text> 
+                        </View> 
+                    </View> 
+                    {/* TableContent */} 
+                    <View style={styles.tableRow}> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                1
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColLarge}> 
+                            <Text style={styles.tableCell}>
+                                
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColSmall}> 
+                            <Text style={styles.tableCell}>
+                                {props.transaction.Currency}
+                            </Text> 
+                        </View> 
+                        <View style={styles.tableColLarge}> 
+                            <Text style={styles.tableCell}>
+                                {props.transaction.Amount}
+                            </Text> 
+                        </View> 
+                    </View> 
+                </View>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.text}>
+                Thank you for your generous donation! We appreciate your support
+                </Text>
+            </View>
+            <View style={styles.section} wrap={false}>
+                <Text style={styles.text}>
+                For Simple Education Foundation
+                </Text>
+                <Image style={styles.image} src={im1} />
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.text}>
+                    This confirms that the items given by the donor to Simple Education Foundation (SEF).{"\n"}
+                    No goods or services were received in exchange for this/ these donations.{"\n"}
+                    SEF is a non-profit registered under section 80G of Income Tax Act, 1961.{"\n"}
+                    80G: DEL-SE27729-24042017/8410
+                </Text>
+            </View>
+            <View
+                style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                }}
+                />
+            <View style={styles.section}>
+                <Text style={styles.text}>
+                    Registered Address: H-1, Bandhu Vihar, CGHS, Sector – 10, Plot No. – 11, Dwarka, New Delhi – 110075{"\n"}
+                    www.simpleeducationfoundation.org | +91-9810704035 | connect@simpleeducationfoundation.org
+                </Text>
+            </View>
+        </Page>
+    </Document>
+  )
+
+function getDonor(transaction,donors){
+    var name = "unknown"
+    donors.forEach(donor => {
+        if (donor.id == transaction) {
+            name = donor.First_Name;
+        }
+    });
+    if (name == "unknown") {
+        console.log(transaction)
+    }
+    return name;
+}
+
 function TransactionList(props) {
 
     const getItems = () => APIService.GetDonor();
