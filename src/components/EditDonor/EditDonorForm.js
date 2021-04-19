@@ -82,7 +82,7 @@ function Formx(props) {
                 Status
             })
             alert("Donor Entry Updated");
-            history.push('/');
+            history.push('/donor');
         }
         setValidated(true);
         

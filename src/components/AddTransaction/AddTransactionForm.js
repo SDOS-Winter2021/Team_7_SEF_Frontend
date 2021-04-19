@@ -70,7 +70,7 @@ function Formx() {
                     .then(resp => {
                         if (check(resp)) {
                             alert("New Transaction Added")
-                            history.push('/')
+                            history.push('/transaction')
                         }
                         else {
                             console.log(resp)

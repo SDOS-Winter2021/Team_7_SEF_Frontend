@@ -83,7 +83,7 @@ function Formx() {
                 .then(resp => {
                     if (check(resp)) {
                         alert("New Donor Added");
-                        history.push('/');
+                        history.push('/donor');
                     }
                 }
                 )

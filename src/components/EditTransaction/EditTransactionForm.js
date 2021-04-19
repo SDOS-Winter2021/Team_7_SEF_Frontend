@@ -73,7 +73,7 @@ function Formx(props) {
                     Is_Approved
                 })
                 alert("Transaction Entry Updated");
-                history.push('/');
+                history.push('/transaction');
             }
             else {
                 alert("Donor with the given PAN doesn't Exist")
