@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
-function AddDonor() {
+function AddDonorForm() {
 
     return (
         <div className="App">
@@ -12,7 +12,7 @@ function AddDonor() {
     )
 }
 
-export default AddDonor
+export default AddDonorForm
 
 
 function Formx() {

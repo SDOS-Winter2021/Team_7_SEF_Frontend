@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
-import APIService from '../APIService';
+import APIService from '../../APIService';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import im1 from '../images/sign.png';
-import im2 from '../images/logo.png';
+import im1 from '../../images/sign.png';
+import im2 from '../../images/logo.png';
 // import im1 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/sign.png';
 // import im2 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/logo.png';
 

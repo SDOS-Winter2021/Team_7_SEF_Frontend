@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
-function EditDonor(props) {
+function EditDonorForm(props) {
 
     return (
         <div className="App">
@@ -12,7 +12,7 @@ function EditDonor(props) {
     )
 }
 
-export default EditDonor
+export default EditDonorForm
 
 
 function Formx(props) {

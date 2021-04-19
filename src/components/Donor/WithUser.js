@@ -1,31 +1,26 @@
 import React,{useState,useEffect} from 'react'
-import TransactionList from '../TransactionList';
+import DonorList from './DonorList';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 
-function WithUserTransaction() {
+function WithUser() {
 
-    const getItems = () => APIService.GetTransaction();
-    const [transactions, setTransactions] = useState([]);
+    const getItems = () => APIService.GetDonor();
+    const [donors, setDonors] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
-        getItems().then(data => setTransactions(data));
+        getItems().then(data => setDonors(data));
       }, []);
 
-    const editBtn = (transaction) => {
-      localStorage.setItem('curr_transaction',JSON.stringify(transaction))
-      history.push('/transaction');
-    }
-
-    const approveBtn = () => {
-      alert("Transaction Approved")
-      window.location.reload(true);
+    const editBtn = (donor) => {
+      localStorage.setItem('curr_donor',JSON.stringify(donor))
+      history.push('/donor/donorEP/editDonor');
     }
     
-    const transactionForm = () => {
-      localStorage.setItem('curr_transaction',null)
-      history.push('/transaction');
+    const donorForm = () => {
+      localStorage.setItem('curr_donor',null)
+      history.push('/donor/addDonor');
     }
 
     const topFunction = () => {
@@ -44,13 +39,13 @@ function WithUserTransaction() {
               <br/> 
             </div>
             <div className = "col">
-              <button onClick = {transactionForm} className = "btn btn-primary">New Transaction</button>
+              <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
             </div>
           </div>
           <div className = "row">
             <br/>
           </div>
-            <TransactionList transactions = {transactions} editBtn = {editBtn} approveBtn = {approveBtn}/>
+            <DonorList donors = {donors} editBtn = {editBtn}/>
           <div>
             <button onClick={topFunction} id="myBtn">Top</button>
           </div>
@@ -58,4 +53,4 @@ function WithUserTransaction() {
     )
 }
 
-export default WithUserTransaction
+export default WithUser

@@ -3,43 +3,39 @@ import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
-function EditTransaction(props) {
+function AddTransactionForm() {
 
     return (
         <div className="App">
-            <Formx transaction={props.transaction} />
+            <Formx />
         </div>
     )
 }
 
-export default EditTransaction
+export default AddTransactionForm
 
 
-function Formx(props) {
+function Formx() {
     const history = useHistory()
     const getItems = () => APIService.GetDonor();
     const [Receipt_Number, setReceipt_Number] = useState('')
-    const [Donor, setDonor] = useState('')
+    var Donor = ''
     const [DonorPAN, setDonorPAN] = useState('')
     const [Currency, setCurrency] = useState('')
     const [Amount, setAmount] = useState('')
     const [Date, setDate] = useState('')
     const [Mode_of_Payment, setMode_of_Payment] = useState('')
     const [DonorList, setDonorList] = useState('')
-    const [Is_Approved, setIs_Approved] = useState('')
-
-    // const history = useHistory()
 
     useEffect(() => {
         getItems().then(data => setDonorList(data));
-        setReceipt_Number(props.transaction.Receipt_Number)
-        setDonor(props.transaction.Donor)
-        setCurrency(props.transaction.Currency)
-        setAmount(props.transaction.Amount)
-        setDate(props.transaction.Date)
-        setMode_of_Payment(props.transaction.Mode_of_Payment)
-        setIs_Approved(props.transaction.Is_Approved)
-    }, [props.transaction])
+        setReceipt_Number('')
+        setDonorPAN('')
+        setCurrency('')
+        setAmount('')
+        setDate('')
+        setMode_of_Payment('')
+    }, [])
 
     const yourChangeHandler = (event) => {
         setMode_of_Payment(event.target.value)
@@ -48,7 +44,7 @@ function Formx(props) {
     const [validated, setValidated] = useState(false);
     var PANCheck = false;
 
-    const updateTransaction = (event) => {
+    const addTransaction = (event) => {
         const form = event.currentTarget;
         console.log(form)
         if (form.checkValidity() === false) {
@@ -57,43 +53,38 @@ function Formx(props) {
         }
         else {
             DonorList.forEach(d => {
-                if (d.PAN === DonorPAN) {
+                if (DonorPAN !== '' && d.PAN === DonorPAN) {
                     PANCheck = true;
-                    setDonor(d.id);
+                    Donor = d.id;
                 }
             })
             if (PANCheck && PANCheck === true) {
-                APIService.UpdateTransaction(props.transaction.id, {
+                APIService.AddTransaction({
                     Receipt_Number,
                     Donor,
                     Currency,
                     Amount,
                     Date,
-                    Mode_of_Payment,
-                    Is_Approved
+                    Mode_of_Payment
                 })
-                alert("Transaction Entry Updated");
-                history.push('/');
+                    .then(resp => {
+                        if (check(resp)) {
+                            alert("New Transaction Added")
+                            history.push('/')
+                        }
+                        else {
+                            console.log(resp)
+                            alert("Error in Input")
+                        }
+                    }
+                    )
             }
             else {
                 alert("Donor with the given PAN doesn't Exist")
             }
         }
         setValidated(true);
-        
-    }
 
-    const deleteBtn = () => {
-        var transaction_check = prompt("Please enter the POC of the Donor:", props.transaction.Poc);
-        if (transaction_check === null || transaction_check !== props.transaction.Poc || transaction_check === "") {
-            alert("Try Again, Transaction Name miss match")
-        }
-        else {
-            APIService.DeleteTransaction(props.transaction.id)
-                .catch(error => console.log(error))
-            alert("Transaction Entry Deleted");
-            history.push('/');
-        }
     }
 
     return (
@@ -213,21 +204,23 @@ function Formx(props) {
 
                 <br />
 
-
-
-                <Row>
-                    <Col sm={2}>
+                <Row className="md-center">
+                    <Col sm={4}>
                     </Col>
                     <Col sm={4}>
-                    <Button block onClick={updateTransaction} className="btn btn-success">Update Transaction</Button>
-                    </Col>
-                    <Col sm={1}>
-                    </Col>
-                    <Col sm={4}>
-                    <Button block onClick={deleteBtn} className="btn btn-danger">Delete</Button>
+                        <Button block onClick={addTransaction} className="btn btn-success">Add Transaction</Button>
                     </Col>
                 </Row>
             </Form>
         </Container>
     )
+}
+
+function check(resp) {
+    if (resp.id === undefined) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }

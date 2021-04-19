@@ -1,68 +1,53 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import AddDonor from './AddDonor'
-import EditDonor from './EditDonor'
-import WithoutUser from '../Home/WithoutUser'
+import WithoutUser from '../WithoutUser'
+import WithUser from './WithUser'
 
 export const Donor = () => {
-  const location = useLocation()
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-  const [donor, setDonor] = useState(JSON.parse(localStorage.getItem('curr_donor')))
-  useEffect(() => {
-    // const token = user?.token
-    // const token2 = donor?.token
-    setUser(JSON.parse(localStorage.getItem('profile')))
-    setDonor(JSON.parse(localStorage.getItem('curr_donor')))
-  }, [location])
-
-  if (user === null) {
-    return (
-      <div className="App">
-        <WithoutUser />
-      </div>
-    )
-  }
-  else {
-    return (
-      <div className="App">
-        <TeamCheck donor={donor} />
-      </div>
-    )
-  }
-
-
-}
-
-const TeamCheck = (props) => {
-  const [donor, setDonor] = useState(props.donor)
-  const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
-  useEffect(() => {
-    setDonor(props.donor)
-    setTeam(JSON.parse(localStorage.getItem('Team')))
-  }, [props])
-
-  if (team !== 'Finance') {
-    if (donor === null) {
+    const location = useLocation()
+    const user = JSON.parse(localStorage.getItem('profile'))
+    const [email, setEmail] = useState('')
+    useEffect(() => {
+      setEmail(user?.result.email)
+    }, [location, user])
+  
+    if (user === null) {
       return (
         <div className="App">
-          <AddDonor />
+          <WithoutUser />
         </div>
       )
     }
+  
     else {
       return (
         <div className="App">
-          <EditDonor donor={donor} />
+          <UserCheck email={email} />
         </div>
       )
     }
   }
 
-  else {
-    return (
-      <div className="App">
-        <WithoutUser />
-      </div>
-    )    
+  const UserCheck = (props) => {
+    const [team, setTeam] = useState(JSON.parse(localStorage.getItem('Team')))
+    useEffect(() => {
+      setTeam(JSON.parse(localStorage.getItem('Team')))
+    }, [props])
+  
+    if (team === 'Donor' || team === 'CnF') {
+      return (
+        <div className="App">
+          <WithUser />
+        </div>
+      )
+    }
+  
+    else {
+      return (
+        <div className="App">
+          <WithoutUser />
+        </div>
+      )
+    }
+  
   }
-}
