@@ -115,7 +115,7 @@ function editBtn(props,donor) {
     }
 
 
-    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>Update</button>
+    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>View</button>
 }
 
 function noteBtn(props,donor) {
