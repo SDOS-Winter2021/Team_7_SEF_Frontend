@@ -16,7 +16,8 @@ function WithUser() {
 
     const editBtn = (donor) => {
       localStorage.setItem('curr_donor',JSON.stringify(donor))
-      history.push('/donor/donorEP/editDonor');
+      history.push('/donor/donorEP');
+      // history.push('/donor/donorEP/editDonor');
     }
 
     const noteBtn = (donor) => {

@@ -6,7 +6,7 @@ import { Home } from './components/Home/Home'
 import { Donor } from './components/Donor/Donor'
 import { AddDonor } from './components/AddDonor/AddDonor'
 import { EditDonor } from './components/EditDonor/EditDonor'
-// import { EP } from './components/EP/EP'
+import { EP } from './components/EP/EP'
 import { Note } from './components/Note/Note'
 import { AddNote } from './components/AddNote/AddNote'
 import { EditNote } from './components/EditNote/EditNote'
@@ -27,7 +27,7 @@ const App = () => {
                 <Route path='/donor/notes/addNote' exact component={AddNote}/>
                 <Route path='/donor/notes/editNote' exact component={EditNote}/>
                 <Route path='/donor/addDonor' exact component={AddDonor}/>
-                {/* <Route path='/donor/donorEP' exact component={EP}/> */}
+                <Route path='/donor/donorEP' exact component={EP}/>
                 <Route path='/donor/donorEP/editDonor' exact component={EditDonor}/>
                 <Route path='/transaction' exact component={Transaction}/>
                 <Route path='/transaction/addTransaction' exact component={AddTransaction}/>

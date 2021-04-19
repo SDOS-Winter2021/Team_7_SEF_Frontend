@@ -82,7 +82,7 @@ function Formx(props) {
                 Status
             })
             alert("Donor Entry Updated");
-            history.push('/donor'); //later to be changed to donorEP
+            history.push('/donor/donorEP');
         }
         setValidated(true);
 
@@ -97,7 +97,7 @@ function Formx(props) {
             APIService.DeleteDonor(props.donor.id)
                 .catch(error => console.log(error))
             alert("Donor Entry Deleted");
-            history.push('/donor'); //later to be changed to donorEP
+            history.push('/donor');
         }
     }
 
