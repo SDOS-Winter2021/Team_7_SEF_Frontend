@@ -7,13 +7,13 @@ import APIService from '../../APIService';
 
 export const Home = () => {
   const location = useLocation()
-  const user = JSON.parse(localStorage.getItem('profile')).result
+  const user = JSON.parse(localStorage.getItem('profile'))
   const [email, setEmail] = useState('')
   useEffect(() => {
     // const token = user?.token
     // setUser(JSON.parse(localStorage.getItem('profile')))
     // setBranch('Finance') //Donor, Finance, CNF
-    setEmail(user?.email)
+    setEmail(user?.result.email)
 
   }, [location,user])
 
