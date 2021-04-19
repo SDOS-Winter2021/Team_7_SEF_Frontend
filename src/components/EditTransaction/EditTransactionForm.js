@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
-import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Breadcrumb  } from 'react-bootstrap';
 
 function EditTransactionForm(props) {
 
@@ -97,6 +97,26 @@ function Formx(props) {
     }
 
     return (
+        <div>
+            <div className="row">
+                <div className="col">
+                    <br />
+                </div>
+                <div className="col">
+                    <br />
+                </div>
+                <div className="col">
+                    <br />
+                </div>
+                <div className="col">
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/transaction">Transaction</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Edit Transaction</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+            </div>
+            <br />
         <Container > {/*change the widht of the form (padding) */}
             <Form noValidate validated={validated}>
 
@@ -229,5 +249,6 @@ function Formx(props) {
                 </Row>
             </Form>
         </Container>
+        </div>
     )
 }
