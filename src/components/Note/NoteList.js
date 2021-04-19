@@ -1,6 +1,5 @@
 import React from "react";
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 
 
@@ -108,112 +107,46 @@ function Table({ columns, data }) {
     )
 }
 
-function editBtn(props,donor) {
+function editBtn(props,note) {
 
-    const editDonorBtn = (donor) => {
-        props.editBtn(donor)
+    const editNoteBtn = (note) => {
+        props.editBtn(note)
     }
 
 
-    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>Update</button>
-}
-
-function noteBtn(props,donor) {
-
-    const donorNoteBtn = (donor) => {
-        props.noteBtn(donor)
-    }
-
-
-    return <button className = "btn btn-primary" onClick  = {() => donorNoteBtn(donor)}>Notes</button>
+    return <button className = "btn btn-primary" onClick  = {() => editNoteBtn(note)}>Update</button>
 }
 
 
+function NoteList(props) {
 
-function DonorList(props) {
-
-    const donors = props.donors;
+    const notes = props.notes;
 
     const newData = [];
-    donors.forEach(donor => {
-        newData.push({
-            PAN:donor.PAN,
-            Title:donor.Title,
-            First_Name:donor.First_Name,
-            Last_Name:donor.Last_Name,
-            Current_Address:donor.Current_Address,
-            Email:donor.Email,
-            Phone:donor.Phone,
-            Birth_Date:donor.Birth_Date,
-            Recruitment_Source:donor.Recruitment_Source,
-            Recruitment_Type:donor.Recruitment_Type,
-            Nationality:donor.Nationality,
-            Organisation:donor.Organisation,
-            Status:donor.Status,
-            Update_Donor: editBtn(props,donor),
-            Notes: noteBtn(props,donor)
-        });
+    notes.forEach(note => {
+        if (props.donor && note?.Donor === props.donor?.id) {
+            newData.push({
+                Date:note.Date,
+                Note:note.Notes,
+                Update_Note:editBtn(props,note)
+            });
+        }
     });
 
     const columns = React.useMemo(
         () => [
             {
-                Header: 'PAN',
-                accessor: 'PAN',
+                Header: 'Date',
+                accessor: 'Date',
             },
             {
-                Header: 'First Name',
-                accessor: 'First_Name',
-            },
-            {
-                Header: 'Last Name',
-                accessor: 'Last_Name',
-            },
-            {
-                Header: 'Current Address',
-                accessor: 'Current_Address',
-            },
-            {
-                Header: 'Email',
-                accessor: 'Email',
-            },
-            {
-                Header: 'Phone',
-                accessor: 'Phone',
-            },
-            {
-                Header: 'Birth Date',
-                accessor: 'Birth_Date',
-            },
-            {
-                Header: 'Recruitment Source',
-                accessor: 'Recruitment_Source',
-            },
-            {
-                Header: 'Recruitment Type',
-                accessor: 'Recruitment_Type',
-            },
-            {
-                Header: 'Nationality',
-                accessor: 'Nationality',
-            },
-            {
-                Header: 'Organisation',
-                accessor: 'Organisation',
-            },
-            {
-                Header: 'Status',
-                accessor: 'Status',
+                Header: 'Note',
+                accessor: 'Note',
             },
             {
                 Header: '',
                 disableFilters: true,
-                accessor: 'Update_Donor',
-            },
-            {
-                Header: '',
-                disableFilters: true,
-                accessor: 'Notes',
+                accessor: 'Update_Note',
             },
         ],
         []
@@ -228,4 +161,4 @@ function DonorList(props) {
     )
 }
 
-export default DonorList;
+export default NoteList;

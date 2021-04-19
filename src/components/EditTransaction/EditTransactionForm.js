@@ -92,7 +92,7 @@ function Formx(props) {
             APIService.DeleteTransaction(props.transaction.id)
                 .catch(error => console.log(error))
             alert("Transaction Entry Deleted");
-            history.push('/');
+            history.push('/transaction');
         }
     }
 

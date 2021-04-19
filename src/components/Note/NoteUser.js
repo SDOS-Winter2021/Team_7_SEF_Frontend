@@ -1,32 +1,29 @@
 import React,{useState,useEffect} from 'react'
-import DonorList from './DonorList';
+import NoteList from './NoteList';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-function WithUser() {
+function NoteUser(props) {
 
-    const getItems = () => APIService.GetDonor();
-    const [donors, setDonors] = useState([]);
-    const history = useHistory();
+  const getItems = () => APIService.GetNote();
+  const [donor, setDonor] = useState('')
+  const [notes, setNotes] = useState([])
+  const history = useHistory();
 
-    useEffect(() => {
-        getItems().then(data => setDonors(data));
-      }, []);
+  useEffect(() => {
+    setDonor(props.donor)
+    getItems().then(data => setNotes(data));
+  }, [props])
 
-    const editBtn = (donor) => {
-      localStorage.setItem('curr_donor',JSON.stringify(donor))
-      history.push('/donor/donorEP/editDonor');
-    }
-
-    const noteBtn = (donor) => {
-      localStorage.setItem('curr_donor',JSON.stringify(donor))
-      history.push('/donor/notes');
+    const editBtn = (note) => {
+      localStorage.setItem('curr_note',JSON.stringify(note))
+      history.push('/donor/notes/editNote');
     }
     
-    const donorForm = () => {
-      localStorage.setItem('curr_donor',null)
-      history.push('/donor/addDonor');
+    const noteForm = () => {
+      localStorage.setItem('curr_note',null)
+      history.push('/donor/notes/addNote');
     }
 
     const topFunction = () => {
@@ -39,7 +36,7 @@ function WithUser() {
         <div className="App">
           <div className = "row">
             <div className = "col">
-              <button onClick = {donorForm} className = "btn btn-primary">Add Donor</button>
+              <button onClick = {noteForm} className = "btn btn-primary">Add Note</button>
             </div>
             <div className = "col">        
               <br/> 
@@ -50,14 +47,15 @@ function WithUser() {
             <div className = "col">        
             <Breadcrumb>
               <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-              <Breadcrumb.Item active>Donor</Breadcrumb.Item>
+              <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
+              <Breadcrumb.Item active>Notes</Breadcrumb.Item>
             </Breadcrumb>
             </div>
           </div>
           <div className = "row">
             <br/>
           </div>
-            <DonorList donors = {donors} editBtn = {editBtn} noteBtn={noteBtn}/>
+            <NoteList notes = {notes} donor = {donor} editBtn = {editBtn}/>
           <div>
             <button onClick={topFunction} id="myBtn">Top</button>
           </div>
@@ -65,4 +63,4 @@ function WithUser() {
     )
 }
 
-export default WithUser
+export default NoteUser

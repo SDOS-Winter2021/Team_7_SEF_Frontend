@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import { Form, Button, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
 
-function EditDonorForm(props) {
+function EditNoteForm(props) {
 
     return (
         <div className="App">
@@ -12,7 +12,7 @@ function EditDonorForm(props) {
     )
 }
 
-export default EditDonorForm
+export default EditNoteForm
 
 
 function Formx(props) {
@@ -82,7 +82,7 @@ function Formx(props) {
                 Status
             })
             alert("Donor Entry Updated");
-            history.push('/donor');
+            history.push('/donor'); //later to be changed to donorEP
         }
         setValidated(true);
 
@@ -97,7 +97,7 @@ function Formx(props) {
             APIService.DeleteDonor(props.donor.id)
                 .catch(error => console.log(error))
             alert("Donor Entry Deleted");
-            history.push('/');
+            history.push('/donor'); //later to be changed to donorEP
         }
     }
 
