@@ -370,6 +370,7 @@ function Formx() {
 }
 
 function check(resp) {
+    console.log(resp)
     if (resp.id === undefined) {
         return false;
     }

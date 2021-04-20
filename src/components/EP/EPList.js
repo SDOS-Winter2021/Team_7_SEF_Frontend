@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
 import './Donors.css';
 
@@ -11,7 +11,7 @@ function GlobalFilter({
 
     return (
         <span>
-            Found: {count} records
+            Found: {count} Notifications
         </span>
     )
 }
@@ -67,8 +67,8 @@ function Table({ columns, data }) {
                 globalFilter={state.globalFilter}
                 setGlobalFilter={setGlobalFilter}
             />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <table className="table table-dark" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -107,58 +107,127 @@ function Table({ columns, data }) {
     )
 }
 
-function editBtn(props,note) {
+function doneBtn() {
 
-    const editNoteBtn = (note) => {
-        props.editBtn(note)
-    }
+    // const editNoteBtn = (note) => {
+    //     props.editBtn(note)
+    // }
 
 
-    return <button className = "btn btn-primary" onClick  = {() => editNoteBtn(note)}>Update</button>
+    return <button className="btn btn-primary">Done</button>
+    // return <button className = "btn btn-primary" onClick  = {() => editNoteBtn(note)}>Update</button>
 }
 
 
 function EPList(props) {
 
-    const notes = props.notes;
+    const filterTransaction = props.transactions;
 
-    const newData = [];
-    notes.forEach(note => {
-        if (props.donor && note?.Donor === props.donor?.id) {
+    var newData = [];
+    const taskList = ['Donation Reciept + 80 G',
+        'Thank you Phone Call',
+        '"month since" Thank you email with update',
+        'Quarter Program Updates',
+        '6 month Update',
+        'Satisfction Survey (Coffee Chat/Meetup)',
+        'Pledge (Email/Coffee Chat - Messages of Hope - count on support again)',
+        'Donorversery Email'];
+    if (filterTransaction.length > 0) {
+
+        var oldest_transaction = filterTransaction.reduce(function (a, b) {
+            return a < b ? a : b;
+        });
+        var newest_transaction = filterTransaction.reduce(function (a, b) {
+            return a > b ? a : b;
+        });
+        var date1 = new Date(newest_transaction);
+        const date2 = new Date();
+        var diffTime = Math.abs(date2 - date1);
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        var date3 = new Date(oldest_transaction);
+        var diffTime2 = Math.abs(date2 - date3);
+        var diffDays2 = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
+        if (diffDays <= 3) {
             newData.push({
-                Date:note.Date,
-                Note:note.Notes,
-                Update_Note:editBtn(props,note)
-            });
+                Task: taskList[0],
+                Date: 3 - diffDays,
+                Done: doneBtn()
+            })
         }
-    });
+        if (diffDays <= 7) {
+            newData.push({
+                Task: taskList[1],
+                Date: 7 - diffDays,
+                Done: doneBtn()
+            })
+        }
+        if (diffDays <= 30) {
+            newData.push({
+                Task: taskList[2],
+                Date: 30 - diffDays,
+                Done: doneBtn()
+            })
+        }
+        if (diffDays <= 180) {
+            newData.push({
+                Task: taskList[4],
+                Date: 180 - diffDays,
+                Done: doneBtn()
+            })
+        }
+        if (diffDays <= 240) {
+            newData.push({
+                Task: taskList[5],
+                Date: 240 - diffDays,
+                Done: doneBtn()
+            })
+        }
+        if (diffDays <= 270) {
+            newData.push({
+                Task: taskList[6],
+                Date: 270 - diffDays,
+                Done: doneBtn()
+            })
+        }
+        if (diffDays2 <= 365) {
+            newData.push({
+                Task: taskList[7],
+                Date: 365 - diffDays,
+                Done: doneBtn()
+            })
+        }
+    }
+
 
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Date',
-                accessor: 'Date',
+                Header: 'Task',
+                accessor: 'Task',
             },
             {
-                Header: 'Note',
-                accessor: 'Note',
+                Header: 'Due Date',
+                accessor: 'Date',
             },
             {
                 Header: '',
                 disableFilters: true,
-                accessor: 'Update_Note',
+                accessor: 'Done',
             },
         ],
         []
     )
-
-    const data = newData
-
     return (
-        <div className="Donors">  
-        <Table columns={columns} data={data} />
-        </div>
+        <EPex columns={columns} data={newData} />
     )
 }
 
 export default EPList;
+
+function EPex(props) {
+    return (
+        <div className="Donors">
+            {props.data ? <Table columns={props.columns} data={props.data} />: <Table columns={props.columns} data={[]} />}
+        </div>
+    )
+}

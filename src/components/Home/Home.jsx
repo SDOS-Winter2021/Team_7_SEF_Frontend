@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import WithoutUser from '../WithoutUser'
 import APIService from '../../APIService';
 import { useHistory } from 'react-router-dom'
+import { Button, Col, Row, Container } from 'react-bootstrap';
 
 export const Home = () => {
   const location = useLocation()
@@ -85,7 +86,10 @@ function Donor() {
 
   return (
     <div className="App">
-      <button onClick={Btn}>Donors</button>
+      <Container>
+        <Button block onClick={Btn}>Donors</Button>
+      </Container>
+      {/* <button onClick={Btn}>Donors</button> */}
     </div>
   )
 }
@@ -98,7 +102,9 @@ function Finance() {
 
   return (
     <div className="App">
-      <button onClick={Btn}>Transactions</button>
+      <Container>
+        <Button block onClick={Btn}>Transactions</Button>
+      </Container>
     </div>
   )
 }
@@ -114,8 +120,16 @@ function CnF() {
 
   return (
     <div className="App">
-      <button onClick={Btn1}>Donors</button>
-      <button onClick={Btn2}>Transactions</button>
+      <Container>
+        <Row>
+          <Col>
+            <Button block onClick={Btn1}>Donors</Button>
+          </Col>
+          <Col>
+            <Button block onClick={Btn2}>Transactions</Button>
+          </Col>
+        </Row>
+      </Container>
     </div>
   )
 }

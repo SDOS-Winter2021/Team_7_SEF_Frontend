@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react'
-// import EPList from './EPList';
+import EPList from './EPList';
 import { useHistory } from 'react-router-dom';
-// import APIService from '../../APIService';
+import APIService from '../../APIService';
 import { Form, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
 
 function EPUser(props) {
 
-  // const getItems = () => APIService.GetNote();
+  const getItems = () => APIService.GetTransaction();
   const [donor, setDonor] = useState('')
-  // const [notes, setNotes] = useState([])
+  const [transaction, setTransactions] = useState([])
+  const [filterTransaction, setFilterTransactions] = useState([])
   const history = useHistory();
 
   useEffect(() => {
     setDonor(props.donor)
-    // getItems().then(data => setNotes(data));
+    getItems().then(data => setTransactions(data));
   }, [props])
 
-  // const editBtn = (note) => {
-  //   localStorage.setItem('curr_note',JSON.stringify(note))
-  //   history.push('/donor/notes/editNote');
-  // }
+  useEffect(() => {
+    var tx = []
+    transaction.forEach(tran => {
+      if (tran?.Donor === donor?.id) {
+          tx.push(tran.Date);
+      }
+  });
+  setFilterTransactions(tx)
+  }, [transaction,donor])
 
   const noteForm = () => {
     localStorage.setItem('curr_donor', JSON.stringify(donor))
@@ -58,7 +64,7 @@ function EPUser(props) {
       <DonorDetails donor={donor} />
       <div>
       </div>
-      {/* <NoteList notes = {notes} donor = {donor} editBtn = {editBtn}/> */}
+      <EPList donor = {donor} transactions = {filterTransaction}/>
       <div>
         <button onClick={topFunction} id="myBtn">Top</button>
       </div>
