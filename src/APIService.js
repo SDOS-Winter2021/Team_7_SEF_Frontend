@@ -106,6 +106,58 @@ export default class APIService {
 
     }
 
+    // Note
+
+    static GetNote() {
+
+      return fetch(`${base_url}note/`, {
+         'method':'GET',
+         headers: {
+             'Content-Type':'application/json'
+           } 
+      }).then(resp => resp.json())
+
+    }
+    
+    static UpdateNote(note_id, body) {
+
+     return fetch(`${base_url}note/${note_id}/`, {
+        'method':'PUT',
+        headers: {
+            'Content-Type':'application/json'
+          }, 
+          body:JSON.stringify(body)
+
+     }).then(resp => resp.json())
+
+
+    }
+
+    static AddNote(body) {
+
+      return fetch(`${base_url}note/`, {
+        'method':'POST',
+        headers: {
+            'Content-Type':'application/json'
+          }, 
+          body:JSON.stringify(body)
+
+      }).then(resp => resp.json())
+
+    }
+
+    static DeleteNote(note_id) {
+
+      return fetch(`${base_url}note/${note_id}/`, {
+        'method':'DELETE',
+        headers: {
+            'Content-Type':'application/json'
+          }
+
+     })
+
+    }
+
     // User
 
     static GetStaff() {
