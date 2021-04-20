@@ -3,6 +3,7 @@ import EPList from './EPList';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
 import { Form, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 function EPUser(props) {
 
@@ -21,21 +22,15 @@ function EPUser(props) {
     var tx = []
     transaction.forEach(tran => {
       if (tran?.Donor === donor?.id) {
-          tx.push(tran.Date);
+        tx.push(tran.Date);
       }
-  });
-  setFilterTransactions(tx)
-  }, [transaction,donor])
+    });
+    setFilterTransactions(tx)
+  }, [transaction, donor])
 
   const noteForm = () => {
     localStorage.setItem('curr_donor', JSON.stringify(donor))
     history.push('/donor/donorEP/editDonor');
-  }
-
-  const topFunction = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    console.log('top button clicked')
   }
 
   return (
@@ -64,9 +59,9 @@ function EPUser(props) {
       <DonorDetails donor={donor} />
       <div>
       </div>
-      <EPList donor = {donor} transactions = {filterTransaction}/>
+      <EPList donor={donor} transactions={filterTransaction} />
       <div>
-        <button onClick={topFunction} id="myBtn">Top</button>
+        <ScrollUpButton />
       </div>
     </div>
   )

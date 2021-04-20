@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
-import { Form, Button, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Breadcrumb, Jumbotron } from 'react-bootstrap';
 
 function AddNoteForm(props) {
 
     return (
         <div className="App">
-            <Formx donor = {props.donor}/>
+            <Formx donor={props.donor} />
         </div>
     )
 }
@@ -57,12 +57,6 @@ function Formx(props) {
         <div>
             <div className="row">
                 <div className="col">
-                    <br />
-                </div>
-                <div className="col">
-                    <br />
-                </div>
-                <div className="col">
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
@@ -70,56 +64,62 @@ function Formx(props) {
                         <Breadcrumb.Item active>Add Note</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
+                <div className="col">
+                </div>
+                <div className="col">
+                </div>
             </div>
             <br />
             <Container > {/*change the widht of the form (padding) */}
-                <Form noValidate validated={validated}>
+                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                    <Form noValidate validated={validated}>
 
-                    <Form.Group as={Row} controlId="validationNote">
-                        <Form.Label column sm={2}>Note</Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                as='textarea'
-                                type="text"
-                                row={10}
-                                placeholder="Note"
-                                value={Notes}
-                                onChange={e => setNotes(e.target.value)}
+                        <Form.Group as={Row} controlId="validationNote">
+                            <Form.Label column sm={2}>Note</Form.Label>
+                            <Col sm={10}>
+                                <Form.Control
+                                    as='textarea'
+                                    type="text"
+                                    row={10}
+                                    placeholder="Note"
+                                    value={Notes}
+                                    onChange={e => setNotes(e.target.value)}
 
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Note.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
+                                />
+                                <Form.Control.Feedback type="invalid">Please enter the Note.</Form.Control.Feedback>
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            </Col>
+                        </Form.Group>
 
-                    <br />
+                        <br />
 
-                    <Form.Group as={Row} controlId="validationDate">
-                        <Form.Label column sm={2}>Date <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                required
-                                type="date"
-                                placeholder="Date"
-                                value={Date}
-                                onChange={e => setDate(e.target.value)}
+                        <Form.Group as={Row} controlId="validationDate">
+                            <Form.Label column sm={2}>Date <span style={{ color: 'red' }}>*</span></Form.Label>
+                            <Col sm={10}>
+                                <Form.Control
+                                    required
+                                    type="date"
+                                    placeholder="Date"
+                                    value={Date}
+                                    onChange={e => setDate(e.target.value)}
 
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Date.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
+                                />
+                                <Form.Control.Feedback type="invalid">Please enter the Date.</Form.Control.Feedback>
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                            </Col>
+                        </Form.Group>
 
-                    <br />
+                        <br />
 
-                    <Row className="md-center">
-                        <Col sm={4}>
-                        </Col>
-                        <Col sm={4}>
-                            <Button block onClick={addNote} className="btn btn-success">Add Note</Button>
-                        </Col>
-                    </Row>
-                </Form>
+                        <Row className="md-center">
+                            <Col sm={4}>
+                            </Col>
+                            <Col sm={4}>
+                                <Button block onClick={addNote} className="btn btn-success">Add Note</Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Jumbotron>
             </Container>
         </div>
     )

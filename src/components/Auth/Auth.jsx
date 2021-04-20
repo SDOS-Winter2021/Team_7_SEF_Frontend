@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { AUTH } from '../../constants/actionTypes'
 import { useHistory } from 'react-router-dom'
 import { signIn } from '../../actions/auth'
+import Jumbotron from 'react-bootstrap/Jumbotron'
 // import { LOGOUT } from '../../constants/actionTypes'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
@@ -32,8 +33,8 @@ export const Auth = () => {
             // dispatch({ type: AUTH, data: { result, token } });
             // history.push('/')
             // if (result.email.includes('@iiitd.ac.in')) {
-                dispatch({ type: AUTH, data: { result, token } });
-                history.push('/')
+            dispatch({ type: AUTH, data: { result, token } });
+            history.push('/')
             // }
             // else {
 
@@ -50,25 +51,32 @@ export const Auth = () => {
     }
 
     return (
-        <Container component='main' maxWidth='xs'>
-            <Paper className={classes.paper} elevation={3}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    <GoogleLogin
-                        clientId='769388396500-909t411qfsejlkguj9n6opi2kulhpb2r.apps.googleusercontent.com'
-                        render={(renderProps) => (
-                            <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant='contained'>
-                                Google Sign In
-                            </Button>
-                        )}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy='single_host_origin'
-                    />
-                </form>
-            </Paper>
-        </Container>
+        <div className="bg-image d-flex justify-content-center  align-items-center"
+            style={{ "backgroundImage": "url('https://simpleeducationfoundation.org/wp-content/uploads/2019/10/principal3-min-1.jpg?resize=480:*')", "height": "100vh", "backgroundSize": "100% 100%" }}>
+            <Container component='main' maxWidth='xs'>
+                <Jumbotron style={{"background": "rgba(204, 204, 204, 0.7)"}}>
+                    <h1 className="text-center" style={{"color":"#3f51b5","fontSize":"60px",}}><b>Log in</b></h1>
+                    <Paper className={classes.paper} elevation={3}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <form className={classes.form} onSubmit={handleSubmit}>
+                            <GoogleLogin
+                                clientId='769388396500-909t411qfsejlkguj9n6opi2kulhpb2r.apps.googleusercontent.com'
+                                render={(renderProps) => (
+                                    <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant='contained'>
+                                        Google Sign In
+                                    </Button>
+                                )}
+                                onSuccess={googleSuccess}
+                                onFailure={googleFailure}
+                                cookiePolicy='single_host_origin'
+                            />
+                        </form>
+                    </Paper>
+                </Jumbotron>
+            </Container>
+        </div>
+
     )
 }

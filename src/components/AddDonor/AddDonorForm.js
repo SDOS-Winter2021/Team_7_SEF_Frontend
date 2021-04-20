@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
-import { Form, Button, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Breadcrumb, Jumbotron } from 'react-bootstrap';
 
 function AddDonorForm() {
 
@@ -95,24 +95,22 @@ function Formx() {
         <div>
             <div className="row">
                 <div className="col">
-                    <br />
-                </div>
-                <div className="col">
-                    <br />
-                </div>
-                <div className="col">
-                    <br />
-                </div>
-                <div className="col">
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
                         <Breadcrumb.Item active>Add Donor</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
+                <div className="col">
+                </div>
+                <div className="col">
+                </div>
+                <div className="col">
+                </div>
             </div>
             <br />
             <Container > {/*change the widht of the form (padding) */}
+                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
                 <Form noValidate validated={validated}>
 
                     <Form.Group as={Row} controlId="validationTitle">
@@ -364,6 +362,7 @@ function Formx() {
                         </Col>
                     </Row>
                 </Form>
+                </Jumbotron>
             </Container>
         </div>
     )
