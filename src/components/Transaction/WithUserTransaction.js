@@ -34,19 +34,19 @@ function WithUserTransaction() {
     <div className="App">
       <div className="row">
         <div className="col">
-          <button onClick={transactionForm} className="btn btn-primary">New Transaction</button>
-        </div>
-        <div className="col">
-          <br />
-        </div>
-        <div className="col">
-          <br />
-        </div>
-        <div className="col">
           <Breadcrumb>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item active>Transaction</Breadcrumb.Item>
           </Breadcrumb>
+        </div>
+        <div className="col">
+          <br />
+        </div>
+        <div className="col">
+          <br />
+        </div>
+        <div className="col">
+          <button onClick={transactionForm} className="btn btn-primary">New Transaction</button>
         </div>
       </div>
       <div className="row">
