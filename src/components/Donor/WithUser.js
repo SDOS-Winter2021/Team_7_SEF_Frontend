@@ -35,19 +35,17 @@ function WithUser() {
     <div className="App">
       <div className="row">
         <div className="col">
-          <button onClick={donorForm} className="btn btn-primary">Add Donor</button>
-        </div>
-        <div className="col">
-          <br />
-        </div>
-        <div className="col">
-          <br />
-        </div>
-        <div className="col">
           <Breadcrumb>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item active>Donor</Breadcrumb.Item>
           </Breadcrumb>
+        </div>
+        <div className="col">
+        </div>
+        <div className="col">
+        </div>
+        <div className="col">
+          <button onClick={donorForm} className="btn btn-primary">Add Donor</button>
         </div>
       </div>
       <div className="row">
