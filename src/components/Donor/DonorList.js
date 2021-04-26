@@ -115,7 +115,17 @@ function editBtn(props,donor) {
     }
 
 
-    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>Update</button>
+    return <button className = "btn btn-primary" onClick  = {() => editDonorBtn(donor)}>View</button>
+}
+
+function noteBtn(props,donor) {
+
+    const donorNoteBtn = (donor) => {
+        props.noteBtn(donor)
+    }
+
+
+    return <button className = "btn btn-primary" onClick  = {() => donorNoteBtn(donor)}>Notes</button>
 }
 
 
@@ -140,7 +150,8 @@ function DonorList(props) {
             Nationality:donor.Nationality,
             Organisation:donor.Organisation,
             Status:donor.Status,
-            Update_Donor: editBtn(props,donor)
+            Update_Donor: editBtn(props,donor),
+            Notes: noteBtn(props,donor)
         });
     });
 
@@ -198,6 +209,11 @@ function DonorList(props) {
                 Header: '',
                 disableFilters: true,
                 accessor: 'Update_Donor',
+            },
+            {
+                Header: '',
+                disableFilters: true,
+                accessor: 'Notes',
             },
         ],
         []

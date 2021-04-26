@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import WithUser from './WithUser'
-import WithoutUser from './WithoutUser'
-import WithUserTransaction from '../Transaction Home/WithUserTransaction'
+import WithoutUser from '../WithoutUser'
 import APIService from '../../APIService';
+import { useHistory } from 'react-router-dom'
+import { Button, Col, Row, Container } from 'react-bootstrap';
 
 export const Home = () => {
   const location = useLocation()
   const user = JSON.parse(localStorage.getItem('profile'))
   const [email, setEmail] = useState('')
   useEffect(() => {
-    // const token = user?.token
-    // setUser(JSON.parse(localStorage.getItem('profile')))
-    // setBranch('Finance') //Donor, Finance, CNF
     setEmail(user?.result.email)
 
-  }, [location,user])
+  }, [location, user])
 
   if (user === null) {
     return (
@@ -42,7 +39,7 @@ const UserCheck = (props) => {
     getItems().then(data => data.forEach(data_item => {
       if (props.email === data_item.Email) {
         setStaff(data_item)
-        localStorage.setItem('Team',JSON.stringify(data_item.Team))
+        localStorage.setItem('Team', JSON.stringify(data_item.Team))
       }
     }))
   }, [props])
@@ -50,7 +47,7 @@ const UserCheck = (props) => {
   if (staff.Team === 'Donor') {
     return (
       <div className="App">
-        <WithUser />
+        <Donor />
       </div>
     )
   }
@@ -58,7 +55,15 @@ const UserCheck = (props) => {
   else if (staff.Team === 'Finance') {
     return (
       <div className="App">
-        <WithUserTransaction />
+        <Finance />
+      </div>
+    )
+  }
+
+  else if (staff.Team === 'CnF') {
+    return (
+      <div className="App">
+        <CnF />
       </div>
     )
   }
@@ -73,3 +78,58 @@ const UserCheck = (props) => {
 
 }
 
+function Donor() {
+  const history = useHistory()
+  const Btn = () => {
+    history.push('/donor');
+  }
+
+  return (
+    <div className="App">
+      <Container>
+        <Button block onClick={Btn}>Donors</Button>
+      </Container>
+      {/* <button onClick={Btn}>Donors</button> */}
+    </div>
+  )
+}
+
+function Finance() {
+  const history = useHistory()
+  const Btn = () => {
+    history.push('/transaction');
+  }
+
+  return (
+    <div className="App">
+      <Container>
+        <Button block onClick={Btn}>Transactions</Button>
+      </Container>
+    </div>
+  )
+}
+
+function CnF() {
+  const history = useHistory()
+  const Btn1 = () => {
+    history.push('/donor');
+  }
+  const Btn2 = () => {
+    history.push('/transaction');
+  }
+
+  return (
+    <div className="App">
+      <Container>
+        <Row>
+          <Col>
+            <Button block onClick={Btn1}>Donors</Button>
+          </Col>
+          <Col>
+            <Button block onClick={Btn2}>Transactions</Button>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
+}
