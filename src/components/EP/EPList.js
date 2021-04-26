@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTable, useFilters, useGlobalFilter } from 'react-table'
+import APIService from '../../APIService';
 import './Donors.css';
 
 
@@ -107,96 +108,44 @@ function Table({ columns, data }) {
     )
 }
 
-function doneBtn() {
+function doneBtn(props, ep, Donor, Transaction, Task, Due_Date, done) {
 
-    // const editNoteBtn = (note) => {
-    //     props.editBtn(note)
-    // }
+    const Is_Complete = true;
+    const DoneBtn = (ep) => {
+        APIService.UpdateEP(ep.id, {
+            Donor,
+            Transaction,
+            Task,
+            Due_Date,
+            Is_Complete
+        }).then(resp => console.log(resp))
+        props.taskDoneBtn()
+    }
 
-
-    return <button className="btn btn-primary">Done</button>
+    return (<div>
+        {done ?
+            <div style={{ color: '#66FF99' }}>Done</div> :
+            <div>
+                <button className="btn btn-primary" onClick={() => DoneBtn(ep)}>Done</button>
+            </div>}
+    </div>
+    )
     // return <button className = "btn btn-primary" onClick  = {() => editNoteBtn(note)}>Update</button>
 }
 
 
 function EPList(props) {
 
-    const filterTransaction = props.transactions;
+    const filterEP = props.EP;
 
-    var newData = [];
-    const taskList = ['Donation Reciept + 80 G',
-        'Thank you Phone Call',
-        '"month since" Thank you email with update',
-        'Quarter Program Updates',
-        '6 month Update',
-        'Satisfction Survey (Coffee Chat/Meetup)',
-        'Pledge (Email/Coffee Chat - Messages of Hope - count on support again)',
-        'Donorversery Email'];
-    if (filterTransaction.length > 0) {
-
-        var oldest_transaction = filterTransaction.reduce(function (a, b) {
-            return a < b ? a : b;
+    const newData = [];
+    filterEP.forEach(ep => {
+        newData.push({
+            Task: ep.Task,
+            Due_Date: ep.Due_Date,
+            Done: doneBtn(props, ep, ep.Donor, ep.Transaction, ep.Task, ep.Due_Date, ep.Is_Complete)
         });
-        var newest_transaction = filterTransaction.reduce(function (a, b) {
-            return a > b ? a : b;
-        });
-        var date1 = new Date(newest_transaction);
-        const date2 = new Date();
-        var diffTime = Math.abs(date2 - date1);
-        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        var date3 = new Date(oldest_transaction);
-        var diffTime2 = Math.abs(date2 - date3);
-        var diffDays2 = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
-        if (diffDays <= 3) {
-            newData.push({
-                Task: taskList[0],
-                Date: 3 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays <= 7) {
-            newData.push({
-                Task: taskList[1],
-                Date: 7 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays <= 30) {
-            newData.push({
-                Task: taskList[2],
-                Date: 30 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays <= 180) {
-            newData.push({
-                Task: taskList[4],
-                Date: 180 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays <= 240) {
-            newData.push({
-                Task: taskList[5],
-                Date: 240 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays <= 270) {
-            newData.push({
-                Task: taskList[6],
-                Date: 270 - diffDays,
-                Done: doneBtn()
-            })
-        }
-        if (diffDays2 <= 365) {
-            newData.push({
-                Task: taskList[7],
-                Date: 365 - diffDays,
-                Done: doneBtn()
-            })
-        }
-    }
+    });
 
 
     const columns = React.useMemo(
@@ -207,7 +156,7 @@ function EPList(props) {
             },
             {
                 Header: 'Due Date',
-                accessor: 'Date',
+                accessor: 'Due_Date',
             },
             {
                 Header: '',
@@ -217,17 +166,14 @@ function EPList(props) {
         ],
         []
     )
+
+    const data = newData
+
     return (
-        <EPex columns={columns} data={newData} />
+        <div className="Donors">
+            <Table columns={columns} data={data} />
+        </div>
     )
 }
 
 export default EPList;
-
-function EPex(props) {
-    return (
-        <div className="Donors">
-            {props.data ? <Table columns={props.columns} data={props.data} />: <Table columns={props.columns} data={[]} />}
-        </div>
-    )
-}

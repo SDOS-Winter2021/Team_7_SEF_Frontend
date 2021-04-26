@@ -7,30 +7,35 @@ import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 function EPUser(props) {
 
-  const getItems = () => APIService.GetTransaction();
+  const getItems = () => APIService.GetEP();
   const [donor, setDonor] = useState('')
-  const [transaction, setTransactions] = useState([])
-  const [filterTransaction, setFilterTransactions] = useState([])
+  const [ep, setEP] = useState([])
+  const [filterEP, setFilterEPs] = useState([])
   const history = useHistory();
 
   useEffect(() => {
     setDonor(props.donor)
-    getItems().then(data => setTransactions(data));
+    getItems().then(data => setEP(data));
   }, [props])
 
   useEffect(() => {
     var tx = []
-    transaction.forEach(tran => {
-      if (tran?.Donor === donor?.id) {
-        tx.push(tran.Date);
+    ep.forEach(engagement => {
+      if (engagement?.Donor === donor?.id) {
+        tx.push(engagement);
       }
     });
-    setFilterTransactions(tx)
-  }, [transaction, donor])
+    setFilterEPs(tx)
+  }, [ep, donor])
 
-  const noteForm = () => {
+  const editDonor = () => {
     localStorage.setItem('curr_donor', JSON.stringify(donor))
     history.push('/donor/donorEP/editDonor');
+  }
+
+  const taskDoneBtn = () => {
+    alert("Task Done")
+    window.location.reload(true);
   }
 
   return (
@@ -48,7 +53,7 @@ function EPUser(props) {
         <div className="col">
         </div>
         <div className="col">
-          <button onClick={noteForm} className="btn btn-primary">Edit Donor Details</button>
+          <button onClick={editDonor} className="btn btn-primary">Edit Donor Details</button>
         </div>
       </div>
       <div className="row">
@@ -57,7 +62,7 @@ function EPUser(props) {
       <DonorDetails donor={donor} />
       <div>
       </div>
-      <EPList donor={donor} transactions={filterTransaction} />
+      <EPList EP={filterEP} taskDoneBtn={taskDoneBtn}/>
       <div>
         <ScrollUpButton />
       </div>

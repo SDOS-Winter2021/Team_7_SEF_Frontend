@@ -158,6 +158,58 @@ export default class APIService {
 
     }
 
+    // EP
+
+    static GetEP() {
+
+      return fetch(`${base_url}ep/`, {
+         'method':'GET',
+         headers: {
+             'Content-Type':'application/json'
+           } 
+      }).then(resp => resp.json())
+
+    }
+    
+    static UpdateEP(ep_id, body) {
+
+     return fetch(`${base_url}ep/${ep_id}/`, {
+        'method':'PUT',
+        headers: {
+            'Content-Type':'application/json'
+          }, 
+          body:JSON.stringify(body)
+
+     }).then(resp => resp.json())
+
+
+    }
+
+    static AddEP(body) {
+
+      return fetch(`${base_url}ep/`, {
+        'method':'POST',
+        headers: {
+            'Content-Type':'application/json'
+          }, 
+          body:JSON.stringify(body)
+
+      }).then(resp => resp.json())
+
+    }
+
+    static DeleteEP(ep_id) {
+
+      return fetch(`${base_url}ep/${ep_id}/`, {
+        'method':'DELETE',
+        headers: {
+            'Content-Type':'application/json'
+          }
+
+     })
+
+    }
+    
     // User
 
     static GetStaff() {

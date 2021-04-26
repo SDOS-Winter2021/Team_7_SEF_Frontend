@@ -10,7 +10,7 @@ import { EP } from './components/EP/EP'
 import { Note } from './components/Note/Note'
 import { AddNote } from './components/AddNote/AddNote'
 import { EditNote } from './components/EditNote/EditNote'
-import { Transaction } from './components/Transaction/Transaction2'
+import { Transaction } from './components/Transaction/Transaction'
 import { AddTransaction } from './components/AddTransaction/AddTransaction'
 import { EditTransaction } from './components/EditTransaction/EditTransaction'
 import './App.css';
