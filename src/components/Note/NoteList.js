@@ -1,5 +1,6 @@
 import React from "react";
-import { useTable, useFilters, useGlobalFilter } from 'react-table'
+import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
+import Pagination from 'react-bootstrap/Pagination'
 import './Donors.css';
 
 
@@ -50,6 +51,15 @@ function Table({ columns, data }) {
         state,
         preGlobalFilteredRows,
         setGlobalFilter,
+        page,
+        canPreviousPage,
+        canNextPage,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        setPageSize,
+        state: { pageSize }
     } = useTable(
         {
             columns,
@@ -57,7 +67,8 @@ function Table({ columns, data }) {
             defaultColumn
         },
         useFilters,
-        useGlobalFilter
+        useGlobalFilter,
+        usePagination
     )
 
     return (
@@ -66,9 +77,10 @@ function Table({ columns, data }) {
                 preGlobalFilteredRows={preGlobalFilteredRows}
                 globalFilter={state.globalFilter}
                 setGlobalFilter={setGlobalFilter}
+
             />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <table className="table table-dark" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -84,7 +96,7 @@ function Table({ columns, data }) {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
+                    {page.map((row, i) => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
@@ -96,8 +108,28 @@ function Table({ columns, data }) {
                     })}
                 </tbody>
             </table>
+            <Pagination>
+                <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage} />
+                <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage} />
+                <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage} />
+                <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} />
+            </Pagination>
+            <div>
+                <select
+                    value={pageSize}
+                    onChange={e => {
+                        setPageSize(Number(e.target.value));
+                    }}
+                >
+                    {[10, 25, 50, 100].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize} rows
+                        </option>
+                    ))}
+                </select>
+            </div>
             <br />
-            <div>Showing the first 20 results of {rows.length} rows</div>
+            <div>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
             {/* <div>
                 <pre className="temp">
                     <code>{JSON.stringify(state.filters, null, 2)}</code>

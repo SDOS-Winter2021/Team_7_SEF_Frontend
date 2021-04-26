@@ -6,7 +6,7 @@ function WithoutUser() {
 
     return (
         <Carousel>
-            <Carousel.Item class="cropped" interval={5000}>
+            <Carousel.Item className="cropped" interval={5000}>
                 <img
                     className="d-block w-100"
                     src="https://simpleeducationfoundation.org/wp-content/uploads/2019/04/Thumbnail_1.jpg?resize=50:*"
@@ -18,7 +18,7 @@ function WithoutUser() {
                     <p>We Work With Four Stakeholders As Part Of Our School Transformation Model</p>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item class="cropped" interval={5000}>
+            <Carousel.Item className="cropped" interval={5000}>
                 <img
                     className="d-block w-100"
                     src="https://simpleeducationfoundation.org/wp-content/uploads/2019/04/0K5C6317.jpg?resize=50:*"
@@ -30,7 +30,7 @@ function WithoutUser() {
                     <h3>SUPPORT QUALITY EDUCATION</h3>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item class="cropped" interval={5000}>
+            <Carousel.Item className="cropped" interval={5000}>
                 <img
                     className="d-block w-100"
                     src="https://simpleeducationfoundation.org/wp-content/uploads/2019/04/0K5C6256.jpg?resize=50:*"

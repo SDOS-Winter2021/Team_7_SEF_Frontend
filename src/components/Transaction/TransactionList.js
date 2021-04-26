@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, useFilters, useGlobalFilter } from 'react-table'
+import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
+import Pagination from 'react-bootstrap/Pagination'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 import APIService from '../../APIService';
@@ -58,6 +59,15 @@ function Table({ columns, data }) {
         state,
         preGlobalFilteredRows,
         setGlobalFilter,
+        page,
+        canPreviousPage,
+        canNextPage,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        setPageSize,
+        state: { pageSize }
     } = useTable(
         {
             columns,
@@ -65,7 +75,8 @@ function Table({ columns, data }) {
             defaultColumn
         },
         useFilters,
-        useGlobalFilter
+        useGlobalFilter,
+        usePagination
     )
 
     return (
@@ -74,6 +85,7 @@ function Table({ columns, data }) {
                 preGlobalFilteredRows={preGlobalFilteredRows}
                 globalFilter={state.globalFilter}
                 setGlobalFilter={setGlobalFilter}
+
             />
             <br />
             <br />
@@ -92,7 +104,7 @@ function Table({ columns, data }) {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
+                    {page.map((row, i) => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
@@ -104,8 +116,28 @@ function Table({ columns, data }) {
                     })}
                 </tbody>
             </table>
+            <Pagination>
+                <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage} />
+                <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage} />
+                <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage} />
+                <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} />
+            </Pagination>
+            <div>
+                <select
+                    value={pageSize}
+                    onChange={e => {
+                        setPageSize(Number(e.target.value));
+                    }}
+                >
+                    {[10, 25, 50, 100].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize} rows
+                        </option>
+                    ))}
+                </select>
+            </div>
             <br />
-            <div>Showing the first 20 results of {rows.length} rows</div>
+            <div>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
             {/* <div>
                 <pre className="temp">
                     <code>{JSON.stringify(state.filters, null, 2)}</code>
@@ -143,7 +175,7 @@ function editBtn(props, transaction, aproval, donor) {
 
 }
 
-function approveBtn(props, transaction, approval, Receipt_Number, Donor, Currency, Amount, Date, Mode_of_Payment) {
+function approveBtn(props, transaction, approval, Receipt_Number, Donor, Currency, Amount, Date, Mode_of_Payment, Date_List) {
     const Is_Approved = true;
     const approveDonorBtn = (transaction) => {
         APIService.UpdateTransaction(transaction.id, {
@@ -155,6 +187,33 @@ function approveBtn(props, transaction, approval, Receipt_Number, Donor, Currenc
             Mode_of_Payment,
             Is_Approved
         }).then(resp => console.log(resp))
+        const Transaction = transaction.id;
+        const taskList = ['Donation Reciept + 80 G',
+            'Thank you Phone Call',
+            '"month since" Thank you email with update',
+            '6 month Update',
+            'Satisfction Survey (Coffee Chat/Meetup)',
+            'Pledge (Email/Coffee Chat - Messages of Hope - count on support again)',
+            'Donorversery Email'];
+        // const taskList = ['Donation Reciept + 80 G',
+        //     'Thank you Phone Call',
+        //     '"month since" Thank you email with update',
+        //     'Quarter Program Updates',
+        //     '6 month Update',
+        //     'Satisfction Survey (Coffee Chat/Meetup)',
+        //     'Pledge (Email/Coffee Chat - Messages of Hope - count on support again)',
+        //     'Donorversery Email'];
+        var i;
+        for (i = 0; i < Date_List.length; i++) {
+            const Task = taskList[i];
+            const Due_Date = Date_List[i];
+            APIService.AddEP({
+                Donor,
+                Transaction,
+                Task,
+                Due_Date
+            }).then(resp => console.log(resp))
+        }
         props.approveBtn();
     }
     return (<div>
@@ -265,15 +324,54 @@ function TransactionList(props) {
     const newData = [];
     transactions.forEach(transaction => {
         const donor_out = getDonor(transaction.Donor, donors)
-        if (donor_out){
+        if (donor_out) {
+            var Date_List = [];
+            if (transaction.Is_Approved === false) {
+                // 3 days
+                var curr_d = new Date(transaction.Date);
+                curr_d.setDate(curr_d.getDate() + 3);
+                var x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 7 days
+                curr_d = new Date(transaction.Date);
+                curr_d.setDate(curr_d.getDate() + 7);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 1 month
+                curr_d = new Date(transaction.Date);
+                curr_d.setMonth(curr_d.getMonth() + 1);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 6 month
+                curr_d = new Date(transaction.Date);
+                curr_d.setMonth(curr_d.getMonth() + 6);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 8 month
+                curr_d = new Date(transaction.Date);
+                curr_d.setMonth(curr_d.getMonth() + 8);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 9 month
+                curr_d = new Date(transaction.Date);
+                curr_d.setMonth(curr_d.getMonth() + 9);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+                // 1 year
+                curr_d = new Date(transaction.Date);
+                curr_d.setFullYear(curr_d.getFullYear() + 1);
+                x = new Date(curr_d.getTime() - (curr_d.getTimezoneOffset() * 60000)).toISOString().split("T")[0];
+                Date_List.push(x);
+            }
+
             newData.push({
                 Receipt_Number: transaction.Receipt_Number,
                 Donor: donor_out.PAN,
-                Currency: transaction.Currency, 
+                Currency: transaction.Currency,
                 Amount: transaction.Amount,
                 Date: transaction.Date,
                 Mode_of_Payment: transaction.Mode_of_Payment,
-                Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment),
+                Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment, Date_List),
                 Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, donor_out)
             });
         }
