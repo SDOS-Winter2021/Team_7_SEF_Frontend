@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
 import Pagination from 'react-bootstrap/Pagination'
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donors.css';
 import APIService from '../../APIService';
-import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { BlobProvider, PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import im1 from '../../images/sign.png';
 import im2 from '../../images/logo.png';
-// import im1 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/sign.png';
-// import im2 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/logo.png';
 
 
 // Define a default UI for filtering
@@ -145,6 +142,42 @@ function Table({ columns, data }) {
             </div> */}
         </div>
     )
+}
+
+function emailBtn(props, transaction, aproval, donor) {
+
+    const emailDonorBtn = (file, email, filename) => {
+
+        const form = new FormData();
+        form.append('to_donor', email);
+        form.append('pdf_url', file);
+        form.append('filename', filename);
+
+        APIService.Email(form);
+
+        // props.emailBtn(transaction)
+    }
+    const file_name = "transaction_" + donor.First_Name + "_" + transaction.Receipt_Number + ".pdf";
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const yyyy = today.getFullYear();
+
+    const date_today = mm + '/' + dd + '/' + yyyy;
+    const numWords = require('num-words')
+    const amountInWords = numWords(transaction.Amount)
+
+    return (
+        < div >
+            < BlobProvider document={< MyDoc transaction={transaction} donor={donor} date={date_today} amountInWords={amountInWords} />}>
+                {({ blob, url, loading, error }) => {
+                    var file = new File([blob], file_name, {lastModified: (new Date()).getTime()});
+                    return <button className="btn btn-primary" onClick={() => emailDonorBtn(file, donor.Email, file_name)}>Email</button>
+                }}
+            </BlobProvider >
+        </div >
+    )
+
 }
 
 function editBtn(props, transaction, aproval, donor) {
@@ -372,7 +405,8 @@ function TransactionList(props) {
                 Date: transaction.Date,
                 Mode_of_Payment: transaction.Mode_of_Payment,
                 Approve_Transaction: approveBtn(props, transaction, transaction.Is_Approved, transaction.Receipt_Number, transaction.Donor, transaction.Currency, transaction.Amount, transaction.Date, transaction.Mode_of_Payment, Date_List),
-                Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, donor_out)
+                Edit_Transaction: editBtn(props, transaction, transaction.Is_Approved, donor_out),
+                Email_Transaction: emailBtn(props, transaction, transaction.Is_Approved, donor_out)
             });
         }
     });
@@ -412,6 +446,11 @@ function TransactionList(props) {
                 Header: '',
                 disableFilters: true,
                 accessor: 'Edit_Transaction',
+            },
+            {
+                Header: '',
+                disableFilters: true,
+                accessor: 'Email_Transaction',
             },
         ],
         []
