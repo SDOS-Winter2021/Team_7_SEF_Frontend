@@ -1,4 +1,8 @@
+
+import axios from 'axios';
+
 const base_url = 'https://sef-dashboard.herokuapp.com/api/'
+
 
 export default class APIService {
 
@@ -223,4 +227,24 @@ export default class APIService {
 
     }
 
+    //Email
+
+    static Email(form) {
+
+      axios({
+        method: "POST",
+        url: "https://sef-dashboard.herokuapp.com/email/",
+        data: form,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          console.log('no error')
+          console.log(response);
+        })
+        .catch(function (response) {
+          console.log('error')
+          console.log(response);
+        });
+
+    }
 }
