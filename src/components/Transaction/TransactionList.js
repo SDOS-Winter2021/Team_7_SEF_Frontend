@@ -172,7 +172,11 @@ function emailBtn(props, transaction, aproval, donor) {
             < BlobProvider document={< MyDoc transaction={transaction} donor={donor} date={date_today} amountInWords={amountInWords} />}>
                 {({ blob, url, loading, error }) => {
                     var file = new File([blob], file_name, {lastModified: (new Date()).getTime()});
-                    return <button className="btn btn-primary" onClick={() => emailDonorBtn(file, donor.Email, file_name)}>Email</button>
+                    return (<div>
+                        {aproval ? <button className="btn btn-primary" onClick={() => emailDonorBtn(file, donor.Email, file_name)}>Email</button> :
+                        <div/>}
+                    </div>
+                    )
                 }}
             </BlobProvider >
         </div >
