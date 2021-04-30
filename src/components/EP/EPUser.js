@@ -102,7 +102,7 @@ function DonorDetails(props) {
   return (
     
     
-    <Jumbotron fluid style={{background:'white'}}>
+    <Jumbotron fluid style={{background:'rgb(249,249,249)'}}>
     <span class='display-text'>
       <Container>
       <Row style={{paddingBottom:12, paddingTop:0}}>
