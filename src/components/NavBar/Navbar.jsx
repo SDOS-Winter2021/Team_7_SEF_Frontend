@@ -46,9 +46,9 @@ export const Navbar = () => {
                             <div class='column'>
                                 <div class='row'>
                                     <div class='column'>
-                                        <Avatar><img src={imgUrl} alt={userName} /></Avatar>
+                                        <Avatar style={{height:35, width:36}}><img src={imgUrl} alt={userName} /></Avatar>
                                     </div>
-                                    <div class='column' style={{paddingTop:8, paddingLeft:5}}>
+                                    <div class='column' style={{paddingTop:8, paddingLeft:8}}>
                                         <Typography variant='h7'>{userName}</Typography>
                                     </div>
                                 </div>
