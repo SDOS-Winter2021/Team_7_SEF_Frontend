@@ -3,7 +3,7 @@ import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-tabl
 import Pagination from 'react-bootstrap/Pagination'
 import APIService from '../../APIService';
 import './Donors.css';
-
+import Badge from 'react-bootstrap/Badge';
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -12,7 +12,7 @@ function GlobalFilter({
     const count = preGlobalFilteredRows.length
 
     return (
-        <span>
+        <span class='display-text'>
             Found: {count} Notifications
         </span>
     )
@@ -82,7 +82,7 @@ function Table({ columns, data }) {
             />
             <br />
             <br />
-            <table className="table table-dark" {...getTableProps()}>
+            <table className="table table-light table-striped" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -130,7 +130,7 @@ function Table({ columns, data }) {
                 </select>
             </div>
             <br />
-            <div>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
+            <div class='display-text'>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
             {/* <div>
                 <pre className="temp">
                     <code>{JSON.stringify(state.filters, null, 2)}</code>
@@ -156,7 +156,7 @@ function doneBtn(props, ep, Donor, Transaction, Task, Due_Date, done) {
 
     return (<div>
         {done ?
-            <div style={{ color: '#66FF99' }}>Done</div> :
+            <div> <Badge variant='success'>Done</Badge> </div> :
             <div>
                 <button className="btn btn-primary" onClick={() => DoneBtn(ep)}>Done</button>
             </div>}
