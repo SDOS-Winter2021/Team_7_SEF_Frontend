@@ -70,9 +70,15 @@ function Formx(props) {
                 </div>
             </div>
             <br />
+
+            <span class='display-text' STYLE="font-weight:bold">
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249,249,249)" }}>
                     <Form noValidate validated={validated}>
+
+                    <Row><h4>Add Note</h4></Row>
+                    <hr/>
+                    <br/>
 
                         <Form.Group as={Row} controlId="validationNote">
                             <Form.Label column sm={2}>Note</Form.Label>
@@ -95,7 +101,7 @@ function Formx(props) {
 
                         <Form.Group as={Row} controlId="validationDate">
                             <Form.Label column sm={2}>Date <span style={{ color: 'red' }}>*</span></Form.Label>
-                            <Col sm={10}>
+                            <Col sm={3}>
                                 <Form.Control
                                     required
                                     type="date"
@@ -110,9 +116,13 @@ function Formx(props) {
                         </Form.Group>
 
                         <br />
+                        <br/>
+                        <br/>
 
                         <Row className="md-center">
+                            <Col sm={2}></Col>
                             <Col sm={4}>
+                                <Button block href='/Donor/Notes' className="btn btn-danger">Cancel</Button>
                             </Col>
                             <Col sm={4}>
                                 <Button block onClick={addNote} className="btn btn-success">Add Note</Button>
@@ -121,6 +131,7 @@ function Formx(props) {
                     </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }

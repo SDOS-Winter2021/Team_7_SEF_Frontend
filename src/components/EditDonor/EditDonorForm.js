@@ -377,6 +377,8 @@ function Formx(props) {
                         </Form.Group>
 
                         <br />
+                        <br/>
+                        <br/>
 
                         <Row>
                             <Col sm={2}>

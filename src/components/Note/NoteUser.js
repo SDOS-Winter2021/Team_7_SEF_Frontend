@@ -46,7 +46,7 @@ function NoteUser(props) {
         <div className="col">
         </div>
         <div className="col">
-          <button onClick={noteForm} className="btn btn-primary">Add Note</button>
+          <button onClick={noteForm} className="btn btn-warning">+ Add New Note</button>
         </div>
       </div>
       <div className="row">

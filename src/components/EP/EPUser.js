@@ -57,7 +57,7 @@ function EPUser(props) {
         <div className="col">
         </div>
         <div className="col">
-          <button onClick={editDonor} className="btn btn-primary">Edit Donor Details</button>
+          <button onClick={editDonor} className="btn btn-warning">Edit Donor Details</button>
         </div>
       </div>
       <div className="row">
