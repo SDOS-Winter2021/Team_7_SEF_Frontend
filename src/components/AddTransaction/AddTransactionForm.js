@@ -91,7 +91,7 @@ function Formx() {
         <div>
             <div className="row">
                 <div className="col">
-                    <Breadcrumb>
+                    <Breadcrumb style={{width:330}}>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/transaction">Transaction</Breadcrumb.Item>
                         <Breadcrumb.Item active>Add Transaction</Breadcrumb.Item>
@@ -108,9 +108,15 @@ function Formx() {
                 </div>
             </div>
             <br />
+            <span class='display-text' STYLE='font-weight:bold'>
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249, 249, 249)" }}>
+                    
                     <Form noValidate validated={validated}>
+
+                        <Row><h4>Donor's Personal Details</h4></Row>
+                        <hr/>
+                        <br/>
 
                         <Form.Group as={Row} controlId="validationReceipt_Number">
                             <Form.Label column sm={2}>Receipt Number <span style={{ color: 'red' }}>*</span></Form.Label>
@@ -224,9 +230,13 @@ function Formx() {
                         </Form.Group>
 
                         <br />
+                        <br/>
+                        <br/>
 
                         <Row className="md-center">
+                            <Col sm={2}></Col>
                             <Col sm={4}>
+                                <Button block href='/Transaction' className="btn btn-danger">Cancel</Button>
                             </Col>
                             <Col sm={4}>
                                 <Button block onClick={addTransaction} className="btn btn-success">Add Transaction</Button>
@@ -235,6 +245,7 @@ function Formx() {
                     </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }
