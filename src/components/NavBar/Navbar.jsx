@@ -57,7 +57,7 @@ export const Navbar = () => {
                             <Button onClick={handleLogout} size='large' color='primary'>Logout</Button>
                             </div>
                         </div>
-                        : <Button component={Link} to='/auth' size='large' color='primary'>Login</Button>
+                        : <Button component={Link} to='/auth' size='large' color='primary'>Sign In</Button>
                     }
                 </Toolbar>
             </AppBar>
