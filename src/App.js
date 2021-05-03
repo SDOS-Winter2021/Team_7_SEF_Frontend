@@ -13,6 +13,7 @@ import { EditNote } from './components/EditNote/EditNote'
 import { Transaction } from './components/Transaction/Transaction'
 import { AddTransaction } from './components/AddTransaction/AddTransaction'
 import { EditTransaction } from './components/EditTransaction/EditTransaction'
+import {AddEPTask} from './components/AddEPTask/AddEPTask'
 import './App.css';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path='/donor/notes/editNote' exact component={EditNote}/>
                 <Route path='/donor/addDonor' exact component={AddDonor}/>
                 <Route path='/donor/donorEP' exact component={EP}/>
+                <Route path='/donor/donorEP/addEPTask' exact component={AddEPTask}/>
                 <Route path='/donor/donorEP/editDonor' exact component={EditDonor}/>
                 <Route path='/transaction' exact component={Transaction}/>
                 <Route path='/transaction/addTransaction' exact component={AddTransaction}/>

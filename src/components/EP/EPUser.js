@@ -38,6 +38,11 @@ function EPUser(props) {
     window.location.reload(true);
   }
 
+  const addNewEPTask = () => {
+    localStorage.setItem('curr_task', null)
+    history.push('/donor/donorEP/addEPTask');
+  }
+
   return (
     <div className="App">
       <div className="row">
@@ -64,7 +69,16 @@ function EPUser(props) {
         <br />
       </div>
       <DonorDetails donor={donor} />
-      <div>
+      <div className='row'>
+      <div className="col">
+      </div>
+      <div className="col">
+      </div>
+      <div className="col">
+      </div>
+      <div className='col'>
+      <button onClick={addNewEPTask} className="btn btn-primary">Add New Task</button>
+      </div>
       </div>
       <EPList EP={filterEP} taskDoneBtn={taskDoneBtn}/>
       <div>
