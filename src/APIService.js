@@ -162,6 +162,35 @@ export default class APIService {
 
     }
 
+    //Receipt 
+
+    static GetReceipts(donor_PAN) {
+
+      return fetch(`${base_url}transaction/${donor_PAN}`, {
+        'method':'POST',
+        headers: {
+            'Content-Type':'application/json'
+          }
+
+      }).then(resp => resp.json())
+
+    }
+
+    //EP Task
+
+    static AddEPTask(body) {
+
+      return fetch(`${base_url}note/`, {
+        'method':'POST',
+        headers: {
+            'Content-Type':'application/json'
+          }, 
+          body:JSON.stringify(body)
+
+      }).then(resp => resp.json())
+
+    }
+
     // EP
 
     static GetEP() {
