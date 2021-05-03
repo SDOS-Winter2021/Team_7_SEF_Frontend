@@ -11,7 +11,7 @@ function GlobalFilter({
     const count = preGlobalFilteredRows.length
 
     return (
-        <span>
+        <span class='display-text'>
             Found: {count} records
         </span>
     )
@@ -81,7 +81,7 @@ function Table({ columns, data }) {
             />
             <br />
             <br />
-            <table className="table table-dark" {...getTableProps()}>
+            <table className="table table-light table-striped" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -129,7 +129,7 @@ function Table({ columns, data }) {
                 </select>
             </div>
             <br />
-            <div>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
+            <div class='display-text'>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
             {/* <div>
                 <pre className="temp">
                     <code>{JSON.stringify(state.filters, null, 2)}</code>

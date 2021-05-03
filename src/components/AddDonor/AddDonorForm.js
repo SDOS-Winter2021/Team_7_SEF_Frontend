@@ -109,13 +109,18 @@ function Formx() {
                 </div>
             </div>
             <br />
+
+            <span class='display-text' STYLE="font-weight:bold">
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249,249,249)" }}>
                 <Form noValidate validated={validated}>
+
+                    <Row><h4>Donor's Personal Details</h4></Row>
+                    <hr/>
 
                     <Form.Group as={Row} controlId="validationTitle">
                         <Form.Label column sm={2}>Title <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={3}>
                             <Form.Control
                                 required
                                 as='select'
@@ -140,7 +145,7 @@ function Formx() {
 
                     <Form.Group as={Row} controlId="validationFirst_Name">
                         <Form.Label column sm={2}>First Name <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={5}>
                             <Form.Control
                                 required
                                 type="text"
@@ -159,7 +164,7 @@ function Formx() {
 
                     <Form.Group as={Row} controlId="validationLast_Name">
                         <Form.Label column sm={2}>Last Name <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={5}>
                             <Form.Control
                                 required
                                 type="text"
@@ -175,44 +180,9 @@ function Formx() {
 
                     <br />
 
-                    <Form.Group as={Row} controlId="validationEmail">
-                        <Form.Label column sm={2}>Email <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                required
-                                type="email"
-                                placeholder="Email"
-                                value={Email}
-                                onChange={e => setEmail(e.target.value)}
-
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Email.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
-
-                    <br />
-
-                    <Form.Group as={Row} controlId="validationPhone">
-                        <Form.Label column sm={2}>Phone</Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                type="text"
-                                placeholder="Phone"
-                                value={Phone}
-                                onChange={e => setPhone(e.target.value)}
-
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Phone.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
-
-                    <br />
-
                     <Form.Group as={Row} controlId="validationBirth_Date">
                         <Form.Label column sm={2}>Birth Date</Form.Label>
-                        <Col sm={10}>
+                        <Col sm={3}>
                             <Form.Control
                                 type="date"
                                 placeholder="Birth Date"
@@ -227,29 +197,10 @@ function Formx() {
 
                     <br />
 
-                    <Form.Group as={Row} controlId="validationAddress">
-                        <Form.Label column sm={2}>Current Address</Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                as='textarea'
-                                type="text"
-                                row={5}
-                                placeholder="Current Address"
-                                value={Current_Address}
-                                onChange={e => setCurrent_Address(e.target.value)}
-
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Address.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
-
-                    <br />
-
 
                     <Form.Group as={Row} controlId="validationPAN">
                         <Form.Label column sm={2}>PAN</Form.Label>
-                        <Col sm={10}>
+                        <Col sm={3}>
                             <Form.Control
                                 type="text"
                                 placeholder="PAN"
@@ -264,43 +215,9 @@ function Formx() {
 
                     <br />
 
-                    <Form.Group as={Row} controlId="validationRecruitment_Source">
-                        <Form.Label column sm={2}>Recruitment Source</Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                type="text"
-                                placeholder="Recruitment Source"
-                                value={Recruitment_Source}
-                                onChange={e => setRecruitment_Source(e.target.value)}
-
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Recruitment Source.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
-
-                    <br />
-
-                    <Form.Group as={Row} controlId="validationRecruitment_Type">
-                        <Form.Label column sm={2}>Recruitment Type</Form.Label>
-                        <Col sm={10}>
-                            <Form.Control
-                                type="text"
-                                placeholder="Recruitment Type"
-                                value={Recruitment_Type}
-                                onChange={e => setRecruitment_Type(e.target.value)}
-
-                            />
-                            <Form.Control.Feedback type="invalid">Please enter the Recruitment Type.</Form.Control.Feedback>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        </Col>
-                    </Form.Group>
-
-                    <br />
-
                     <Form.Group as={Row} controlId="validationNationality">
                         <Form.Label column sm={2}>Nationality <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={5}>
                             <Form.Control
                                 required
                                 as='select'
@@ -335,10 +252,107 @@ function Formx() {
                     </Form.Group>
 
                     <br />
+                    <br/>
+
+                    <Row><h4>Contact Details</h4></Row>
+                    <hr/>
+
+                    <Form.Group as={Row} controlId="validationEmail">
+                        <Form.Label column sm={2}>Email <span style={{ color: 'red' }}>*</span></Form.Label>
+                        <Col sm={5}>
+                            <Form.Control
+                                required
+                                type="email"
+                                placeholder="Email"
+                                value={Email}
+                                onChange={e => setEmail(e.target.value)}
+
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the Email.</Form.Control.Feedback>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+
+                    <br />
+
+                    <Form.Group as={Row} controlId="validationPhone">
+                        <Form.Label column sm={2}>Phone</Form.Label>
+                        <Col sm={3}>
+                            <Form.Control
+                                type="text"
+                                placeholder="Phone"
+                                value={Phone}
+                                onChange={e => setPhone(e.target.value)}
+
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the Phone.</Form.Control.Feedback>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+
+                    <br />
+
+                    <Form.Group as={Row} controlId="validationAddress">
+                        <Form.Label column sm={2}>Current Address</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control
+                                as='textarea'
+                                type="text"
+                                row={5}
+                                placeholder="Current Address"
+                                value={Current_Address}
+                                onChange={e => setCurrent_Address(e.target.value)}
+
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the Address.</Form.Control.Feedback>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+
+                    <br />
+
+                    <br/>
+
+                    <Row><h4>Contact Details</h4></Row>
+                    <hr/>
+
+                    <Form.Group as={Row} controlId="validationRecruitment_Source">
+                        <Form.Label column sm={2}>Recruitment Source</Form.Label>
+                        <Col sm={5}>
+                            <Form.Control
+                                type="text"
+                                placeholder="Recruitment Source"
+                                value={Recruitment_Source}
+                                onChange={e => setRecruitment_Source(e.target.value)}
+
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the Recruitment Source.</Form.Control.Feedback>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+
+                    <br />
+
+                    <Form.Group as={Row} controlId="validationRecruitment_Type">
+                        <Form.Label column sm={2}>Recruitment Type</Form.Label>
+                        <Col sm={5}>
+                            <Form.Control
+                                type="text"
+                                placeholder="Recruitment Type"
+                                value={Recruitment_Type}
+                                onChange={e => setRecruitment_Type(e.target.value)}
+
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the Recruitment Type.</Form.Control.Feedback>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Col>
+                    </Form.Group>
+
+                    <br />
 
                     <Form.Group as={Row} controlId="validationStatus"> {/*need to convert into options on further review*/}
                         <Form.Label column sm={2}>Status <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={5}>
                             <Form.Control
                                 required
                                 type="text"
@@ -353,9 +367,13 @@ function Formx() {
                     </Form.Group>
 
                     <br />
+                    <br/>
+                    <br/>
 
                     <Row className="md-center">
+                        <Col sm={2}></Col>
                         <Col sm={4}>
+                        <Button block href='/Donor' className="btn btn-danger">Cancel</Button>
                         </Col>
                         <Col sm={4}>
                             <Button block onClick={addDonor} className="btn btn-success">Add Donor</Button>
@@ -364,6 +382,7 @@ function Formx() {
                 </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }

@@ -46,7 +46,11 @@ function WithUserTransaction() {
           <br />
         </div>
         <div className="col">
-          <button onClick={transactionForm} className="btn btn-primary">New Transaction</button>
+        </div>
+        <div className="col">
+        </div>
+        <div className="col">
+          <button onClick={transactionForm} className="btn btn-success">+ Add New Transaction</button>
         </div>
       </div>
       <div className="row">

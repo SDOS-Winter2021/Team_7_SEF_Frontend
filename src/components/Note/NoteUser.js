@@ -31,7 +31,7 @@ function NoteUser(props) {
     <div className="App">
       <div className="row">
         <div className="col">
-          <Breadcrumb>
+          <Breadcrumb style={{width:220}}>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
             <Breadcrumb.Item active>Notes</Breadcrumb.Item>
@@ -46,7 +46,7 @@ function NoteUser(props) {
         <div className="col">
         </div>
         <div className="col">
-          <button onClick={noteForm} className="btn btn-primary">Add Note</button>
+          <button onClick={noteForm} className="btn btn-warning">+ Add New Note</button>
         </div>
       </div>
       <div className="row">

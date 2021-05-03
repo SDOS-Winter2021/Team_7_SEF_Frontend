@@ -6,6 +6,10 @@ import APIService from '../../APIService';
 import { BlobProvider, PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import im1 from '../../images/sign.png';
 import im2 from '../../images/logo.png';
+import Badge from 'react-bootstrap/Badge';
+// import im1 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/sign.png';
+// import im2 from '/home/mittooji/Desktop/Frontend/Team_7_SEF_Frontend/src/images/logo.png';
+
 
 
 // Define a default UI for filtering
@@ -15,7 +19,7 @@ function GlobalFilter({
     const count = preGlobalFilteredRows.length
 
     return (
-        <span>
+        <span class='display-text'>
             Found: {count} records
         </span>
     )
@@ -86,7 +90,7 @@ function Table({ columns, data }) {
             />
             <br />
             <br />
-            <table className="table table-dark" {...getTableProps()}>
+            <table className="table table-light table-striped" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -134,7 +138,7 @@ function Table({ columns, data }) {
                 </select>
             </div>
             <br />
-            <div>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
+            <div class='display-text'>Showing {rows.length < pageSize ? rows.length : pageSize} rows of {rows.length} rows</div>
             {/* <div>
                 <pre className="temp">
                     <code>{JSON.stringify(state.filters, null, 2)}</code>
@@ -203,10 +207,10 @@ function editBtn(props, transaction, aproval, donor) {
         {aproval ?
             <div>
                 {transaction && <PDFDownloadLink document={<MyDoc transaction={transaction} donor={donor} date={date_today} amountInWords={amountInWords} />} fileName={file_name}>
-                    {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className="btn btn-primary" >PDF</button>)}
+                    {({ blob, url, loading, error }) => (loading ? 'Loading document...' : <button className="btn btn-info" >PDF</button>)}
                 </PDFDownloadLink>}
             </div> :
-            <button className="btn btn-primary" onClick={() => editDonorBtn(transaction)}>Edit</button>}
+            <button className="btn btn-warning" onClick={() => editDonorBtn(transaction)}>Edit</button>}
     </div>
     )
 
@@ -255,7 +259,7 @@ function approveBtn(props, transaction, approval, Receipt_Number, Donor, Currenc
     }
     return (<div>
         {approval ?
-            <div style={{ color: '#66FF99' }}>Approved</div> :
+            <div><Badge variant='success'>Approved</Badge></div> :
             <div>
                 <button className="btn btn-primary" onClick={() => approveDonorBtn(transaction)}>Approve</button>
             </div>}

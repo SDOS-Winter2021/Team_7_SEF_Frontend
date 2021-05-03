@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import EPList from './EPList';
 import { useHistory } from 'react-router-dom';
 import APIService from '../../APIService';
-import { Form, Col, Row, Container, Breadcrumb } from 'react-bootstrap';
+import { Form, Col, Row, Container, Breadcrumb, Jumbotron } from 'react-bootstrap';
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 function EPUser(props) {
@@ -42,7 +42,7 @@ function EPUser(props) {
     <div className="App">
       <div className="row">
         <div className="col">
-          <Breadcrumb>
+          <Breadcrumb style={{width:340}}>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
             <Breadcrumb.Item active>Donor Engagement Plan</Breadcrumb.Item>
@@ -53,7 +53,11 @@ function EPUser(props) {
         <div className="col">
         </div>
         <div className="col">
-          <button onClick={editDonor} className="btn btn-primary">Edit Donor Details</button>
+        </div>
+        <div className="col">
+        </div>
+        <div className="col">
+          <button onClick={editDonor} className="btn btn-warning">Edit Donor Details</button>
         </div>
       </div>
       <div className="row">
@@ -96,33 +100,45 @@ function DonorDetails(props) {
   }, [props.donor])
 
   return (
-    <Container >
-      <Row>
+    
+    
+    <Jumbotron fluid style={{background:'rgb(249,249,249)'}}>
+    <span class='display-text'>
+      <Container>
+      <Row style={{paddingBottom:12, paddingTop:0}}>
         <Col>
-          <Form.Label>Name: {Title} {First_Name} {Last_Name}</Form.Label>
+          <Form.Label><b>Name:</b> {Title} {First_Name} {Last_Name}</Form.Label>
         </Col>
         <Col>
-          <Form.Label>PAN: {PAN}</Form.Label>
+          <Form.Label><b>PAN:</b> {PAN}</Form.Label>
         </Col>
         <Col>
-          <Form.Label>Email: {Email}</Form.Label>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Label>Nationality: {Nationality}</Form.Label>
-        </Col>
-        <Col>
-          <Form.Label>Recruitment Source: {Recruitment_Source}</Form.Label>
-        </Col>
-        <Col>
-          <Form.Label>Recruitment Type: {Recruitment_Type}</Form.Label>
+          <Form.Label><b>Email:</b> {Email}</Form.Label>
         </Col>
       </Row>
-      <Col>
-        <Form.Label>Status: {Status}</Form.Label>
-      </Col>
-    </Container>
+      <Row style={{paddingBottom:12}}>
+        <Col>
+          <Form.Label><b>Nationality:</b> {Nationality}</Form.Label>
+        </Col>
+        <Col>
+          <Form.Label><b>Recruitment Source:</b> {Recruitment_Source}</Form.Label>
+        </Col>
+        <Col>
+          <Form.Label><b>Recruitment Type:</b> {Recruitment_Type}</Form.Label>
+        </Col>
+      </Row>
+      <Row style={{paddingBottom:0}}>
+        <Col>
+          <Form.Label><b>Status:</b> {Status}</Form.Label>
+        </Col>
+        <Col></Col>
+        <Col></Col>
+      </Row>
+      </Container>
+      </span>
+    </Jumbotron>
+    
+    
   )
 
 }

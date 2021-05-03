@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import useStyles from './styles'
 // import MenuIcon from '@material-ui/icons/Menu'
-import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import { Avatar, Typography, IconButton, Toolbar, AppBar, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import { LOGOUT } from '../../constants/actionTypes'
@@ -31,23 +31,33 @@ export const Navbar = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" color='default'>
                 <Toolbar>
                     {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton> */}
                     <Typography component={Link} to='/' variant="h6" className={classes.title}>
-                        <IconButton className={classes.logo} primary="white" secondary="black">
-                            <HomeTwoToneIcon />
+                        <IconButton className={classes.logo} primary="white" secondary="black" color='inherit'>
+                            <HomeRoundedIcon/>
                         </IconButton>
                     </Typography>
                     {user
-                        ? <div>
-                            <Avatar ><img src={imgUrl} alt={userName} /></Avatar>
-                            <Typography variant='h6'>{userName}</Typography>
-                            <Button onClick={handleLogout} size='small' variant='contained' color='secondary'>Logout</Button>
+                        ? <div class='row'>
+                            <div class='column'>
+                                <div class='row'>
+                                    <div class='column'>
+                                        <Avatar style={{height:35, width:36}}><img src={imgUrl} alt={userName} /></Avatar>
+                                    </div>
+                                    <div class='column' style={{paddingTop:8, paddingLeft:8}}>
+                                        <Typography variant='h7'>{userName}</Typography>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='column' style={{paddingLeft:35, paddingRight:10}}>
+                            <Button onClick={handleLogout} size='large' color='primary'>Logout</Button>
+                            </div>
                         </div>
-                        : <Button component={Link} to='/auth' size='small' variant='contained' color='secondary'>Login</Button>
+                        : <Button component={Link} to='/auth' size='large' color='primary'>Sign In</Button>
                     }
                 </Toolbar>
             </AppBar>
