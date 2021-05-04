@@ -71,7 +71,7 @@ function Formx(props) {
             </div>
             <br />
 
-            <span class='display-text' STYLE="font-weight:bold">
+            <span className='display-text' STYLE="font-weight:bold">
             <Container > {/*change the widht of the form (padding) */}
                 <Jumbotron style={{ "background": "rgb(249,249,249)" }}>
                     <Form noValidate validated={validated}>

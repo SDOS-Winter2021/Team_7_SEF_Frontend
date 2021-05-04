@@ -32,7 +32,7 @@ function Formx(props) {
         setReceiptNumber('')
         const getItems = () => APIService.GetReceipts(props.donor.PAN);
         getItems().then(data => setReceipts(data));
-    }, [props.donor])
+    }, [props])
 
     const [validated, setValidated] = useState(false);
 

@@ -4,6 +4,9 @@ import WithoutUser from '../WithoutUser'
 import APIService from '../../APIService';
 import { useHistory } from 'react-router-dom'
 import { Button, Col, Row, Container } from 'react-bootstrap';
+import DonorVisualisationParent from './DonorVisualisationParent'
+import TransactionVisualisationParent from './TransactionVisualisationParent'
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 export const Home = () => {
   const location = useLocation()
@@ -146,9 +149,30 @@ function CnF() {
           </Col>
         </Row>
         <Row>
-          {/* add code for visualisation */}
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
         </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <DonorVisualisationParent/>
+            
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <TransactionVisualisationParent/>
+            
+          </Col>
+        </Row>
+        
       </Container>
+      <div>
+        <ScrollUpButton />
+      </div>
     </div>
   )
 }

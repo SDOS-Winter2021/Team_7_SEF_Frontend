@@ -185,6 +185,7 @@ export default class APIService {
         data: JSON.stringify(body),
         headers: { "Content-Type": "multipart/form-data" },
       }).then(resp => resp.json())
+      .catch(error =>  console.log(error))
 
     }
 
