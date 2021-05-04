@@ -86,19 +86,28 @@ function Donor() {
   const Btn1 = () => {
     history.push('/donor');
   }
-  const Btn2 = () => {
-    history.push('/mailchimpAnalytics');
-  }
 
   return (
     <div className="App">
       <Container>
-        <Row>
-          <Col>
+      <Row>
+          <Col sm={3}>
+          </Col>
+          <Col sm={6}>
             <Button block onClick={Btn1}>Donors</Button>
           </Col>
-          <Col>
-            <Button block onClick={Btn2}>MailChimp Analytics</Button>
+          <Col sm={3}>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+              <DonorVisualisationParent/>
           </Col>
         </Row>
       </Container>
@@ -116,7 +125,28 @@ function Finance() {
   return (
     <div className="App">
       <Container>
-        <Button block onClick={Btn}>Transactions</Button>
+        <Row>
+          <Col sm={3}>
+          </Col>
+          <Col sm={6}>
+            <Button block onClick={Btn}>Transactions</Button>
+          </Col>
+          <Col sm={3}>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <TransactionVisualisationParent/>
+            
+          </Col>
+        </Row>
       </Container>
     </div>
   )
