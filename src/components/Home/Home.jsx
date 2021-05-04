@@ -4,6 +4,9 @@ import WithoutUser from '../WithoutUser'
 import APIService from '../../APIService';
 import { useHistory } from 'react-router-dom'
 import { Button, Col, Row, Container } from 'react-bootstrap';
+import DonorVisualisationParent from '../DonorVis/DonorVisualisationParent'
+import TransactionVisualisationParent from '../TransactionVis/TransactionVisualisationParent'
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 export const Home = () => {
   const location = useLocation()
@@ -80,14 +83,33 @@ const UserCheck = (props) => {
 
 function Donor() {
   const history = useHistory()
-  const Btn = () => {
+  const Btn1 = () => {
     history.push('/donor');
   }
 
   return (
     <div className="App">
       <Container>
-        <Button block onClick={Btn}>Donors</Button>
+      <Row>
+          <Col sm={3}>
+          </Col>
+          <Col sm={6}>
+            <Button block onClick={Btn1}>Donors</Button>
+          </Col>
+          <Col sm={3}>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+              <DonorVisualisationParent/>
+          </Col>
+        </Row>
       </Container>
       {/* <button onClick={Btn}>Donors</button> */}
     </div>
@@ -103,7 +125,28 @@ function Finance() {
   return (
     <div className="App">
       <Container>
-        <Button block onClick={Btn}>Transactions</Button>
+        <Row>
+          <Col sm={3}>
+          </Col>
+          <Col sm={6}>
+            <Button block onClick={Btn}>Transactions</Button>
+          </Col>
+          <Col sm={3}>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <TransactionVisualisationParent/>
+            
+          </Col>
+        </Row>
       </Container>
     </div>
   )
@@ -129,7 +172,31 @@ function CnF() {
             <Button block onClick={Btn2}>Transactions</Button>
           </Col>
         </Row>
+        <Row>
+          <Col sm={12}>
+            <br/>
+            <br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <DonorVisualisationParent/>
+            
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+          
+              <TransactionVisualisationParent/>
+            
+          </Col>
+        </Row>
+        
       </Container>
+      <div>
+        <ScrollUpButton />
+      </div>
     </div>
   )
 }

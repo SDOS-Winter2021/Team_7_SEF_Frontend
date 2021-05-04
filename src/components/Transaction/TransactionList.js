@@ -159,6 +159,8 @@ function emailBtn(props, transaction, aproval, donor) {
 
         APIService.Email(form);
 
+        alert('Email sent!');
+
         // props.emailBtn(transaction)
     }
     const file_name = "transaction_" + donor.First_Name + "_" + transaction.Receipt_Number + ".pdf";

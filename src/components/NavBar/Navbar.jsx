@@ -49,7 +49,7 @@ export const Navbar = () => {
                                         <Avatar style={{height:35, width:36}}><img src={imgUrl} alt={userName} /></Avatar>
                                     </div>
                                     <div class='column' style={{paddingTop:8, paddingLeft:8}}>
-                                        <Typography variant='h7'>{userName}</Typography>
+                                        <Typography variant='body1'>{userName}</Typography>
                                     </div>
                                 </div>
                             </div>
