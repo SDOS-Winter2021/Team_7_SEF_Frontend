@@ -75,9 +75,15 @@ function Formx(props) {
             </div>
             <br />
             <br />
+
+            <span className='display-text'>
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249, 249, 249)" }}>
                     <Form noValidate validated={validated}>
+
+                    <Row><h4>Edit Note</h4></Row>
+                    <hr/>
+                    <br/>
 
                         <Form.Group as={Row} controlId="validationNote">
                             <Form.Label column sm={2}>Note</Form.Label>
@@ -115,6 +121,7 @@ function Formx(props) {
                         </Form.Group>
 
                         <br />
+                        <br/>
 
                         <Row>
                             <Col sm={2}>
@@ -131,6 +138,7 @@ function Formx(props) {
                     </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }

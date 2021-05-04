@@ -100,7 +100,7 @@ function Formx(props) {
         <div>
             <div className="row">
                 <div className="col">
-                    <Breadcrumb>
+                    <Breadcrumb style={{width:400}}>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/transaction">Transaction</Breadcrumb.Item>
                         <Breadcrumb.Item active>Edit Transaction</Breadcrumb.Item>
@@ -114,9 +114,15 @@ function Formx(props) {
                 </div>
             </div>
             <br />
+
+            <span className='display-text'>
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249, 249, 249)" }}>
                     <Form noValidate validated={validated}>
+
+                        <Row><h4>Edit Transaction</h4></Row>
+                        <hr/>
+                        <br/>
 
                         <Form.Group as={Row} controlId="validationReceipt_Number">
                             <Form.Label column sm={2}>Receipt Number <span style={{ color: 'red' }}>*</span></Form.Label>
@@ -230,7 +236,7 @@ function Formx(props) {
                         </Form.Group>
 
                         <br />
-
+                        <br/> 
 
 
                         <Row>
@@ -248,6 +254,7 @@ function Formx(props) {
                     </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }
