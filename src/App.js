@@ -14,6 +14,7 @@ import { Transaction } from './components/Transaction/Transaction'
 import { AddTransaction } from './components/AddTransaction/AddTransaction'
 import { EditTransaction } from './components/EditTransaction/EditTransaction'
 import {AddEPTask} from './components/AddEPTask/AddEPTask'
+import { MailchimpAnalytics } from './components/MailchimpAnalytics/MailchimpAnalytics'
 import './App.css';
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path='/transaction' exact component={Transaction}/>
                 <Route path='/transaction/addTransaction' exact component={AddTransaction}/>
                 <Route path='/transaction/editTransaction' exact component={EditTransaction}/>
+                <Route path='/mailchimpAnalytics' exact component={MailchimpAnalytics}/>
             </Switch>
         </Router>
     )

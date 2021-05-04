@@ -166,13 +166,12 @@ export default class APIService {
 
     static GetReceipts(donor_PAN) {
 
-      return fetch(`${base_url}transaction/${donor_PAN}`, {
-        'method':'POST',
-        headers: {
-            'Content-Type':'application/json'
-          }
-
-      }).then(resp => resp.json())
+      return axios({
+        method: "POST",
+        url: "https://sefdash.herokuapp.com/api/donor/donorEP/get_recipts/",
+        data: donor_PAN,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(resp => resp.json()) 
 
     }
 
@@ -180,13 +179,11 @@ export default class APIService {
 
     static AddEPTask(body) {
 
-      return fetch(`${base_url}note/`, {
-        'method':'POST',
-        headers: {
-            'Content-Type':'application/json'
-          }, 
-          body:JSON.stringify(body)
-
+      return axios({
+        method: "POST",
+        url: "https://sefdash.herokuapp.com/api/donor/donorEP/get_recipts/",
+        data: JSON.stringify(body),
+        headers: { "Content-Type": "multipart/form-data" },
       }).then(resp => resp.json())
 
     }
