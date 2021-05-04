@@ -133,8 +133,7 @@ function DonorDetails(props) {
       </Container>
       </span>
     </Jumbotron>
-    
-    
+      
   )
 
 }

@@ -4,8 +4,8 @@ import WithoutUser from '../WithoutUser'
 import APIService from '../../APIService';
 import { useHistory } from 'react-router-dom'
 import { Button, Col, Row, Container } from 'react-bootstrap';
-import DonorVisualisationParent from './DonorVisualisationParent'
-import TransactionVisualisationParent from './TransactionVisualisationParent'
+import DonorVisualisationParent from '../DonorVis/DonorVisualisationParent'
+import TransactionVisualisationParent from '../TransactionVis/TransactionVisualisationParent'
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 export const Home = () => {
