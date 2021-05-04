@@ -21,18 +21,19 @@ function DonorVisualisationParent() {
       <Container>
         <Jumbotron style={{ "background": "rgb(249,249,249)" }}>
 
-            <Row>
+            {/* <Row>
                 <Col sm={12}>
+                    <br/>
                     <h3 class='display-text'> Donor Stats </h3>
-                    <hr></hr>
+                    <hr/>
                 </Col>
-            </Row>
+            </Row> */}
 
-            <Row>
+            {/* <Row>
                 <Col sm={12}>
                     <br></br>
                 </Col>
-            </Row>
+            </Row> */}
 
 
             <Row>
@@ -127,6 +128,20 @@ function DonorVisualisationParent() {
                     </Paper>
                 </Col>
             </Row>
+
+            <Row>
+                <Col sm={12}>
+                    <br/>
+                    <h3 class='display-text'> Donor Stats </h3>
+                    <hr/>
+                </Col>
+            </Row>
+
+            {/* <Row>
+                <Col sm={12}>
+                    <br></br>
+                </Col>
+            </Row> */}
 
             <Row>
                 <Col>
