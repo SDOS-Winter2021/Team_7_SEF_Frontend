@@ -31,7 +31,7 @@ function Formx(props) {
         setTask('')
         setReceiptNumber('')
         getItems().then(data => setReceipts(data));
-    }, [props])
+    }, [props.donor])
 
     const [validated, setValidated] = useState(false);
 
@@ -75,6 +75,7 @@ function Formx(props) {
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/donor/donorEP">Donor Engagement Plan</Breadcrumb.Item>
                         <Breadcrumb.Item active>Add Task</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
@@ -146,9 +147,9 @@ function Formx(props) {
 
                         <Row className="md-center">
                             <Col sm={4}>
-                                {Receipts.map(r => {
+                                {/* {Receipts.map(r => {
                                     return <h6>{r}</h6>
-                                })}
+                                })} */}
                             </Col>
                             <Col sm={4}>
                                 <Button block onClick={addEPTask} className="btn btn-success">Add Task</Button>

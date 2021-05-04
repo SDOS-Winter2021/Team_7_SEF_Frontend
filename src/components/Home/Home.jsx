@@ -80,14 +80,24 @@ const UserCheck = (props) => {
 
 function Donor() {
   const history = useHistory()
-  const Btn = () => {
+  const Btn1 = () => {
     history.push('/donor');
+  }
+  const Btn2 = () => {
+    history.push('/mailchimpAnalytics');
   }
 
   return (
     <div className="App">
       <Container>
-        <Button block onClick={Btn}>Donors</Button>
+        <Row>
+          <Col>
+            <Button block onClick={Btn1}>Donors</Button>
+          </Col>
+          <Col>
+            <Button block onClick={Btn2}>MailChimp Analytics</Button>
+          </Col>
+        </Row>
       </Container>
       {/* <button onClick={Btn}>Donors</button> */}
     </div>
@@ -117,6 +127,9 @@ function CnF() {
   const Btn2 = () => {
     history.push('/transaction');
   }
+  const Btn3 = () => {
+    history.push('/mailchimpAnalytics');
+  }
 
   return (
     <div className="App">
@@ -127,6 +140,9 @@ function CnF() {
           </Col>
           <Col>
             <Button block onClick={Btn2}>Transactions</Button>
+          </Col>
+          <Col>
+            <Button block onClick={Btn3}>MailChimp Analytics</Button>
           </Col>
         </Row>
       </Container>
