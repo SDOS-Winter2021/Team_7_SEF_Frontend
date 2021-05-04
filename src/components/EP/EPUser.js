@@ -47,13 +47,11 @@ function EPUser(props) {
     <div className="App">
       <div className="row">
         <div className="col">
-          <Breadcrumb style={{width:340}}>
+          <Breadcrumb style={{width:400}}>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
             <Breadcrumb.Item active>Donor Engagement Plan</Breadcrumb.Item>
           </Breadcrumb>
-        </div>
-        <div className="col">
         </div>
         <div className="col">
         </div>
@@ -76,8 +74,12 @@ function EPUser(props) {
       </div>
       <div className="col">
       </div>
+      <div className="col">
+      </div>
+      <div className="col">
+      </div>
       <div className='col'>
-      <button onClick={addNewEPTask} className="btn btn-primary">Add New Task</button>
+      <button onClick={addNewEPTask} className="btn btn-success">+ Add New Task</button>
       </div>
       </div>
       <EPList EP={filterEP} taskDoneBtn={taskDoneBtn}/>

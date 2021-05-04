@@ -17,7 +17,7 @@ export default AddEPTaskForm
 
 function Formx(props) {
     const history = useHistory()
-    const getItems = () => APIService.GetReceipts(props.donor.PAN); //this has to be added to APIService 
+    //const getItems = () => APIService.GetReceipts(props.donor.PAN); //this has to be added to APIService 
     const [Donor, setDonor] = useState([])
     const [Date, setDate] = useState('')
     const [Task, setTask] = useState('')
@@ -30,6 +30,7 @@ function Formx(props) {
         setDate('')
         setTask('')
         setReceiptNumber('')
+        const getItems = () => APIService.GetReceipts(props.donor.PAN);
         getItems().then(data => setReceipts(data));
     }, [props.donor])
 
@@ -72,7 +73,7 @@ function Formx(props) {
         <div>
             <div className="row">
                 <div className="col">
-                    <Breadcrumb>
+                    <Breadcrumb style={{width:500}}>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/donor">Donor</Breadcrumb.Item>
                         <Breadcrumb.Item href="/donor/donorEP">Donor Engagement Plan</Breadcrumb.Item>
@@ -85,13 +86,19 @@ function Formx(props) {
                 </div>
             </div>
             <br />
+
+            <span class='display-text' STYLE="font-weight:bold">
             <Container > {/*change the widht of the form (padding) */}
-                <Jumbotron style={{ "background": "rgb(52, 58, 64)" }}>
+                <Jumbotron style={{ "background": "rgb(249, 249, 249)" }}>
                     <Form noValidate validated={validated}>
 
-                    <Form.Group as={Row} controlId="validationTitle">
+                    <Row><h4>Add Task</h4></Row>
+                    <hr/>
+                    <br/>
+
+                    <Form.Group as={Row} controlId="validationReceiptNumber">
                         <Form.Label column sm={2}>Receipt Number <span style={{ color: 'red' }}>*</span></Form.Label>
-                        <Col sm={10}>
+                        <Col sm={6}>
                             <Form.Control
                                 required
                                 as='select'
@@ -129,7 +136,7 @@ function Formx(props) {
 
                         <Form.Group as={Row} controlId="validationDate">
                             <Form.Label column sm={2}>Date <span style={{ color: 'red' }}>*</span></Form.Label>
-                            <Col sm={10}>
+                            <Col sm={4}>
                                 <Form.Control
                                     required
                                     type="date"
@@ -144,12 +151,13 @@ function Formx(props) {
                         </Form.Group>
 
                         <br />
+                        <br />
+                        <br /> 
 
                         <Row className="md-center">
+                            <Col sm={2}></Col>
                             <Col sm={4}>
-                                {/* {Receipts.map(r => {
-                                    return <h6>{r}</h6>
-                                })} */}
+                                <Button block href='/donor/donorEP' className="btn btn-danger">Cancel</Button>
                             </Col>
                             <Col sm={4}>
                                 <Button block onClick={addEPTask} className="btn btn-success">Add Task</Button>
@@ -158,6 +166,7 @@ function Formx(props) {
                     </Form>
                 </Jumbotron>
             </Container>
+            </span>
         </div>
     )
 }

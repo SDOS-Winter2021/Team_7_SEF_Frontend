@@ -13,7 +13,7 @@ function GlobalFilter({
 
     return (
         <span class='display-text'>
-            Found: {count} Notifications
+            Found: {count} Tasks
         </span>
     )
 }

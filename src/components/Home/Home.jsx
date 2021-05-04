@@ -145,6 +145,9 @@ function CnF() {
             <Button block onClick={Btn3}>MailChimp Analytics</Button>
           </Col>
         </Row>
+        <Row>
+          {/* add code for visualisation */}
+        </Row>
       </Container>
     </div>
   )
