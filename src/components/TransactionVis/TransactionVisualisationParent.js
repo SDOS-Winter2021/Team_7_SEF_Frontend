@@ -96,7 +96,7 @@ function TransactionVisualisationParent() {
             <Row>
                 <Col sm={12}>
                     <br/>
-                    <h4 className='display-text'> Amount Raised per Quarter <h6>(in thousands)</h6> </h4> 
+                    <h4 className='display-text'> Amount Raised per Quarter </h4> <h6>(in thousands)</h6> 
                 </Col>
             </Row>
             
