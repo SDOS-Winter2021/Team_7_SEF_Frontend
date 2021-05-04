@@ -162,32 +162,6 @@ export default class APIService {
 
     }
 
-    //Receipt 
-
-    static GetReceipts(donor_PAN) {
-
-      return axios({
-        method: "POST",
-        url: "https://sefdash.herokuapp.com/api/donor/donorEP/get_recipts/",
-        data: donor_PAN,
-        headers: { "Content-Type": "multipart/form-data" },
-      }).then(resp => resp.json()) 
-
-    }
-
-    //EP Task
-
-    static AddEPTask(body) {
-
-      return axios({
-        method: "POST",
-        url: "https://sefdash.herokuapp.com/api/donor/donorEP/get_recipts/",
-        data: JSON.stringify(body),
-        headers: { "Content-Type": "multipart/form-data" },
-      }).then(resp => resp.json())
-      .catch(error =>  console.log(error))
-
-    }
 
     // EP
 

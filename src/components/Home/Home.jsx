@@ -130,9 +130,6 @@ function CnF() {
   const Btn2 = () => {
     history.push('/transaction');
   }
-  const Btn3 = () => {
-    history.push('/mailchimpAnalytics');
-  }
 
   return (
     <div className="App">
@@ -143,9 +140,6 @@ function CnF() {
           </Col>
           <Col>
             <Button block onClick={Btn2}>Transactions</Button>
-          </Col>
-          <Col>
-            <Button block onClick={Btn3}>MailChimp Analytics</Button>
           </Col>
         </Row>
         <Row>
